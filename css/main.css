@@ -33,9 +33,7 @@
   height: 1.5em;
   line-height: 1.5em;
   display: inline-block;
-}
-#grid .e0, #grid .e1, #grid .e2, #grid .e3, #grid .e4, #grid .e5, #grid .e6, #grid .eX {
-  font-size: 40px;
+  background-repeat: no-repeat;
 }
 #grid > div { position: absolute; cursor: pointer; }
 #grid > div:nth-child(6n+1) { left: 0px; }
@@ -55,14 +53,31 @@
 .e3 { background-image: url('../img/light_grid.png'); color: #fe5; }
 .e4 { background-image: url('../img/dark_grid.png'); color: #d5c; }
 .e5 {
-  background-image: url('../img/heart_grid.png');
   color: #f7d;
   margin: 0.1em;
   width: 1.3em;
   height: 1.3em;
+  background-image: url('../img/heart_grid.png');
+  background-size: 52px;
 }
 .e6 { background-image: url('../img/poison_grid.png'); border-radius: 0%; color: navy; }
 .eX { background: #444; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; color: #ccc; }
+
+/* resizing */
+span.e0, span.e1, span.e2, span.e3, span.e4, span.e5, span.e6 {
+  background-size: 20px;
+}
+td.e0, td.e1, td.e2, td.e3, td.e4, td.e5, td.e6 {
+  background-size: 23px;
+}
+#grid .e0, #grid .e1, #grid .e2, #grid .e3, #grid .e4, #grid .e6, #grid .eX {
+  background-size: 60px;
+  font-size: 40px;
+}
+/* heart orb */
+span.e5 { background-size: 18px; }
+td.e5 { background-size: 20px; }
+#grid .e5 { font-size: 40px; }
 
 /*
 .e0::before { content: "\1f525"; }
@@ -74,6 +89,7 @@
 .e6::before { content: "\1f608"; } */
 
 .eX::before { content: "?"; }
+
 #profile {
   position: absolute;
   left: 445px;
