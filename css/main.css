@@ -29,7 +29,6 @@
   font-family: PnDIcons;
   text-align: center;
   vertical-align: middle;
-  border-radius: 50%;
   width: 1.5em;
   height: 1.5em;
   line-height: 1.5em;
@@ -50,28 +49,30 @@
 .row3 { top: 128px; }
 .row4 { top: 192px; }
 .row5 { top: 256px; }
-.e0 { background: #b12; color: #f74; }
-.e0::before { content: "\1f525"; /*fire*/ }
-.e1 { background: #15b; color: #8ff; }
-.e1::before { content: "\1f4a7"; /*droplet*/ }
-.e2 { background: #074; color: #4f6; }
-.e2::before { content: "\1f342"; /*leaf*/ }
-.e3 { background: #872; color: #fe5; }
-.e3::before { content: "\2600"; /*sun*/ }
-.e4 { background: #709; color: #d5c; }
-.e4::before { content: "\263e"; /*moon*/ }
+.e0 { background-image: url('../img/fire_grid.png'); color: #f74; }
+.e1 { background-image: url('../img/water_grid.png'); color: #8ff; }
+.e2 { background-image: url('../img/grass_grid.png'); color: #4f6; }
+.e3 { background-image: url('../img/light_grid.png'); color: #fe5; }
+.e4 { background-image: url('../img/dark_grid.png'); color: #d5c; }
 .e5 {
-  background: #e28;
+  background-image: url('../img/heart_grid.png');
   color: #f7d;
-  border-radius: 8%;
   margin: 0.1em;
   width: 1.3em;
   height: 1.3em;
 }
-.e5::before { content: "\2665"; /*heart*/ }
-.e6 { background: white; color: navy; }
-.e6::before { content: "\1f608"; /*demon*/ }
+.e6 { background-image: url('../img/poison_grid.png'); border-radius: 0%; color: navy; }
 .eX { background: #444; color: #ccc; }
+
+/*
+.e0::before { content: "\1f525"; }
+.e1::before { content: "\1f4a7"; }
+.e2::before { content: "\1f342"; }
+.e3::before { content: "\2600"; }
+.e4::before { content: "\263e"; }
+.e5::before { content: "\2665"; }
+.e6::before { content: "\1f608"; } */
+
 .eX::before { content: "?"; }
 #profile {
   position: absolute;
