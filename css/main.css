@@ -292,6 +292,9 @@ th, label, #status, li, p {
   padding: 20px;
 
 }
+i.glyphicon {
+  margin: 2px;
+}
 #keep-open {
   background-color: rgba(158,190,149,1);
   color: black;
