@@ -1,13 +1,21 @@
-pndopt --- Puzzle & Dragons Optimizer
+padopt - a Puzzle & Dragons Optimizer
 =====================================
 
 ![Screenshot](screenshot.png)
 
-`pndopt` is a Javascript application to find an optimal path leading to a high-combo move in Puzzle & Dragons.
+`padopt` is a Javascript-based web application that finds optimal paths in the mobile game Puzzle & Dragons.
 
-Only use it in emergency ☺!
+Originally forked from kennytm's [pndopt](https://github.com/kennytm/pndopt) and based on [combo.tips](http://combo.tips). 90% of the credit goes to them, including the main Javascript logic. While the program logic is mostly fine, the user experience left something to desired. In particular, left and right clicking led to context menus popping up and unintentional text selections. This fork's main purpose is to provide a nicer interface for the program.
 
-*(Yes I knew there were [Big Combo](http://www.fonescience.com/bigcombo/) and [Path & Decision](http://pnd.cubeforge.net/), but the former is gone and I'm unsatisfied with the result of the latter.)*
+Changelist
+----------
+
+* Increased margins in some elements (~2px).
+* Changed orbs to the actual pad icons.
+* Changed junk orb to poison orb (functionality is the same).
+* Changed some tooltips to slightly more readable english.
+* Changed some title text for coherency.
+* Added LKali, DKali profiles.
 
 Usage
 -----
@@ -19,16 +27,17 @@ Usage
 Requirements
 ------------
 
-* Firefox (version 19 or above).
-* Screen resolution of 1280×800 or above.
-
-It may work in other configurations but I don't guarantee it will work ☺.
+* An updated browser - preferably chromium or Firefox.
+* Javascript enabled.
 
 TODO
 ----
 
-* Introduce better solver (e.g. [this post](http://puzzleanddragonsforum.com/showthread.php?tid=1603&pid=6263#pid6263)). Currently it is just a brute-force greedy algorithm, which may not produce truly optimal result.
+* Fix the body scrollbar issue.
+* Change scrollbars to [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar).
+* Fix some icon sizing issues.
+* Introduce better solver (e.g. [this post](http://puzzleanddragonsforum.com/showthread.php?tid=1603&pid=6263#pid6263)). Currently just a brute-force greedy algorithm, which may not produce truly optimal results.
 * Resolve overlapping lines and points.
-* Simulate swapping and matching when playing the animation.
+* Simulate swapping and matching when playing the animation and dropping the matches.
 * The default weight of the profiles may need to be adjusted.
 
