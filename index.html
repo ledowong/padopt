@@ -30,7 +30,7 @@
 <body>
     <!-- PAD CANVAS -->
     <canvas id="path" width="380" height="316"></canvas>
-    <div id="grid">
+    <div id="grid" oncontextmenu="return false;">
         <div id="o00" class="row1"></div>
         <div id="o01" class="row1"></div>
         <div id="o02" class="row1"></div>
@@ -440,9 +440,6 @@
         <div class="row">
             <div class="row">
                 <div class="col-md-8">
-
-
-
                 </div>
                 <div class="col-md-4">
                     <div id="solutions">
@@ -462,52 +459,6 @@
             </div>
         </div>
     </div>
-
-    <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#disqus_thread">
-                    <span class="sr-only">Chat</span>
-                    <span class="glyphicon glyphicon-heart-empty"></span>
-                </button>
-                <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-tower"></span> padopt</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse in" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown upload open">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Import from screenshot <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li class="list-float-left">
-                                <a href="#"><img class="uploaded-image" src="/images/image2.png"></a>
-                                <span class="glyphicon glyphicon-question-sign"> </span><span>Click the image to import</span>
-                            </li>
-                            <li class="list-float-right">
-                                <a href="#">
-                                <form id="screenshot-upload" action="upload.php" class="dropzone"></form>
-                                </a>
-                            </li>
-                        </ul>
-                    <li class="divider"></li>
-                    <li class="divider"></li>
-                    <li>
-                        <a id="keep-open" href="#"><form role="form"></form></a>
-                    </li>
-                </ul>
-                <!-- <div class="checkbox">
-                    <label><input type="checkbox"> Don't close this window!</input></label>
-                </div> -->
-            </div>
-        </div>
-    </nav>
 
     <!-- SCRIPTS -->
     <script src="ext/jquery-1.9.1.min.js"></script>
