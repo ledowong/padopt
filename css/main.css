@@ -98,7 +98,7 @@ td.e5 { background-size: 20px; }
 #profile .e0, #profile .e1, #profile .e2, #profile .e3, #profile .e4, #profile .e6, #profile .e5, #profile .eX {
   font-size: 16px;
 }
-#profile input { width: 2.8em; }
+#profile input { width: 2.8em; border: 0px; margin: 2px; }
 #controls {
   position: absolute;
   left: 20px;
@@ -222,14 +222,9 @@ td.e5 { background-size: 20px; }
 .navbar-right .upload ul {
   width: 550px;
 }
-
-.uploaded-image {
-
-}
 body {
-  background: #000;
   font-family: 'Roboto', Helvetica;
-
+  background: url('../img/bg.gif') repeat;
 }
 th, label, #status, li, p {
   color: white;
@@ -364,30 +359,6 @@ body .modal-backdrop {
 }
 .navbar-fixed-bottom {
   z-index: 9999;
-}
-#bitcoin-donate-msg {
-  position: relative;
-  top: -27px;
-  right: 5px;
-  padding: 5px;
-  border-top-left-radius: 9px;
-  border-bottom-left-radius: 9px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-.paypal-donate {
-  width: 100px;
-  height: 29px;
-  background-color: lightgrey;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 5px;
-  border-top-right-radius: 5px;
-  display: inline-block;
-  color: black;
-  position: relative;
-  top: -7px;
-  margin-left: 18px;
 }
 .support-tag {
   color: orange;
