@@ -62,7 +62,7 @@
   height: 1.3em;
 }
 .e6 { background-image: url('../img/poison_grid.png'); border-radius: 0%; color: navy; }
-.eX { background: #444; color: #ccc; }
+.eX { background: #444; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; color: #ccc; }
 
 /*
 .e0::before { content: "\1f525"; }
