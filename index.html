@@ -10,9 +10,6 @@
 
     <link rel="icon" type="image/png" href="/images/favicon.ico">
     <title>padopt</title>
-    <script src="/ext/jquery-1.9.1.min.js"></script>
-    <script src="/ext/dropzone.min.js"></script>
-    <script src="/ext/bootstrap-slider.min.js"></script>
 
     <!-- analytics -->
 
@@ -30,10 +27,10 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 </head>
-    <body>
-
-      <canvas id="path" width="380" height="316"></canvas>
-      <div id="grid">
+<body>
+    <!-- PAD CANVAS -->
+    <canvas id="path" width="380" height="316"></canvas>
+    <div id="grid">
         <div id="o00" class="row1"></div>
         <div id="o01" class="row1"></div>
         <div id="o02" class="row1"></div>
@@ -68,76 +65,80 @@
         <div id="o43" class="row5"></div>
         <div id="o44" class="row5"></div>
         <div id="o45" class="row5"></div>
-      </div>
-      <div id="profile">
-        <table>
-          <tr class="center-text">
+    </div>
+
+    <!-- SIDEBAR PROFILE -->
+    <div id="profile">
+    <table>
+        <tr class="center-text">
             <th></th>
             <th>N</th>
             <th>Mass</th>
             <th>RA</th>
             <th>TPA-W</th>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
             <td class="e0" title="Fire"></td>
             <td><input id="e0-normal" value="1"/></td>
             <td><input id="e0-mass" value="3"/></td>
             <td><input id="e0-row" value="0"/></td>
             <td><input id="e0-tpa" value="0"/></td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
             <td class="e1" title="Water"></td>
             <td><input id="e1-normal" value="1"/></td>
             <td><input id="e1-mass" value="3"/></td>
             <td><input id="e1-row" value="0"/></td>
             <td><input id="e1-tpa" value="0"/></td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
             <td class="e2" title="Wood"></td>
             <td><input id="e2-normal" value="1"/></td>
             <td><input id="e2-mass" value="3"/></td>
             <td><input id="e2-row" value="0"/></td>
             <td><input id="e2-tpa" value="0"/></td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
             <td class="e3" title="Light"></td>
             <td><input id="e3-normal" value="1"/></td>
             <td><input id="e3-mass" value="3"/></td>
             <td><input id="e3-row" value="0"/></td>
             <td><input id="e3-tpa" value="0"/></td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
             <td class="e4" title="Dark"></td>
             <td><input id="e4-normal" value="1"/></td>
             <td><input id="e4-mass" value="3"/></td>
             <td><input id="e4-row" value="0"/></td>
             <td><input id="e4-tpa" value="0"/></td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
             <td class="e5" title="Heal"></td>
             <td><input id="e5-normal" value="0.3"/></td>
             <td><input id="e5-mass" value="0.3"/></td>
             <td><input id="e5-row" value="0"/></td>
             <td><input id="e5-tpa" value="0"/></td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
             <td class="e6" title="Junk"></td>
             <td><input id="e6-normal" value="0.1"/></td>
             <td><input id="e6-mass" value="0.1"/></td>
             <td><input id="e6-row" value="0"/></td>
             <td><input id="e6-tpa" value="0"/></td>
-          </tr>
-          <tr class="center-text">
+        </tr>
+        <tr class="center-text">
             <th></th>
             <th><a data-toggle="tooltip" title="Normal"><i class="glyphicon glyphicon-question-sign"></i></a></th>
             <th><a data-toggle="tooltip" title="Mass"><i class="glyphicon glyphicon-question-sign"></i></a></th>
             <th><a data-toggle="tooltip" title="Row Awkns"><i class="glyphicon glyphicon-question-sign"></i></a></th>
             <th><a data-toggle="tooltip" title="TPA Weight - Put the additional weight coming from TPAs. E.g. If you have 3 monsters with 1k green attack and one has a TPA and ones has two TPA, the base weight is 3 and the TPA effect is 1*1.5 for the single TPA (.5 extra) and 1*1.5*1.5 = 2.25 (1.25 extra) for the double TPA so you enter 1.75."><i class="glyphicon glyphicon-question-sign"></i></a></th>
-          </tr>
-        </table>
-        <p><br>
-          Profile:<br>
-          <select class="btn btn-default"  id="profile-selector">
+        </tr>
+    </table>
+
+    <p>
+        <br>
+        Profile:<br>
+        <select class="btn btn-default"  id="profile-selector">
             <option value="
                            1,3,0,0,
                            1,3,0,0,
@@ -363,33 +364,34 @@
                            0.3,0.3,0,0,
                            0.1,0.1,0,0,
                            7">Bastet</option>
-          </select>
-          <br>
-          <br>
-          <label for="max-length">Max path length:</label>
-          <input id="max-length" value="20" size="3"/><br /><br />
-          <label for="num-paths">Path Number Scaling</label>
-          <input type="text" value="100" id="num-path-value" class="fast">
-          <br>
-          <!-- <input id="num-paths" value="100" size="3"/> -->
-          <input type="text" id="num-paths" class="span2" value="" data-slider-min="10" data-slider-max="400" data-slider-step="10" data-slider-value="100" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
-          <em style="display: block; margin-top: 4px;"><span style="color: rgb(93,167,102)" class="glyphicon glyphicon-arrow-up"></span>  larger: longer computation, better solutions</em>
-        </p>
-      </div>
-      <div id="controls">
+        </select>
+        <br>
+        <br>
+        <label for="max-length">Max path length:</label>
+        <input id="max-length" value="20" size="3"/><br /><br />
+        <label for="num-paths">Path Number Scaling</label>
+        <input type="text" value="100" id="num-path-value" class="fast">
+        <br>
+        <input type="text" id="num-paths" class="span2" value="" data-slider-min="10" data-slider-max="400" data-slider-step="10" data-slider-value="100" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
+        <em style="display: block; margin-top: 4px;"><span style="color: rgb(93,167,102)" class="glyphicon glyphicon-arrow-up"></span>  larger: longer computation, better solutions</em>
+    </p>
+
+    <!-- CONTROLS -->
+    </div>
+    <div id="controls">
         <input type="checkbox" id="allow-8"/>
         <label for="allow-8">Allow 8-direction movement</label><br />
         <input class="btn btn-primary" type="button" value="Solve" id="solve"/>
-      </div>
-      <div id="extra-controls">
+    </div>
+    <div id="extra-controls">
         <input class="btn btn-default" type="button" value="Drop matches" id="drop"/> &bull;
         <input class="btn btn-default" type="button" value="Final state" id="final"/> &bull;
         <select class="btn btn-default"  id="randomization-type">
-          <option value="0,1,2">3-color</option>
-          <option value="0,1,2,5">3 + Heal</option>
-          <option value="0,1,2,3,4">5-color</option>
-          <option value="0,1,2,3,4,5" selected="selected">5 + Heal</option>
-          <option value="0,1,2,3,4,5,6">All</option>
+            <option value="0,1,2">3-color</option>
+            <option value="0,1,2,5">3 + Heal</option>
+            <option value="0,1,2,3,4">5-color</option>
+            <option value="0,1,2,3,4,5" selected="selected">5 + Heal</option>
+            <option value="0,1,2,3,4,5,6">All</option>
         </select>
         <br>
         <input class="btn btn-default" type="button" value="Randomize" id="randomize"/> &bull;
@@ -397,123 +399,123 @@
         <input class="btn btn-default" type="button" value="Import" id="import"/> &bull;
         <br>
         <input class="btn btn-default" type="button" value="Change orbs" id="change"/>
-      </div>
-      <div id="hand"></div>
-      <div id="import-popup">
-        <div id="import-legend">
-          <span class="e0"></span> = 0 / r<br />
-          <span class="e1"></span> = 1 / b<br />
-          <span class="e2"></span> = 2 / g<br />
-          <span class="e3"></span> = 3 / y<br />
-          <span class="e4"></span> = 4 / p<br />
-          <span class="e5"></span> = 5 / h<br />
-          <span class="e6"></span> = 6 / j<br />
-          <span class="eX"></span> = . / x<br />
-        </div>
-        <textarea id="import-textarea" cols="6" rows="5" spellcheck="false"></textarea>
-        <div id="import-control">
-          <input type="button" value="Cancel" id="import-cancel"/>
-          <input type="button" value="Import" id="import-import"/>
-        </div>
-      </div>
-      <div id="change-popup">
+    </div>
+    <div id="hand"></div>
+    <div id="import-popup">
+    <div id="import-legend">
+        <span class="e0"></span> = 0 / r<br />
+        <span class="e1"></span> = 1 / b<br />
+        <span class="e2"></span> = 2 / g<br />
+        <span class="e3"></span> = 3 / y<br />
+        <span class="e4"></span> = 4 / p<br />
+        <span class="e5"></span> = 5 / h<br />
+        <span class="e6"></span> = 6 / j<br />
+        <span class="eX"></span> = . / x<br />
+    </div>
+    <textarea id="import-textarea" cols="6" rows="5" spellcheck="false"></textarea>
+    <div id="import-control">
+        <input type="button" value="Cancel" id="import-cancel"/>
+        <input type="button" value="Import" id="import-import"/>
+    </div>
+    </div>
+    <div id="change-popup">
         <div>
-          <span class="e0"></span> &rarr; <span class="e0 change-target"></span><br />
-          <span class="e1"></span> &rarr; <span class="e1 change-target"></span><br />
-          <span class="e2"></span> &rarr; <span class="e2 change-target"></span><br />
-          <span class="e3"></span> &rarr; <span class="e3 change-target"></span><br />
-          <span class="e4"></span> &rarr; <span class="e4 change-target"></span><br />
-          <span class="e5"></span> &rarr; <span class="e5 change-target"></span><br />
-          <span class="e6"></span> &rarr; <span class="e6 change-target"></span><br />
-          <span class="eX"></span> &rarr; <span class="eX change-target"></span>
+            <span class="e0"></span> &rarr; <span class="e0 change-target"></span><br />
+            <span class="e1"></span> &rarr; <span class="e1 change-target"></span><br />
+            <span class="e2"></span> &rarr; <span class="e2 change-target"></span><br />
+            <span class="e3"></span> &rarr; <span class="e3 change-target"></span><br />
+            <span class="e4"></span> &rarr; <span class="e4 change-target"></span><br />
+            <span class="e5"></span> &rarr; <span class="e5 change-target"></span><br />
+            <span class="e6"></span> &rarr; <span class="e6 change-target"></span><br />
+            <span class="eX"></span> &rarr; <span class="eX change-target"></span>
         </div>
-        <div id="change-control">
-          <input type="button" value="Cancel" class="btn btn-danger" id="change-cancel"/>
-          <input type="button" value="Change" class="btn btn-success" id="change-change"/>
-        </div>
-      </div>
-      <div class="container-fluid" style="">
+    <div id="change-control">
+        <input type="button" value="Cancel" class="btn btn-danger" id="change-cancel"/>
+        <input type="button" value="Change" class="btn btn-success" id="change-change"/>
+    </div>
+    </div>
+
+    <!-- SOLVER AREA -->
+    <div class="container-fluid" style="">
         <div class="row">
-          <div class="row">
-            <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-8">
 
 
 
-            </div>
-            <div class="col-md-4">
-              <!-- <h1>.col-md-4</h1> -->
-              <div id="solutions">
-                <p id="are-you-ready">Ready for tips?</p>
-                <div class="loading-throbber">
-                  <span id="status">...</span>
-                  </span>
-                <div class="sliderOMG">
-                  <div class="line"></div>
-                  <div class="break dot1"></div>
-                  <div class="break dot2"></div>
-                  <div class="break dot3"></div>
                 </div>
-              </div>
-              <ol></ol>
+                <div class="col-md-4">
+                    <div id="solutions">
+                        <p id="are-you-ready">Ready for tips?</p>
+                        <div class="loading-throbber">
+                            <span id="status">...</span>
+                            <div class="sliderOMG">
+                                <div class="line"></div>
+                                <div class="break dot1"></div>
+                                <div class="break dot2"></div>
+                                <div class="break dot3"></div>
+                            </div>
+                        </div>
+                        <ol></ol>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      </div>
+    </div>
 
     <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#disqus_thread">
-            <span class="sr-only">Chat</span>
-            <span class="glyphicon glyphicon-heart-empty"></span>
-          </button>
-          <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-tower"></span> Combo.Tips (Alpha)</a>
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#disqus_thread">
+                    <span class="sr-only">Chat</span>
+                    <span class="glyphicon glyphicon-heart-empty"></span>
+                </button>
+                <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-tower"></span> padopt</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse in" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown upload open">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Import from screenshot <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="list-float-left">
+                                <a href="#"><img class="uploaded-image" src="/images/image2.png"></a>
+                                <span class="glyphicon glyphicon-question-sign"> </span><span>Click the image to import</span>
+                            </li>
+                            <li class="list-float-right">
+                                <a href="#">
+                                <form id="screenshot-upload" action="upload.php" class="dropzone"></form>
+                                </a>
+                            </li>
+                        </ul>
+                    <li class="divider"></li>
+                    <li class="divider"></li>
+                    <li>
+                        <a id="keep-open" href="#"><form role="form"></form></a>
+                    </li>
+                </ul>
+                <div class="checkbox">
+                    <label><input type="checkbox"> Don't close this window!</input></label>
+                </div>
+            </div>
         </div>
+    </nav>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse in" id="bs-example-navbar-collapse-1">
-
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown upload open">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Import from screenshot <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li class="list-float-left"><a href="#"><img class="uploaded-image" src="/images/image2.png"></a>
-
-                  <span class="glyphicon glyphicon-question-sign"> </span><span>Click the image to import</span>
-                </li>
-                <li class="list-float-right">
-                  <a href="#">
-                    <form id="screenshot-upload" action="upload.php" class="dropzone">
-                    </form>
-                  </a>
-                </li>
-                <li class="divider"></li>
-                <li class="divider"></li>
-                <li><a id="keep-open" href="#">
-                  <form role="form">
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox"> Don't close this window!</input>
-                      </label>
-                  </form>
-                  </div></a></li>
-          </ul>
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-<script src="/ext/easeljs-0.7.1.min.js"></script>
-<script src="/ext/main.js"></script>
-<script src="/ext/optimizer.js"></script>
+    <!-- SCRIPTS -->
+    <script src="/ext/jquery-1.9.1.min.js"></script>
+    <script src="/ext/dropzone.min.js"></script>
+    <script src="/ext/bootstrap-slider.min.js"></script>
+    <script src="/ext/easel.js"></script>
+    <script src="/ext/main.js"></script>
+    <script src="/ext/optimizer.js"></script>
 </body>
 </html>
 <!-- AGPLv3
