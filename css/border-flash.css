@@ -1,0 +1,11 @@
+@-webkit-keyframes border-flash {
+    0%   { border-color: orange; }
+    50%  { border-color: red; border-size: 5px; }
+    100% { border-color: orange; }
+}
+
+.border-flash {
+    border: 1px solid black;
+    -webkit-transition: border 1s ease-in-out;
+    -webkit-animation: border-flash 2s infinite;
+}
