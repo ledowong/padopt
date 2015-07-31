@@ -1,5 +1,5 @@
 /**
- * Main js file for Combo.Tips
+ * Main js file
  */
 
 (function($) {
@@ -103,39 +103,6 @@
       },
     });
   });
-
-  // ##### IMGUR SOLUTION. NOT BEING USED
-  //$('#imgur_upload').on('submit', function(e){
-  //e.preventDefault();
-  //console.log('test');
-  //console.log($(this));
-  //var form_data = new FormData(this);
-  //console.log(form_data);
-  //$.ajax({
-  //type: 'POST',
-  //url: $(this).attr('action'),
-  //data: form_data,
-  //cache: false,
-  //contentType: false,
-  //processData: false,
-  //dataType: "json",
-  //})
-  //.done(function(data){
-  //console.log(data);
-  //$('.uploaded-image').attr("src", data.data.link);
-
-  //console.log($('.uploaded-image').attr("src"));
-  //})
-  //.fail(function(data) {
-  //var responseText = data.responseText;
-  //console.log(responseText);
-  //console.log(data);
-  //// just in case posting your form failed
-  //console.log( "Posting failed." );
-
-  //});
-
-  //});
 
   $('.uploaded-image, #import-orbs').on("click", function(event){
     //console.log('clicked image');
@@ -334,45 +301,6 @@
         } else {
           orbs_found.push('eX');
         }
-
-        /** OLD WAY
-        console.log('--');
-        // LIGHT ORBS
-        if (orb.red < 175 && orb.red > 135 && orb.green > 120 && orb.green < 175) {
-          orbs_found.push("e3");
-          console.log('light');
-        }
-        // HEART ORBS
-        if (orb.red < 185 && orb.red > 150 && orb.green > 70 && orb.green < 110 && orb.blue < 145 && orb.blue > 100) {
-          orbs_found.push("e5");
-          console.log('heart');
-        }
-        // DARK ORBS
-        if (orb.red < 160 && orb.red > 105 && orb.green < 110 && orb.green > 60 && orb.blue < 155 && orb.blue > 110) {
-          orbs_found.push("e4");
-          console.log('dark');
-        }
-        // WOOD ORBS
-        if (orb.red < 120 && orb.red > 65 && orb.green < 170 && orb.green > 125 && orb.blue < 130 && orb.blue > 75) {
-          orbs_found.push("e2");
-          console.log('wood');
-        }
-        // FIRE ORBS
-        if (orb.red < 210 && orb.red > 150 && orb.green < 125 && orb.green > 75 && orb.blue < 120 && orb.blue > 50) {
-          orbs_found.push("e0");
-          console.log('fire');
-        }
-        // WATER ORBS
-        if (orb.red < 135 && orb.red > 75 && orb.green < 155 && orb.green > 105 && orb.blue < 195 && orb.blue > 135) {
-          orbs_found.push("e1");
-          console.log('water');
-        }
-        console.log(orb.red);
-        console.log(orb.green);
-        console.log(orb.blue);
-        console.log('--');
-        //orbs_found.push(orb);
-        **/
       }
     }
     $('#grid > div').each(function(index) {
