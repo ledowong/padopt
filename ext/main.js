@@ -5,6 +5,10 @@
 (function($) {
 
   $(document).on('ready', function() {
+    // perfect scrollbar
+    $('#contentHolder').perfectScrollbar();
+    $('#solutions').perfectScrollbar();
+
     // Enable slider for Path Number Scaling
     $('#num-paths').slider()
       .on('slide', function(ev){

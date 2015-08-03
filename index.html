@@ -27,444 +27,445 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/basic.css">
-    <link rel="stylesheet" type="text/css" href="css/dropzone.css">
     <link rel="stylesheet" type="text/css" href="css/throbber.css">
     <link rel="stylesheet" type="text/css" href="css/border-flash.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="css/perfect-scrollbar.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
-    <!-- PAD CANVAS -->
-    <canvas id="path" width="380" height="316"></canvas>
-    <div id="grid" oncontextmenu="return false;">
-        <div id="o00" class="row1"></div>
-        <div id="o01" class="row1"></div>
-        <div id="o02" class="row1"></div>
-        <div id="o03" class="row1"></div>
-        <div id="o04" class="row1"></div>
-        <div id="o05" class="row1"></div>
+    <div id="contentHolder">
+        <!-- PAD CANVAS -->
+        <canvas id="path" width="380" height="316"></canvas>
+        <div id="grid" oncontextmenu="return false;">
+            <div id="o00" class="row1"></div>
+            <div id="o01" class="row1"></div>
+            <div id="o02" class="row1"></div>
+            <div id="o03" class="row1"></div>
+            <div id="o04" class="row1"></div>
+            <div id="o05" class="row1"></div>
 
-        <div id="o10" class="row2"></div>
-        <div id="o11" class="row2"></div>
-        <div id="o12" class="row2"></div>
-        <div id="o13" class="row2"></div>
-        <div id="o14" class="row2"></div>
-        <div id="o15" class="row2"></div>
+            <div id="o10" class="row2"></div>
+            <div id="o11" class="row2"></div>
+            <div id="o12" class="row2"></div>
+            <div id="o13" class="row2"></div>
+            <div id="o14" class="row2"></div>
+            <div id="o15" class="row2"></div>
 
-        <div id="o20" class="row3"></div>
-        <div id="o21" class="row3"></div>
-        <div id="o22" class="row3"></div>
-        <div id="o23" class="row3"></div>
-        <div id="o24" class="row3"></div>
-        <div id="o25" class="row3"></div>
+            <div id="o20" class="row3"></div>
+            <div id="o21" class="row3"></div>
+            <div id="o22" class="row3"></div>
+            <div id="o23" class="row3"></div>
+            <div id="o24" class="row3"></div>
+            <div id="o25" class="row3"></div>
 
-        <div id="o30" class="row4"></div>
-        <div id="o31" class="row4"></div>
-        <div id="o32" class="row4"></div>
-        <div id="o33" class="row4"></div>
-        <div id="o34" class="row4"></div>
-        <div id="o35" class="row4"></div>
+            <div id="o30" class="row4"></div>
+            <div id="o31" class="row4"></div>
+            <div id="o32" class="row4"></div>
+            <div id="o33" class="row4"></div>
+            <div id="o34" class="row4"></div>
+            <div id="o35" class="row4"></div>
 
-        <div id="o40" class="row5"></div>
-        <div id="o41" class="row5"></div>
-        <div id="o42" class="row5"></div>
-        <div id="o43" class="row5"></div>
-        <div id="o44" class="row5"></div>
-        <div id="o45" class="row5"></div>
-    </div>
+            <div id="o40" class="row5"></div>
+            <div id="o41" class="row5"></div>
+            <div id="o42" class="row5"></div>
+            <div id="o43" class="row5"></div>
+            <div id="o44" class="row5"></div>
+            <div id="o45" class="row5"></div>
+        </div>
 
-    <!-- SIDEBAR PROFILE -->
-    <div id="profile">
-    <table>
-        <tr class="center-text">
-            <th></th>
-            <th>N</th>
-            <th>Mass</th>
-            <th>Row</th>
-            <th>TPA</th>
-        </tr>
-        <tr>
-            <td class="e0" title="Fire"></td>
-            <td><input id="e0-normal" value="1"/></td>
-            <td><input id="e0-mass" value="3"/></td>
-            <td><input id="e0-row" value="0"/></td>
-            <td><input id="e0-tpa" value="0"/></td>
-        </tr>
-        <tr>
-            <td class="e1" title="Water"></td>
-            <td><input id="e1-normal" value="1"/></td>
-            <td><input id="e1-mass" value="3"/></td>
-            <td><input id="e1-row" value="0"/></td>
-            <td><input id="e1-tpa" value="0"/></td>
-        </tr>
-        <tr>
-            <td class="e2" title="Wood"></td>
-            <td><input id="e2-normal" value="1"/></td>
-            <td><input id="e2-mass" value="3"/></td>
-            <td><input id="e2-row" value="0"/></td>
-            <td><input id="e2-tpa" value="0"/></td>
-        </tr>
-        <tr>
-            <td class="e3" title="Light"></td>
-            <td><input id="e3-normal" value="1"/></td>
-            <td><input id="e3-mass" value="3"/></td>
-            <td><input id="e3-row" value="0"/></td>
-            <td><input id="e3-tpa" value="0"/></td>
-        </tr>
-        <tr>
-            <td class="e4" title="Dark"></td>
-            <td><input id="e4-normal" value="1"/></td>
-            <td><input id="e4-mass" value="3"/></td>
-            <td><input id="e4-row" value="0"/></td>
-            <td><input id="e4-tpa" value="0"/></td>
-        </tr>
-        <tr>
-            <td class="e5" title="Heal"></td>
-            <td><input id="e5-normal" value="0.3"/></td>
-            <td><input id="e5-mass" value="0.3"/></td>
-            <td><input id="e5-row" value="0"/></td>
-            <td><input id="e5-tpa" value="0"/></td>
-        </tr>
-        <tr>
-            <td class="e6" title="Junk"></td>
-            <td><input id="e6-normal" value="0.1"/></td>
-            <td><input id="e6-mass" value="0.1"/></td>
-            <td><input id="e6-row" value="0"/></td>
-            <td><input id="e6-tpa" value="0"/></td>
-        </tr>
-        <tr class="center-text">
-            <th></th>
-            <th><a data-toggle="tooltip" title="Default"><i class="glyphicon glyphicon-question-sign"></i></a></th>
-            <th><a data-toggle="tooltip" title="Mass"><i class="glyphicon glyphicon-question-sign"></i></a></th>
-            <th><a data-toggle="tooltip" title="Row Awakens"><i class="glyphicon glyphicon-question-sign"></i></a></th>
-            <th><a data-toggle="tooltip" title="TPA Weight"><i class="glyphicon glyphicon-question-sign"></i></a></th>
-        </tr>
-    </table>
+        <!-- SIDEBAR PROFILE -->
+        <div id="profile">
+        <table>
+            <tr class="center-text">
+                <th></th>
+                <th>N</th>
+                <th>Mass</th>
+                <th>Row</th>
+                <th>TPA</th>
+            </tr>
+            <tr>
+                <td class="e0" title="Fire"></td>
+                <td><input id="e0-normal" value="1"/></td>
+                <td><input id="e0-mass" value="3"/></td>
+                <td><input id="e0-row" value="0"/></td>
+                <td><input id="e0-tpa" value="0"/></td>
+            </tr>
+            <tr>
+                <td class="e1" title="Water"></td>
+                <td><input id="e1-normal" value="1"/></td>
+                <td><input id="e1-mass" value="3"/></td>
+                <td><input id="e1-row" value="0"/></td>
+                <td><input id="e1-tpa" value="0"/></td>
+            </tr>
+            <tr>
+                <td class="e2" title="Wood"></td>
+                <td><input id="e2-normal" value="1"/></td>
+                <td><input id="e2-mass" value="3"/></td>
+                <td><input id="e2-row" value="0"/></td>
+                <td><input id="e2-tpa" value="0"/></td>
+            </tr>
+            <tr>
+                <td class="e3" title="Light"></td>
+                <td><input id="e3-normal" value="1"/></td>
+                <td><input id="e3-mass" value="3"/></td>
+                <td><input id="e3-row" value="0"/></td>
+                <td><input id="e3-tpa" value="0"/></td>
+            </tr>
+            <tr>
+                <td class="e4" title="Dark"></td>
+                <td><input id="e4-normal" value="1"/></td>
+                <td><input id="e4-mass" value="3"/></td>
+                <td><input id="e4-row" value="0"/></td>
+                <td><input id="e4-tpa" value="0"/></td>
+            </tr>
+            <tr>
+                <td class="e5" title="Heal"></td>
+                <td><input id="e5-normal" value="0.3"/></td>
+                <td><input id="e5-mass" value="0.3"/></td>
+                <td><input id="e5-row" value="0"/></td>
+                <td><input id="e5-tpa" value="0"/></td>
+            </tr>
+            <tr>
+                <td class="e6" title="Junk"></td>
+                <td><input id="e6-normal" value="0.1"/></td>
+                <td><input id="e6-mass" value="0.1"/></td>
+                <td><input id="e6-row" value="0"/></td>
+                <td><input id="e6-tpa" value="0"/></td>
+            </tr>
+            <tr class="center-text">
+                <th></th>
+                <th><a data-toggle="tooltip" title="Default"><i class="glyphicon glyphicon-question-sign"></i></a></th>
+                <th><a data-toggle="tooltip" title="Mass"><i class="glyphicon glyphicon-question-sign"></i></a></th>
+                <th><a data-toggle="tooltip" title="Row Awakens"><i class="glyphicon glyphicon-question-sign"></i></a></th>
+                <th><a data-toggle="tooltip" title="TPA Weight"><i class="glyphicon glyphicon-question-sign"></i></a></th>
+            </tr>
+        </table>
 
-    <p>
-        <br>
-        Profile:<br>
-        <select class="btn btn-default"  id="profile-selector">
-            <option value="
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           1,1,0,0,
-                           0.1,0.1,0,0,
-                           -1">Recovery</option>
-            <option value="
-                           1,3,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Fire team, multiple target</option>
-            <option value="
-                           1,1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Fire team, single target</option>
-            <option value="
-                           0.1,0.1,0,0,
-                           1,3,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Water team, multiple target</option>
-            <option value="
-                           0.1,0.1,0,0,
-                           1,1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Water team, single target</option>
-            <option value="
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           1,3,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Wood team, multiple target</option>
-            <option value="
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           1,1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Wood team, single target</option>
-            <option value="
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           1,3,0,0,
-                           0.1,0.1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Light team, multiple target</option>
-            <option value="
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           1,1,0,0,
-                           0.1,0.1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Light team, single target</option>
-            <option value="
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           1,3,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Dark team, multiple target</option>
-            <option value="
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           0.1,0.1,0,0,
-                           1,1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Dark team, single target</option>
-            <option value="
-                           1.7,1.7,1,2.125,
-                           1.1,1.1,2,1.375,
-                           9.5,9.5,4,9.875,
-                           0,0,0,0,
-                           1.3,1.3,0,1.625,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">GZL: all double TPA</option>
-            <option value="
-                           9,9,0,2.5,
-                           0,0,0,0,
-                           0,0,0,0,
-                           0,0,0,0,
-                           0,0,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">A. Shiva</option>
-            <option value="
-                           0,0,0,0,
-                           1.3,1.3,0,0,
-                           0,0,0,0,
-                           0,0,0,0,
-                           7,7,7,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           -1">Satan</option>
-            <option value="
-                           0,0,0,0,
-                           4.5,4.5,1,1.5,
-                           1.4,1.4,0,.45,
-                           2,2,0,0,
-                           3.3,3.3,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           0">UmiYama</option>
-            <option value="
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           0,0,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           1">Kirin</option>
-            <option value="
-                           1,1,0,2.5,
-                           1,1,0,0,
-                           1,0,0,0,
-                           1,1,0,2.5,
-                           0,1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           1">LKali</option>
-            <option value="
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,0,0,0,
-                           0,1,0,0,
-                           0.3,1,0,0,
-                           0.1,0.1,0,0,
-                           1">DKali</option>
-            <option value="
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           2">Ra</option>
-            <option value="
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           3">Kush</option>
-            <option value="
-                           1,1,0,0,
-                           1,1,0,0,
-                           0,0,0,0,
-                           0,0,0,0,
-                           1,1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           4">Haku</option>
-            <option value="
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           5">L/L Ra</option>
-            <option value="
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           6">D/L Anubis</option>
-            <option value="
-                           1,1,0,0,
-                           1,1,0,0,
-                           1,1,0,0.5,
-                           1,1,0,0,
-                           1,1,0,0,
-                           0.3,0.3,0,0,
-                           0.1,0.1,0,0,
-                           7">A. Bastet</option>
-        </select>
-        <br>
-        <br>
-        <label for="max-length">Max path length:</label>
-        <input id="max-length" value="25" size="3"/><br /><br />
-        <label for="num-paths">Path Number Scaling</label>
-        <input type="text" value="100" id="num-path-value" class="fast">
-        <br>
-        <input type="text" id="num-paths" class="span2" value="" data-slider-min="10" data-slider-max="400" data-slider-step="10" data-slider-value="100" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
-        <em style="display: block; margin-top: 4px;"><span style="color: rgb(93,167,102)" class="glyphicon glyphicon-arrow-up"></span>  larger: longer computation, better solutions</em>
-    </p>
+        <p>
+            <br>
+            Profile:<br>
+            <select class="btn btn-default"  id="profile-selector">
+                <option value="
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               1,1,0,0,
+                               0.1,0.1,0,0,
+                               -1">Recovery</option>
+                <option value="
+                               1,3,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Fire team, multiple target</option>
+                <option value="
+                               1,1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Fire team, single target</option>
+                <option value="
+                               0.1,0.1,0,0,
+                               1,3,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Water team, multiple target</option>
+                <option value="
+                               0.1,0.1,0,0,
+                               1,1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Water team, single target</option>
+                <option value="
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               1,3,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Wood team, multiple target</option>
+                <option value="
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               1,1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Wood team, single target</option>
+                <option value="
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               1,3,0,0,
+                               0.1,0.1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Light team, multiple target</option>
+                <option value="
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               1,1,0,0,
+                               0.1,0.1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Light team, single target</option>
+                <option value="
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               1,3,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Dark team, multiple target</option>
+                <option value="
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               0.1,0.1,0,0,
+                               1,1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Dark team, single target</option>
+                <option value="
+                               1.7,1.7,1,2.125,
+                               1.1,1.1,2,1.375,
+                               9.5,9.5,4,9.875,
+                               0,0,0,0,
+                               1.3,1.3,0,1.625,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">GZL: all double TPA</option>
+                <option value="
+                               9,9,0,2.5,
+                               0,0,0,0,
+                               0,0,0,0,
+                               0,0,0,0,
+                               0,0,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">A. Shiva</option>
+                <option value="
+                               0,0,0,0,
+                               1.3,1.3,0,0,
+                               0,0,0,0,
+                               0,0,0,0,
+                               7,7,7,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               -1">Satan</option>
+                <option value="
+                               0,0,0,0,
+                               4.5,4.5,1,1.5,
+                               1.4,1.4,0,.45,
+                               2,2,0,0,
+                               3.3,3.3,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               0">UmiYama</option>
+                <option value="
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               0,0,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               1">Kirin</option>
+                <option value="
+                               1,1,0,2.5,
+                               1,1,0,0,
+                               1,0,0,0,
+                               1,1,0,2.5,
+                               0,1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               1">LKali</option>
+                <option value="
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,0,0,0,
+                               0,1,0,0,
+                               0.3,1,0,0,
+                               0.1,0.1,0,0,
+                               1">DKali</option>
+                <option value="
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               2">Ra</option>
+                <option value="
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               3">Kush</option>
+                <option value="
+                               1,1,0,0,
+                               1,1,0,0,
+                               0,0,0,0,
+                               0,0,0,0,
+                               1,1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               4">Haku</option>
+                <option value="
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               5">L/L Ra</option>
+                <option value="
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               6">D/L Anubis</option>
+                <option value="
+                               1,1,0,0,
+                               1,1,0,0,
+                               1,1,0,0.5,
+                               1,1,0,0,
+                               1,1,0,0,
+                               0.3,0.3,0,0,
+                               0.1,0.1,0,0,
+                               7">A. Bastet</option>
+            </select>
+            <br>
+            <br>
+            <label for="max-length">Max path length:</label>
+            <input id="max-length" value="25" size="3"/><br /><br />
+            <label for="num-paths">Path Number Scaling</label>
+            <input type="text" value="100" id="num-path-value" class="fast">
+            <br>
+            <input type="text" id="num-paths" class="span2" value="" data-slider-min="10" data-slider-max="400" data-slider-step="10" data-slider-value="100" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
+            <em style="display: block; margin-top: 4px;"><span style="color: rgb(93,167,102)" class="glyphicon glyphicon-arrow-up"></span>  larger: longer computation, better solutions</em>
+        </p>
 
-    <!-- CONTROLS -->
-    </div>
-    <div id="controls">
-        <input type="checkbox" id="allow-8"/>
-        <label for="allow-8">Allow 8-direction movement</label><br />
-        <input class="btn btn-primary" type="button" value="Solve" id="solve"/>
-    </div>
-    <div id="extra-controls">
-        <input class="btn btn-default" type="button" value="Drop matches" id="drop"/> &nbsp;
-        <input class="btn btn-default" type="button" value="Final state" id="final"/> &nbsp;
-        <select class="btn btn-default"  id="randomization-type">
-            <option value="0,4">Ronia</option>
-            <option value="1,4">Bonia</option>
-            <option value="2,4">Gonia</option>
-            <option value="0,1,5">Urd</option>
-            <option value="1,2,5">Skuld</option>
-            <option value="0,2,5">Verdandi</option>
-            <option value="0,1,2">3-color</option>
-            <option value="0,1,2,5">3 + Heal</option>
-            <option value="0,1,2,3,4">5-color</option>
-            <option value="0,1,2,3,4,5" selected="selected">5 + Heal</option>
-            <option value="0,1,2,3,4,5,6">All</option>
-        </select>
-        <br>
-        <input class="btn btn-default" type="button" value="Randomize" id="randomize"/> &nbsp;
-        <input class="btn btn-default" type="button" value="Clear" id="clear"/> &nbsp;
-        <input class="btn btn-default" type="button" value="Import" id="import"/> &nbsp;
-        <br>
-        <input class="btn btn-default" type="button" value="Change orbs" id="change"/>
-    </div>
-    <div id="hand"></div>
-    <div id="import-popup">
-    <div id="import-legend">
-        <span class="e0"></span> = 0 / r<br />
-        <span class="e1"></span> = 1 / b<br />
-        <span class="e2"></span> = 2 / g<br />
-        <span class="e3"></span> = 3 / y<br />
-        <span class="e4"></span> = 4 / p<br />
-        <span class="e5"></span> = 5 / h<br />
-        <span class="e6"></span> = 6 / j<br />
-        <span class="eX"></span> = . / x<br />
-    </div>
-    <textarea id="import-textarea" cols="6" rows="5" spellcheck="false"></textarea>
-    <div id="import-control">
-        <input type="button" value="Cancel" id="import-cancel"/>
-        <input type="button" value="Import" id="import-import"/>
-    </div>
-    </div>
-    <div id="change-popup">
-        <span class="e0"></span> &rarr; <span class="e0 change-target"></span><br />
-        <span class="e1"></span> &rarr; <span class="e1 change-target"></span><br />
-        <span class="e2"></span> &rarr; <span class="e2 change-target"></span><br />
-        <span class="e3"></span> &rarr; <span class="e3 change-target"></span><br />
-        <span class="e4"></span> &rarr; <span class="e4 change-target"></span><br />
-        <span class="e5"></span> &rarr; <span class="e5 change-target"></span><br />
-        <span class="e6"></span> &rarr; <span class="e6 change-target"></span><br />
-        <span class="eX"></span> &rarr; <span class="eX change-target"></span>
-    <div id="change-control">
-        <input type="button" value="Cancel" class="btn btn-danger" id="change-cancel"/>
-        <input type="button" value="Change" class="btn btn-success" id="change-change"/>
-    </div>
-    </div>
+        <!-- CONTROLS -->
+        </div>
+        <div id="controls">
+            <input type="checkbox" id="allow-8"/>
+            <label for="allow-8">Allow 8-direction movement</label><br />
+            <input class="btn btn-primary" type="button" value="Solve" id="solve"/>
+        </div>
+        <div id="extra-controls">
+            <input class="btn btn-default" type="button" value="Drop matches" id="drop"/> &nbsp;
+            <input class="btn btn-default" type="button" value="Final state" id="final"/> &nbsp;
+            <select class="btn btn-default"  id="randomization-type">
+                <option value="0,4">Ronia</option>
+                <option value="1,4">Bonia</option>
+                <option value="2,4">Gonia</option>
+                <option value="0,1,5">Urd</option>
+                <option value="1,2,5">Skuld</option>
+                <option value="0,2,5">Verdandi</option>
+                <option value="0,1,2">3-color</option>
+                <option value="0,1,2,5">3 + Heal</option>
+                <option value="0,1,2,3,4">5-color</option>
+                <option value="0,1,2,3,4,5" selected="selected">5 + Heal</option>
+                <option value="0,1,2,3,4,5,6">All</option>
+            </select>
+            <br>
+            <input class="btn btn-default" type="button" value="Randomize" id="randomize"/> &nbsp;
+            <input class="btn btn-default" type="button" value="Clear" id="clear"/> &nbsp;
+            <input class="btn btn-default" type="button" value="Import" id="import"/> &nbsp;
+            <br>
+            <input class="btn btn-default" type="button" value="Change orbs" id="change"/>
+        </div>
+        <div id="hand"></div>
+        <div id="import-popup">
+        <div id="import-legend">
+            <span class="e0"></span> = 0 / r<br />
+            <span class="e1"></span> = 1 / b<br />
+            <span class="e2"></span> = 2 / g<br />
+            <span class="e3"></span> = 3 / y<br />
+            <span class="e4"></span> = 4 / p<br />
+            <span class="e5"></span> = 5 / h<br />
+            <span class="e6"></span> = 6 / j<br />
+            <span class="eX"></span> = . / x<br />
+        </div>
+        <textarea id="import-textarea" cols="6" rows="5" spellcheck="false"></textarea>
+        <div id="import-control">
+            <input type="button" value="Cancel" id="import-cancel"/>
+            <input type="button" value="Import" id="import-import"/>
+        </div>
+        </div>
+        <div id="change-popup">
+            <span class="e0"></span> &rarr; <span class="e0 change-target"></span><br />
+            <span class="e1"></span> &rarr; <span class="e1 change-target"></span><br />
+            <span class="e2"></span> &rarr; <span class="e2 change-target"></span><br />
+            <span class="e3"></span> &rarr; <span class="e3 change-target"></span><br />
+            <span class="e4"></span> &rarr; <span class="e4 change-target"></span><br />
+            <span class="e5"></span> &rarr; <span class="e5 change-target"></span><br />
+            <span class="e6"></span> &rarr; <span class="e6 change-target"></span><br />
+            <span class="eX"></span> &rarr; <span class="eX change-target"></span>
+        <div id="change-control">
+            <input type="button" value="Cancel" class="btn btn-danger" id="change-cancel"/>
+            <input type="button" value="Change" class="btn btn-success" id="change-change"/>
+        </div>
+        </div>
 
-    <!-- SOLVER AREA -->
-    <div class="container-fluid" style="">
-        <div class="row">
+        <!-- SOLVER AREA -->
+        <div class="container-fluid" style="">
             <div class="row">
-                <div class="col-md-8">
-                </div>
-                <div class="col-md-4">
-                    <div id="solutions">
-                        <div class="loading-throbber">
-                            <span id="status">...</span>
-                            <div class="sliderOMG">
-                                <div class="line"></div>
-                                <div class="break dot1"></div>
-                                <div class="break dot2"></div>
-                                <div class="break dot3"></div>
+                <div class="row">
+                    <div class="col-md-8">
+                    </div>
+                    <div class="col-md-4">
+                        <div id="solutions">
+                            <div class="loading-throbber">
+                                <span id="status">...</span>
+                                <div class="sliderOMG">
+                                    <div class="line"></div>
+                                    <div class="break dot1"></div>
+                                    <div class="break dot2"></div>
+                                    <div class="break dot3"></div>
+                                </div>
                             </div>
+                            <ol></ol>
                         </div>
-                        <ol></ol>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- SCRIPTS -->
     <script src="ext/jquery-1.9.1.min.js"></script>
-    <script src="ext/dropzone.min.js"></script>
+    <script src="ext/perfect-scrollbar.jquery.min.js"></script>
     <script src="ext/bootstrap-slider.min.js"></script>
     <script src="ext/easel.js"></script>
     <script src="ext/main.js"></script>
