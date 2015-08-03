@@ -20,6 +20,7 @@ Changelist
 * Updated various profiles with guaranteed TPA / row values.
 * Changed some heuristic values for better boards.
 * Default path length updated to 25.
+* Changed scrollbars to [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar).
 
 Usage
 -----
@@ -59,9 +60,9 @@ TODO
 
 * Fix the body scrollbar issue.
 * Add orb painting.
-* Change scrollbars to [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar).
 * Fix some icon sizing issues.
 * Introduce better solver (e.g. [this post](http://puzzleanddragonsforum.com/showthread.php?tid=1603&pid=6263#pid6263)). Currently just a brute-force greedy algorithm, which may not produce truly optimal results.
 * Resolve overlapping lines and points.
 * Simulate swapping and matching when playing the animation and dropping the matches.
 * The default weight of the profiles may need to be adjusted.
+* Randomizer is actually pretty awful and extremely slow the less orbs there are (due to trying to find a board setup without any matches). For some reason this crashes the page if I remove the find_matches function as well. Fix sometime soon hopefully since Sonia boards are really useful to learn.
