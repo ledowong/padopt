@@ -83,7 +83,7 @@ function get_type(elem) {
 
 function advance_type(type, dt) {
     if (type == 'X') {
-        return '0';
+        return dt == 1 ? '0' : '6';
     } else {
         var new_type = dt + +type;
         if (new_type < 0) {
