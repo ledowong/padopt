@@ -763,7 +763,7 @@ $(document).ready(function() {
     $('#hand, #import-popup, #change-popup').hide();
 
     $('#profile-selector').change(function() {
-        var values = this.value.split(/,/);
+        var values = this.value.replace(/\s+/g, '').split(/,/);
         for (var i = 0; i < TYPES; ++ i) {
             $('#e' + i + '-normal').val(values[4*i]);
             $('#e' + i + '-mass').val(values[4*i+1]);

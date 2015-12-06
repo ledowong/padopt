@@ -80,7 +80,7 @@ span.e0, span.e1, span.e2, span.e3, span.e4, span.e5, span.e6 {
 }
 #change-popup > span.e0, #change-popup > span.e1, #change-popup > span.e2, #change-popup > span.e3, #change-popup > span.e4, #change-popup > span.e5, #change-popup > span.e6 {
   background-size: 40px;
-  margin-left: 5px;
+  margin-left: 4px;
 }
 td.e0, td.e1, td.e2, td.e3, td.e4, td.e5, td.e6 {
   background-size: 23px;
@@ -91,15 +91,15 @@ td.e0, td.e1, td.e2, td.e3, td.e4, td.e5, td.e6 {
 }
 /* heart orb */
 span.e5 { background-size: 18px; }
-#change-popup > span.e5 { background-size: 38px; margin-left: 7px;}
-#change-popup > span.e6 { margin-top: 10px; margin-left:5px }
-#change-popup > span.change-target.e6 { margin-top: 0px; margin-left:5px }
+#change-popup > span.e5 { background-size: 38px; margin-left: 6px;}
+#change-popup > span.e6 { margin-top: 10px; margin-left:4px }
+#change-popup > span.change-target.e6 { margin-top: 0px; margin-left:4px }
 #change-popup > span.eX { 
   width: 40px;
   height: 40px;
   line-height: 1.4em;
-  margin-right: 5px;
-  margin-left: 5px;
+  margin-right: 4px;
+  margin-left: 4px;
 }
 #change-cancel { margin-top 5px; }
 td.e5 { background-size: 20px; }
