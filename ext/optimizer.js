@@ -885,7 +885,8 @@ $(document).ready(function() {
             alert('Wrong number of orbs!');
             return;
         }
-        var board = board_joined.match(/.{6}/g).map(function(s) { return s.split(''); });
+	var boardre = new RegExp(".{" + COLS + "}", 'g');
+        var board = board_joined.match(boardre).map(function(s) { return s.split(''); });
         show_board(board);
         clear_canvas();
         $('#import-popup').hide();
