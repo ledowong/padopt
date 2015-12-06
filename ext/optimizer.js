@@ -603,8 +603,10 @@ function add_solution_as_li(html_array, solution) {
     html_array.push(solution.weight.toFixed(2));
     html_array.push(', L=');
     html_array.push(solution.path.length);
-	html_array.push(', H=');
+    html_array.push(', H=');
     html_array.push(solution.heur.toFixed(2));
+    html_array.push(', &#8623;=');
+    html_array.push(getSimplePathXYs(solution).length-1);
     var sorted_matches = solution.matches.slice();
     sorted_matches.sort(function(a, b) {
         if (a.count != b.count) {
@@ -913,3 +915,19 @@ $(document).ready(function() {
         $('#change-popup').hide();
     });
 });
+
+function getSimplePathXYs(solution) {
+  if (solution.simplyXYs) {
+    return solution.simplyXYs; //solved already
+  }
+  var init_rc = solution.init_cursor;
+  var path = solution.path;
+  var rc = new Coordinate(init_rc.row, init_rc.col);
+  var xys = [rc.getXY()];
+  path.forEach(function (p) {
+    in_place_move_rc(rc, p);
+    xys.push(rc.getXY());
+  });
+
+  return simplify_path(xys);
+}
