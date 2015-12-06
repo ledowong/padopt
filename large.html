@@ -24,21 +24,21 @@
     <link rel="icon" type="image/png" href="favicon.png">
     </head>
 <body>
-    <div id="contentHolder">
-
         <script type="text/javascript">
-                var ROWS = 5; var COLS = 6;
+                var ROWS = 6; var COLS = 7;
         </script>
 
+        <div id="contentHolder">
         <!-- PAD CANVAS -->
-        <canvas id="path" width="380" height="316"></canvas>
-        <div id="grid5x6" oncontextmenu="return false;">
+        <canvas id="path" width="444" height="380"></canvas>
+        <div id="grid6x7" oncontextmenu="return false;">
             <div id="o00" class="row1"></div>
             <div id="o01" class="row1"></div>
             <div id="o02" class="row1"></div>
             <div id="o03" class="row1"></div>
             <div id="o04" class="row1"></div>
             <div id="o05" class="row1"></div>
+            <div id="o06" class="row1"></div>
 
             <div id="o10" class="row2"></div>
             <div id="o11" class="row2"></div>
@@ -46,6 +46,7 @@
             <div id="o13" class="row2"></div>
             <div id="o14" class="row2"></div>
             <div id="o15" class="row2"></div>
+            <div id="o16" class="row2"></div>
 
             <div id="o20" class="row3"></div>
             <div id="o21" class="row3"></div>
@@ -53,6 +54,7 @@
             <div id="o23" class="row3"></div>
             <div id="o24" class="row3"></div>
             <div id="o25" class="row3"></div>
+            <div id="o26" class="row3"></div>
 
             <div id="o30" class="row4"></div>
             <div id="o31" class="row4"></div>
@@ -60,6 +62,7 @@
             <div id="o33" class="row4"></div>
             <div id="o34" class="row4"></div>
             <div id="o35" class="row4"></div>
+            <div id="o36" class="row4"></div>
 
             <div id="o40" class="row5"></div>
             <div id="o41" class="row5"></div>
@@ -67,10 +70,20 @@
             <div id="o43" class="row5"></div>
             <div id="o44" class="row5"></div>
             <div id="o45" class="row5"></div>
+            <div id="o46" class="row5"></div>
+
+            <div id="o50" class="row6"></div>
+            <div id="o51" class="row6"></div>
+            <div id="o52" class="row6"></div>
+            <div id="o53" class="row6"></div>
+            <div id="o54" class="row6"></div>
+            <div id="o55" class="row6"></div>
+            <div id="o56" class="row6"></div>
+
         </div>
 
         <!-- SIDEBAR PROFILE -->
-        <div id="profile5x6">
+        <div id="profile6x7">
         <table>
             <tr class="center-text">
                 <th></th>
@@ -371,12 +384,12 @@
 
         <!-- CONTROLS -->
         </div>
-        <div id="controls5x6">
+        <div id="controls6x7">
             <input type="checkbox" id="allow-8"/>
             <label for="allow-8">Allow 8-direction movement</label><br />
             <input class="btn btn-primary" type="button" value="Solve" id="solve"/>
         </div>
-        <div id="extra-controls5x6">
+        <div id="extra-controls6x7">
             <input class="btn btn-default" type="button" value="Drop matches" id="drop"/> &nbsp;
             <input class="btn btn-default" type="button" value="Final state" id="final"/> &nbsp;
             <select class="btn btn-default"  id="randomization-type">
@@ -399,13 +412,13 @@
             <br>
             <input class="btn btn-default" type="button" value="Change orbs" id="change"/> &nbsp;
             <select class="btn btn-default" onchange="location = this.options[this.selectedIndex].value;">
-            <option value="index.html">5x6</option>
             <option value="large.html">6x7</option>
+            <option value="index.html">5x6</option>
             </select>
             <br>
         </div>
         <div id="hand"></div>
-        <div id="import-popup" class="import-popup5x6">
+        <div id="import-popup" class="import-popup6x7">
         <div id="import-legend">
             <span class="e0"></span> = 0 / r<br />
             <span class="e1"></span> = 1 / b<br />
@@ -416,8 +429,8 @@
             <span class="e6"></span> = 6 / j<br />
             <span class="eX"></span> = . / x<br />
         </div>
-        <textarea id="import-textarea" class="import-textarea5x6" maxlength="30" spellcheck="false"></textarea>
-        <div id="import-control" class="import-control5x6">
+        <textarea id="import-textarea" class="import-textarea6x7" maxlength="42" spellcheck="false"></textarea>
+        <div id="import-control" class="import-control6x7">
             <input type="button" value="Cancel" id="import-cancel"/>
             <input type="button" value="Import" id="import-import"/>
         </div>

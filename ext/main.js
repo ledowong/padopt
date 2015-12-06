@@ -307,7 +307,7 @@
         }
       }
     }
-    $('#grid > div').each(function(index) {
+    $('[id^="grid"] > div').each(function(index) {
       //console.log(orbs_found[index]);
       if (orbs_found.length > 0) {
         var grid_class = $(this).attr('class');

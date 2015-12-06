@@ -1,7 +1,8 @@
 padopt - a Puzzle & Dragons Optimizer
 =====================================
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot1.png)
+![Screenshot](screenshot2.png)
 
 `padopt` is a Javascript-based web application that finds optimal paths in the mobile game Puzzle & Dragons.
 

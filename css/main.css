@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Raleway:100);
+@import url(https://fonts.googleapis.com/css?family=Raleway:100);
 .navbar-nav > li > a {
   line-height: 1.42857143;
 }
@@ -14,7 +14,7 @@
     url('../fonts/pndicons.svg') format('svg');
 }
 body, html {
-    height: 102%;
+    height: 100%;
     padding: 0;
     overflow: hidden;
 }
@@ -22,7 +22,7 @@ body, html {
     position:relative;
     height: 100%;
 }
-#grid, #path {
+#grid5x6, #grid6x7, #path {
   top: 20px;
   left: 20px;
   position: absolute;
@@ -44,18 +44,20 @@ body, html {
   display: inline-block;
   background-repeat: no-repeat;
 }
-#grid > div { position: absolute; cursor: pointer; }
-#grid > div:nth-child(6n+1) { left: 0px; }
-#grid > div:nth-child(6n+2) { left: 64px; }
-#grid > div:nth-child(6n+3) { left: 128px; }
-#grid > div:nth-child(6n+4) { left: 192px; }
-#grid > div:nth-child(6n+5) { left: 256px; }
-#grid > div:nth-child(6n+6) { left: 320px; }
+#grid5x6 > div, #grid6x7 > div { position: absolute; cursor: pointer; }
+#grid5x6 > div:nth-child(6n+1), #grid6x7 > div:nth-child(7n+1) { left: 0px; }
+#grid5x6 > div:nth-child(6n+2), #grid6x7 > div:nth-child(7n+2) { left: 64px; }
+#grid5x6 > div:nth-child(6n+3), #grid6x7 > div:nth-child(7n+3) { left: 128px; }
+#grid5x6 > div:nth-child(6n+4), #grid6x7 > div:nth-child(7n+4) { left: 192px; }
+#grid5x6 > div:nth-child(6n+5), #grid6x7 > div:nth-child(7n+5) { left: 256px; }
+#grid5x6 > div:nth-child(6n+6), #grid6x7 > div:nth-child(7n+6) { left: 320px; }
+#grid6x7 > div:nth-child(7n+7) { left: 384px; }
 .row1 { top: 0px; }
 .row2 { top: 64px; }
 .row3 { top: 128px; }
 .row4 { top: 192px; }
 .row5 { top: 256px; }
+.row6 { top: 320px; }
 .e0 { background-image: url('../img/fire_grid.png'); color: #f74; }
 .e1 { background-image: url('../img/water_grid.png'); color: #8ff; }
 .e2 { background-image: url('../img/grass_grid.png'); color: #4f6; }
@@ -76,17 +78,32 @@ body, html {
 span.e0, span.e1, span.e2, span.e3, span.e4, span.e5, span.e6 {
   background-size: 20px;
 }
+#change-popup > span.e0, #change-popup > span.e1, #change-popup > span.e2, #change-popup > span.e3, #change-popup > span.e4, #change-popup > span.e5, #change-popup > span.e6 {
+  background-size: 40px;
+  margin-left: 5px;
+}
 td.e0, td.e1, td.e2, td.e3, td.e4, td.e5, td.e6 {
   background-size: 23px;
 }
-#grid .e0, #grid .e1, #grid .e2, #grid .e3, #grid .e4, #grid .e6, #grid .eX {
+#grid5x6 .e0, #grid5x6 .e1, #grid5x6 .e2, #grid5x6 .e3, #grid5x6 .e4, #grid5x6 .e6, #grid5x6 .eX, #grid6x7 .e0, #grid6x7 .e1, #grid6x7 .e2, #grid6x7 .e3, #grid6x7 .e4, #grid6x7 .e6, #grid6x7 .eX {
   background-size: 60px;
   font-size: 40px;
 }
 /* heart orb */
 span.e5 { background-size: 18px; }
+#change-popup > span.e5 { background-size: 38px; margin-left: 7px;}
+#change-popup > span.e6 { margin-top: 10px; margin-left:5px }
+#change-popup > span.change-target.e6 { margin-top: 0px; margin-left:5px }
+#change-popup > span.eX { 
+  width: 40px;
+  height: 40px;
+  line-height: 1.4em;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+#change-cancel { margin-top 5px; }
 td.e5 { background-size: 20px; }
-#grid .e5 { font-size: 40px; }
+#grid5x6 .e5, #grid6x7 .e5 { font-size: 40px; }
 
 /*
 .e0::before { content: "\1f525"; }
@@ -99,16 +116,22 @@ td.e5 { background-size: 20px; }
 
 .eX::before { content: "?"; }
 
-#profile {
+#profile5x6 {
   position: absolute;
   left: 445px;
   top: 20px;
 }
-#profile .e0, #profile .e1, #profile .e2, #profile .e3, #profile .e4, #profile .e6, #profile .e5, #profile .eX {
+
+#profile6x7 {
+  position: absolute;
+  left: 509px;
+  top: 20px;
+}
+#profile5x6 .e0, #profile5x6 .e1, #profile5x6 .e2, #profile5x6 .e3, #profile5x6 .e4, #profile5x6 .e6, #profile5x6 .e5, #profile5x6 .eX, #profile6x7 .e0, #profile6x7 .e1, #profile6x7 .e2, #profile6x7 .e3, #profile6x7 .e4, #profile6x7 .e6, #profile6x7 .e5, #profile6x7 .eX {
   font-size: 16px;
 }
-#profile input { width: 2.8em; border: 0px; margin: 2px; }
-#controls {
+#profile5x6 input, #profile6x7 input { width: 2.8em; border: 0px; margin: 2px; }
+#controls5x6 {
   position: absolute;
   left: 20px;
   top: 346px;
@@ -116,10 +139,24 @@ td.e5 { background-size: 20px; }
   text-align: center;
   line-height: 2em;
 }
-#extra-controls {
+#controls6x7 {
+  position: absolute;
+  left: 20px;
+  top: 436px;
+  width: 444px;
+  text-align: center;
+  line-height: 2em;
+}
+#extra-controls5x6 {
   position: absolute;
   left: 37px;
   top: 459px;
+  z-index: 9999;
+}
+#extra-controls6x7 {
+  position: absolute;
+  left: 68px;
+  top: 549px;
   z-index: 9999;
 }
 #solve {
@@ -139,8 +176,9 @@ td.e5 { background-size: 20px; }
   position: absolute;
   background: yellow;
   border: 2px solid black;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
+  z-index: 99999999;
 }
 #import-popup, #change-popup {
   position: absolute;
@@ -148,9 +186,15 @@ td.e5 { background-size: 20px; }
   background: #eee;
   padding: 20px;
 }
-#import-popup {
-  width: 400px;
+.import-popup5x6 {
+  width: 350px;
   height: 220px;
+  left: 440px;
+  top: 190px;
+}
+.import-popup6x7 {
+  width: 390px;
+  height: 240px;
   left: 440px;
   top: 190px;
 }
@@ -162,15 +206,41 @@ td.e5 { background-size: 20px; }
   z-index: 10001;
 }
 #import-legend, #change-popup { line-height: 1.6em; }
-#import-textarea {
+.import-textarea5x6 {
   position: absolute;
   left: 125px;
   top: 20px;
-  font-size: 28px;
+  width: 10em;
+  height: 8em;
+  font-size: 20px;
   font-family: 'Roboto', monospace;
-  letter-spacing: 28px;
+  letter-spacing: 20px;
+  resize: none;
 }
-#import-control, #change-control {
+.import-textarea6x7 {
+  position: absolute;
+  left: 125px;
+  top: 20px;
+  width: 12em;
+  height: 9em;
+  font-size: 20px;
+  font-family: 'Roboto', monospace;
+  letter-spacing: 20px;
+  resize: none;
+}
+.import-control5x6 {
+  margin-top: -15px;
+  right: 20px;
+  bottom: 20px;
+  float: right;
+}
+.import-control6x7 {
+  margin-top: 5px;
+  right: 20px;
+  bottom: 20px;
+  float: right;
+}
+#change-control {
   right: 20px;
   bottom: 20px;
 }
@@ -198,9 +268,6 @@ td.e5 { background-size: 20px; }
   width: 100%;
   z-index: 99;
 }
-#solutions:hover li {
-  padding-left: 11px;
-}
 #solutions li {
   transition: background-color 0.05s ease-in-out;
   transition: padding 0.3s ease;
@@ -208,7 +275,7 @@ td.e5 { background-size: 20px; }
 
 #solutions li:hover {
   background: rgb(60,60,60);
-  padding: 20px 11px;
+  padding: 20px 4px;
 }
 #screenshot-upload {
 
@@ -426,7 +493,7 @@ label[for=num-paths] {
   font-weight: bold;
   color: white;
 }
-#extra-controls select, #extra-controls input {
+#extra-controls5x6 select, #extra-controls5x6 input, #extra-controls6x7 select, #extra-controls6x7 input {
   width: 108px;
   margin-bottom: 10px;
   padding: 8px 10px;

@@ -1,5 +1,3 @@
-var ROWS = 5;
-var COLS = 6;
 var TYPES = 7;
 var ORB_X_SEP = 64;
 var ORB_Y_SEP = 64;
@@ -54,7 +52,7 @@ function create_empty_board() {
 
 function get_board() {
     var result = create_empty_board();
-    $('#grid > div').each(function() {
+    $('[id^="grid"] > div').each(function() {
         var row = this.id.charAt(1);
         var col = this.id.charAt(2);
         var type = get_type(this);
@@ -147,14 +145,22 @@ function find_matches(board) {
 
     // 2. enumerate the matches by flood-fill.
     var matches = [];
+    if (ROWS == "5") {
 	var thisMatch = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
+    } else if (ROWS == "6") {
+	var thisMatch = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];
+    }
     for (var i = 0; i < ROWS; ++ i) {
         for (var j = 0; j < COLS; ++ j) {
             var cur_orb = scratch_board[i][j];
             if (typeof(cur_orb) == 'undefined') { continue; }
             var stack = [make_rc(i, j)];
             var count = 0;
-			var thisMatch = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
+            if (ROWS == "5") {
+                var thisMatch = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
+            } else if (ROWS == "6") {
+                var thisMatch = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];      
+            }
             while (stack.length) {
                 var n = stack.pop();
                 if (scratch_board[n.row][n.col] != cur_orb) { continue; }
@@ -169,10 +175,17 @@ function find_matches(board) {
 			var isRow = false;
 			for(var k = 0; k < ROWS; ++k)
 			{
+			if (ROWS == "5") {
 				if(thisMatch[k][0] == 1 && thisMatch[k][1] == 1 && thisMatch[k][2] == 1 && thisMatch[k][3] == 1 && thisMatch[k][4] == 1 && thisMatch[k][5] == 1)
 				{
 					isRow = true;
+				}			
+			} else if (ROWS == "6") {
+				if(thisMatch[k][0] == 1 && thisMatch[k][1] == 1 && thisMatch[k][2] == 1 && thisMatch[k][3] == 1 && thisMatch[k][4] == 1 && thisMatch[k][5] == 1 && thisMatch[k][6] == 1)
+				{
+					isRow = true;
 				}
+			}
 			}
             matches.push(make_match(cur_orb, count, isRow));
 
@@ -729,12 +742,12 @@ $(document).ready(function() {
     // Better position the solutions div based on dynamic values
     var navbar_height = $('.navbar-fixed-bottom').outerHeight();
     var second_navbar_height = $('.secondary-navbar-bottom').outerHeight();
-    $('#solutions').css('min-height', $(window).height() - (navbar_height + second_navbar_height - 25));
-    $('#grid > div').each(function() {
+    $('#solutions').css('min-height', $(window).height() - (navbar_height + second_navbar_height - 60));
+    $('[id^="grid"] > div').each(function() {
         $(this).addClass('eX');
     })
 
-    $('#grid > div, .change-target').mousedown(function(e) {
+    $('[id^="grid"] > div, .change-target').mousedown(function(e) {
         var type = get_type(this);
         var target_type;
         switch (e.which) {
@@ -761,7 +774,7 @@ $(document).ready(function() {
     });
 
     $('#solve').click(function() {
-        $('#grid > div').each(function(){ $(this).removeClass('border-flash'); });
+        $('[id^="grid"] > div').each(function(){ $(this).removeClass('border-flash'); });
         var solver_button = this;
         var board = get_board();
         global_board = board;
@@ -810,7 +823,7 @@ $(document).ready(function() {
     $('#randomize').click(function() {
         var types = $('#randomization-type').val().split(/,/);
 		do{
-        $('#grid > div').each(function() {
+        $('[id^="grid"] > div').each(function() {
             var index = Math.floor(Math.random() * types.length);
             show_element_type($(this), types[index]);
         });
@@ -821,7 +834,7 @@ $(document).ready(function() {
     });
 
     $('#clear').click(function() {
-        $('#grid > div').each(function() { show_element_type($(this), 'X'); });
+        $('[id^="grid"] > div').each(function() { show_element_type($(this), 'X'); });
         clear_canvas();
     });
 
@@ -872,7 +885,8 @@ $(document).ready(function() {
             alert('Wrong number of orbs!');
             return;
         }
-        var board = board_joined.match(/.{6}/g).map(function(s) { return s.split(''); });
+	var boardre = new RegExp(".{" + COLS + "}", 'g');
+        var board = board_joined.match(boardre).map(function(s) { return s.split(''); });
         show_board(board);
         clear_canvas();
         $('#import-popup').hide();
