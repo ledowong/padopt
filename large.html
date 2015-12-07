@@ -381,6 +381,7 @@
             <input type="text" id="num-paths" class="span2" value="" data-slider-min="10" data-slider-max="400" data-slider-step="10" data-slider-value="100" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
             <em style="display: block; margin-top: 4px;"><span style="color: rgb(93,167,102)" class="glyphicon glyphicon-arrow-up"></span>  larger: longer computation, better solutions</em>
         </p>
+        <label>Path Type:</type><br />
         <input type="radio" name="overlap" id="traditional" value="traditional" checked>
         <label for="traditional">Traditional</label>&nbsp;
         <input type="radio" name="overlap" id="nooverlap" value="rounded">
@@ -417,8 +418,9 @@
             <br>
             <input class="btn btn-default" type="button" value="Change orbs" id="change"/> &nbsp;
             <select class="btn btn-default" onchange="location = this.options[this.selectedIndex].value;">
-            <option value="large.html">6x7</option>
             <option value="index.html">5x6</option>
+            <option value="large.html" selected>6x7</option>
+            <option value="small.html">5x4</option>
             </select> &nbsp;
             <input class="btn btn-default" type="button" value="Lengthen Path" id="pathincrease"/>
             <br>
@@ -485,7 +487,6 @@
     <script src="ext/perfect-scrollbar.jquery.min.js"></script>
     <script src="ext/bootstrap-slider.min.js"></script>
     <script src="ext/easel.js"></script>
-    <script src="ext/model.js"></script>
     <script src="ext/optimizer.js"></script>
     <script src="ext/main.js"></script>
 </body>

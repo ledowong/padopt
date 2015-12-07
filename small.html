@@ -27,50 +27,40 @@
     <div id="contentHolder">
 
         <script type="text/javascript">
-                var ROWS = 5; var COLS = 6;
+                var ROWS = 5; var COLS = 4;
         </script>
 
         <!-- PAD CANVAS -->
-        <canvas id="path" width="380" height="316"></canvas>
-        <div id="grid5x6" oncontextmenu="return false;">
+        <canvas id="path" width="256" height="316" style="left:82px;"></canvas>
+        <div id="grid5x4" oncontextmenu="return false;">
             <div id="o00" class="row1"></div>
             <div id="o01" class="row1"></div>
             <div id="o02" class="row1"></div>
             <div id="o03" class="row1"></div>
-            <div id="o04" class="row1"></div>
-            <div id="o05" class="row1"></div>
 
             <div id="o10" class="row2"></div>
             <div id="o11" class="row2"></div>
             <div id="o12" class="row2"></div>
             <div id="o13" class="row2"></div>
-            <div id="o14" class="row2"></div>
-            <div id="o15" class="row2"></div>
 
             <div id="o20" class="row3"></div>
             <div id="o21" class="row3"></div>
             <div id="o22" class="row3"></div>
             <div id="o23" class="row3"></div>
-            <div id="o24" class="row3"></div>
-            <div id="o25" class="row3"></div>
 
             <div id="o30" class="row4"></div>
             <div id="o31" class="row4"></div>
             <div id="o32" class="row4"></div>
             <div id="o33" class="row4"></div>
-            <div id="o34" class="row4"></div>
-            <div id="o35" class="row4"></div>
 
             <div id="o40" class="row5"></div>
             <div id="o41" class="row5"></div>
             <div id="o42" class="row5"></div>
             <div id="o43" class="row5"></div>
-            <div id="o44" class="row5"></div>
-            <div id="o45" class="row5"></div>
         </div>
 
         <!-- SIDEBAR PROFILE -->
-        <div id="profile5x6">
+        <div id="profile5x4">
         <table>
             <tr class="center-text">
                 <th></th>
@@ -368,7 +358,7 @@
             <input type="text" id="num-paths" class="span2" value="" data-slider-min="10" data-slider-max="400" data-slider-step="10" data-slider-value="100" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
             <em style="display: block; margin-top: 4px;"><span style="color: rgb(93,167,102)" class="glyphicon glyphicon-arrow-up"></span>  larger: longer computation, better solutions</em>
         </p>
-	<label>Path Type:</type><br />
+        <label>Path Type:</type><br />
 	<input type="radio" name="overlap" id="traditional" value="traditional" checked>
 	<label for="traditional">Traditional</label>&nbsp;
 	<input type="radio" name="overlap" id="nooverlap" value="rounded">
@@ -376,12 +366,12 @@
 
         <!-- CONTROLS -->
         </div>
-        <div id="controls5x6">
+        <div id="controls5x4">
             <input type="checkbox" id="allow-8"/>
             <label for="allow-8">Allow 8-direction movement</label><br />
             <input class="btn btn-primary" type="button" value="Solve" id="solve"/>
         </div>
-        <div id="extra-controls5x6">
+        <div id="extra-controls5x4">
             <input class="btn btn-default" type="button" value="Drop matches" id="drop"/> &nbsp;
             <input class="btn btn-default" type="button" value="Final state" id="final"/> &nbsp;
             <input class="btn btn-default" type="button" value="Import" id="import"/> &nbsp;
@@ -405,15 +395,15 @@
             <br>
             <input class="btn btn-default" type="button" value="Change orbs" id="change"/> &nbsp;
             <select class="btn btn-default" onchange="location = this.options[this.selectedIndex].value;">
-            <option value="index.html" selected>5x6</option>
+            <option value="index.html">5x6</option>
             <option value="large.html">6x7</option>
-            <option value="small.html">5x4</option>
+            <option value="small.html" selected>5x4</option>
             </select> &nbsp;
             <input class="btn btn-default" type="button" value="Lengthen Path" id="pathincrease"/>
             <br>
         </div>
         <div id="hand"></div>
-        <div id="import-popup" class="import-popup5x6">
+        <div id="import-popup" class="import-popup5x4">
         <div id="import-legend">
             <span class="e0"></span> = 0 / r<br />
             <span class="e1"></span> = 1 / b<br />
@@ -424,8 +414,8 @@
             <span class="e6"></span> = 6 / j<br />
             <span class="eX"></span> = . / x<br />
         </div>
-        <textarea id="import-textarea" class="import-textarea5x6" maxlength="30" spellcheck="false"></textarea>
-        <div id="import-control" class="import-control5x6">
+        <textarea id="import-textarea" class="import-textarea5x4" maxlength="20" spellcheck="false"></textarea>
+        <div id="import-control" class="import-control5x4">
             <input type="button" value="Cancel" id="import-cancel"/>
             <input type="button" value="Import" id="import-import"/>
         </div>

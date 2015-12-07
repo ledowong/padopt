@@ -22,7 +22,7 @@ body, html {
     position:relative;
     height: 100%;
 }
-#grid5x6, #grid6x7, #path {
+#grid5x6, #grid6x7, #grid5x4, #path {
   top: 20px;
   left: 20px;
   position: absolute;
@@ -44,12 +44,12 @@ body, html {
   display: inline-block;
   background-repeat: no-repeat;
 }
-#grid5x6 > div, #grid6x7 > div { position: absolute; cursor: pointer; }
+#grid5x6 > div, #grid6x7 > div, #grid5x4 > div { position: absolute; cursor: pointer; }
 #grid5x6 > div:nth-child(6n+1), #grid6x7 > div:nth-child(7n+1) { left: 0px; }
-#grid5x6 > div:nth-child(6n+2), #grid6x7 > div:nth-child(7n+2) { left: 64px; }
-#grid5x6 > div:nth-child(6n+3), #grid6x7 > div:nth-child(7n+3) { left: 128px; }
-#grid5x6 > div:nth-child(6n+4), #grid6x7 > div:nth-child(7n+4) { left: 192px; }
-#grid5x6 > div:nth-child(6n+5), #grid6x7 > div:nth-child(7n+5) { left: 256px; }
+#grid5x6 > div:nth-child(6n+2), #grid6x7 > div:nth-child(7n+2), #grid5x4 > div:nth-child(4n+1) { left: 64px; }
+#grid5x6 > div:nth-child(6n+3), #grid6x7 > div:nth-child(7n+3), #grid5x4 > div:nth-child(4n+2) { left: 128px; }
+#grid5x6 > div:nth-child(6n+4), #grid6x7 > div:nth-child(7n+4), #grid5x4 > div:nth-child(4n+3) { left: 192px; }
+#grid5x6 > div:nth-child(6n+5), #grid6x7 > div:nth-child(7n+5), #grid5x4 > div:nth-child(4n+4) { left: 256px; }
 #grid5x6 > div:nth-child(6n+6), #grid6x7 > div:nth-child(7n+6) { left: 320px; }
 #grid6x7 > div:nth-child(7n+7) { left: 384px; }
 .row1 { top: 0px; }
@@ -85,7 +85,7 @@ span.e0, span.e1, span.e2, span.e3, span.e4, span.e5, span.e6 {
 td.e0, td.e1, td.e2, td.e3, td.e4, td.e5, td.e6 {
   background-size: 23px;
 }
-#grid5x6 .e0, #grid5x6 .e1, #grid5x6 .e2, #grid5x6 .e3, #grid5x6 .e4, #grid5x6 .e6, #grid5x6 .eX, #grid6x7 .e0, #grid6x7 .e1, #grid6x7 .e2, #grid6x7 .e3, #grid6x7 .e4, #grid6x7 .e6, #grid6x7 .eX {
+#grid5x6 .e0, #grid5x6 .e1, #grid5x6 .e2, #grid5x6 .e3, #grid5x6 .e4, #grid5x6 .e6, #grid5x6 .eX, #grid6x7 .e0, #grid6x7 .e1, #grid6x7 .e2, #grid6x7 .e3, #grid6x7 .e4, #grid6x7 .e6, #grid6x7 .eX, #grid5x4 .e0, #grid5x4 .e1, #grid5x4 .e2, #grid5x4 .e3, #grid5x4 .e4, #grid5x4 .e6, #grid5x4 .eX {
   background-size: 60px;
   font-size: 40px;
 }
@@ -103,7 +103,7 @@ span.e5 { background-size: 18px; }
 }
 #change-cancel { margin-top 5px; }
 td.e5 { background-size: 20px; }
-#grid5x6 .e5, #grid6x7 .e5 { font-size: 40px; }
+#grid5x6 .e5, #grid6x7 .e5, #grid5x4 .e5 { font-size: 40px; }
 
 /*
 .e0::before { content: "\1f525"; }
@@ -116,7 +116,7 @@ td.e5 { background-size: 20px; }
 
 .eX::before { content: "?"; }
 
-#profile5x6 {
+#profile5x6, #profile5x4 {
   position: absolute;
   left: 445px;
   top: 20px;
@@ -127,11 +127,11 @@ td.e5 { background-size: 20px; }
   left: 509px;
   top: 20px;
 }
-#profile5x6 .e0, #profile5x6 .e1, #profile5x6 .e2, #profile5x6 .e3, #profile5x6 .e4, #profile5x6 .e6, #profile5x6 .e5, #profile5x6 .eX, #profile6x7 .e0, #profile6x7 .e1, #profile6x7 .e2, #profile6x7 .e3, #profile6x7 .e4, #profile6x7 .e6, #profile6x7 .e5, #profile6x7 .eX {
+#profile5x6 .e0, #profile5x6 .e1, #profile5x6 .e2, #profile5x6 .e3, #profile5x6 .e4, #profile5x6 .e6, #profile5x6 .e5, #profile5x6 .eX, #profile6x7 .e0, #profile6x7 .e1, #profile6x7 .e2, #profile6x7 .e3, #profile6x7 .e4, #profile6x7 .e6, #profile6x7 .e5, #profile6x7 .eX, #profile5x4 .e0, #profile5x4 .e1, #profile5x4 .e2, #profile5x4 .e3, #profile5x4 .e4, #profile5x4 .e6, #profile5x4 .e5, #profile5x4 .eX {
   font-size: 16px;
 }
-#profile5x6 input, #profile6x7 input { width: 2.8em; border: 0px; margin: 2px; }
-#controls5x6 {
+#profile5x6 input, #profile6x7 input, #profile5x4 input { width: 2.8em; border: 0px; margin: 2px; }
+#controls5x6, #controls5x4 {
   position: absolute;
   left: 20px;
   top: 346px;
@@ -147,7 +147,7 @@ td.e5 { background-size: 20px; }
   text-align: center;
   line-height: 2em;
 }
-#extra-controls5x6 {
+#extra-controls5x6, #extra-controls5x4 {
   position: absolute;
   left: 37px;
   top: 459px;
@@ -186,7 +186,7 @@ td.e5 { background-size: 20px; }
   background: #eee;
   padding: 20px;
 }
-.import-popup5x6 {
+.import-popup5x6, .import-popup5x4 {
   width: 350px;
   height: 220px;
   left: 440px;
@@ -206,7 +206,7 @@ td.e5 { background-size: 20px; }
   z-index: 10001;
 }
 #import-legend, #change-popup { line-height: 1.6em; }
-.import-textarea5x6 {
+.import-textarea5x6, {
   position: absolute;
   left: 125px;
   top: 20px;
@@ -228,7 +228,18 @@ td.e5 { background-size: 20px; }
   letter-spacing: 20px;
   resize: none;
 }
-.import-control5x6 {
+.import-textarea5x6, .import-textarea5x4 {
+  position: absolute;
+  left: 125px;
+  top: 20px;
+  width: 7em;
+  height: 8em;
+  font-size: 20px;
+  font-family: 'Roboto', monospace;
+  letter-spacing: 20px;
+  resize: none;
+}
+.import-control5x6, .import-control5x4 {
   margin-top: -15px;
   right: 20px;
   bottom: 20px;
@@ -493,7 +504,7 @@ label[for=num-paths] {
   font-weight: bold;
   color: white;
 }
-#extra-controls5x6 select, #extra-controls5x6 input, #extra-controls6x7 select, #extra-controls6x7 input {
+#extra-controls5x6 select, #extra-controls5x6 input, #extra-controls6x7 select, #extra-controls6x7 input, #extra-controls5x4 select, #extra-controls5x4 input {
   width: 108px;
   margin-bottom: 10px;
   padding: 8px 10px;

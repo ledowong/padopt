@@ -145,7 +145,9 @@ function find_matches(board) {
 
     // 2. enumerate the matches by flood-fill.
     var matches = [];
-    if (ROWS == "5") {
+    if (COLS == "4") {
+	var thisMatch = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    } else if (ROWS == "5") {
 	var thisMatch = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
     } else if (ROWS == "6") {
 	var thisMatch = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];
@@ -156,7 +158,9 @@ function find_matches(board) {
             if (typeof(cur_orb) == 'undefined') { continue; }
             var stack = [make_rc(i, j)];
             var count = 0;
-            if (ROWS == "5") {
+            if (COLS == "4") {
+                var thisMatch = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+            } else if (ROWS == "5") {
                 var thisMatch = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
             } else if (ROWS == "6") {
                 var thisMatch = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];      
@@ -870,8 +874,12 @@ $(document).ready(function() {
         var hand_elem = $('#hand');
         hand_elem.stop(/*clearQueue*/true).show();
         path.forEach(function(xy, i) {
-            var left = xy.x + 13;
-            var top = xy.y + 13;
+	if (COLS == "4") {
+            var left = xy.x + 76;
+        } else {
+            var left = xy.x + 14;
+	}
+            var top = xy.y + 14;
             hand_elem[i == 0 ? 'offset' : 'animate']({left: left, top: top});
         });
         $('#solutions li.prev-selection').removeClass('prev-selection');
