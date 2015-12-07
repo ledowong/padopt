@@ -682,6 +682,18 @@ function draw_line_to(canvas, px, py, x, y) {
     canvas.lineTo(x, y);
 }
 
+function sign(x) {
+    return x > 0 ? 1 : x < 0 ? -1 : 0;
+}
+
+function draw_line_to2(canvas, px, py, x, y) {
+    var dr = 0.1;
+    var dx = ORB_WIDTH  * dr * sign(x - px);
+    var dy = ORB_HEIGHT * dr * sign(y - py);
+    canvas.lineTo(px + dx, py + dy);
+    canvas.lineTo( x - dx,  y - dy);
+}
+
 function draw_path(init_rc, path) {
     var canvas = clear_canvas();
     var rc = copy_rc(init_rc);
@@ -692,6 +704,9 @@ function draw_path(init_rc, path) {
     });
 
     xys = simplify_path(xys);
+    if ( drawstyle == "rounded" ) {
+        avoid_overlap(xys);
+    }
 
     canvas.lineWidth = 4;
     canvas.strokeStyle = 'rgba(0, 0, 0, 0.75)';
@@ -702,7 +717,11 @@ function draw_path(init_rc, path) {
             canvas.moveTo(xy.x, xy.y);
         } else {
             var prev_xy = xys[i-1];
-            draw_line_to(canvas, prev_xy.x, prev_xy.y, xy.x, xy.y);
+	    if ( drawstyle == "rounded" ) {
+                draw_line_to2(canvas, prev_xy.x, prev_xy.y, xy.x, xy.y);
+	    } else {
+                draw_line_to(canvas, prev_xy.x, prev_xy.y, xy.x, xy.y);
+	    }
         }
     }
     canvas.stroke();
@@ -738,6 +757,7 @@ function clear_canvas() {
 var global_board = create_empty_board();
 var global_solutions = [];
 var global_index = 0;
+var drawstyle;
 
 $(document).ready(function() {
 
@@ -773,6 +793,14 @@ $(document).ready(function() {
 			$('#e' + i + '-tpa').val(values[4*i+3]);
         }
 		globalheur = values[4*TYPES];
+    });
+
+    $('#traditional').click(function() {
+	drawstyle = "traditional";
+    });
+
+    $('#nooverlap').click(function() {
+	drawstyle = "rounded";
     });
 
     $('#solve').click(function() {
@@ -985,4 +1013,42 @@ function lengthenSolution (board, solutions, step_callback, finish_callback) {
     };
     $('#max-length').val(solve_state.max_length);
     solve_board_step(solve_state);
+}
+
+function Coordinate(row, col){
+  this.row = row || 0;
+  this.col = col || 0;
+}
+
+Coordinate.prototype.getXY = function(){
+  var x = this.col * ORB_X_SEP + ORB_WIDTH/2;
+  var y = this.row * ORB_Y_SEP + ORB_HEIGHT/2;
+  return {x: x, y: y};
+};
+
+
+function avoid_overlap(xys) {
+    var rail_num = 5; // should be odd integer
+    var rail_half = Math.floor(rail_num / 2);
+    var dr = Math.max(0.08, 0.4 / rail_num);
+    var rail_x = {};
+    var rail_y = {};
+    for (var i = 1; i < xys.length; ++ i) {
+        if (xys[i].y == xys[i-1].y) {
+            y = xys[i].y;
+            rail_y[y] = rail_y[y] || 0;
+            var dy = ORB_HEIGHT * (rail_y[y] - rail_half) * dr;
+            rail_y[y] = (rail_y[y] + rail_half) % rail_num;
+            xys[i].y += dy;
+            xys[i-1].y += dy;
+        } else if (xys[i].x == xys[i-1].x) {
+            x = xys[i].x;
+            rail_x[x] = rail_x[x] || 0;
+            var dx = ORB_WIDTH * (rail_x[x] - rail_half) * dr;
+            rail_x[x] = (rail_x[x] + rail_half) % rail_num;
+            xys[i].x += dx;
+            xys[i-1].x += dx;
+        }
+    }
+    return xys;
 }
