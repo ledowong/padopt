@@ -206,7 +206,7 @@ td.e5 { background-size: 20px; }
   z-index: 10001;
 }
 #import-legend, #change-popup { line-height: 1.6em; }
-.import-textarea5x6, {
+.import-textarea5x6 {
   position: absolute;
   left: 125px;
   top: 20px;
@@ -228,7 +228,7 @@ td.e5 { background-size: 20px; }
   letter-spacing: 20px;
   resize: none;
 }
-.import-textarea5x6, .import-textarea5x4 {
+.import-textarea5x4 {
   position: absolute;
   left: 125px;
   top: 20px;
