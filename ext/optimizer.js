@@ -229,12 +229,10 @@ function compute_weight(matches, weights) {
 
         var multi_orb_bonus = (m.count - 3) * MULTI_ORB_BONUS + 1;
 
-
 		total_weight += multi_orb_bonus * base_weight * (1 + numRows[m.type]*weights[m.type]['row']/10);
 		//total_weight += multi_orb_bonus * base_weight;
     });
     var combo_bonus = (matches.length - 1) * COMBO_BONUS + 1;
-
     return total_weight * combo_bonus;
 }
 
@@ -756,6 +754,7 @@ function clear_canvas() {
 
 var global_board = create_empty_board();
 var global_solutions = [];
+var global_unsimplified = [];
 var global_index = 0;
 var drawstyle;
 
@@ -823,6 +822,7 @@ $(document).ready(function() {
         }, function(solutions) {
             $('.loading-throbber').fadeToggle();
             var html_array = [];
+	    global_unsimplified = solutions;
             solutions = simplify_solutions(solutions);
             global_solutions = solutions;
             solutions.forEach(function(solution) {
@@ -838,7 +838,7 @@ $(document).ready(function() {
         $('[id^="grid"] > div').each(function(){ $(this).removeClass('border-flash'); });
         board = global_board
         $('.loading-throbber').fadeToggle('fast');
-        lengthenSolution(board, global_solutions, function(p, max_p) {
+        lengthenSolution(board, global_unsimplified, function(p, max_p) {
             //console.log(p);
             //console.log(max_p);
             var result = parseInt(p * 100 / parseInt(max_p));
@@ -851,6 +851,7 @@ $(document).ready(function() {
         }, function(solutions) {
             $('.loading-throbber').fadeToggle();
             var html_array = [];
+	    global_unsimplified = solutions;
             solutions = simplify_solutions(solutions);
             global_solutions = solutions;
             solutions.forEach(function(solution) {
@@ -993,9 +994,9 @@ function lengthenSolution (board, solutions, step_callback, finish_callback) {
     var seed_solution = make_solution(board);
     in_place_evaluate_solution(seed_solution, weights);
 
-    for (var i = 0, s = solutions.lenth; i < ROWS; ++ i) {
+    for (var i = 0, s = 0; i < ROWS; ++ i) {
         for (var j = 0; j < COLS; ++ j, ++ s) {
-            solutions[s] = copy_solution_with_cursor(seed_solution, i, j);
+            solutions.push(copy_solution_with_cursor(seed_solution, i, j));
         }
     }
 
