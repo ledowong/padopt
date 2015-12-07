@@ -145,8 +145,8 @@ function find_matches(board) {
 
     // 2. enumerate the matches by flood-fill.
     var matches = [];
-    if (COLS == "4") {
-	var thisMatch = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    if (ROWS == "4") {
+	var thisMatch = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
     } else if (ROWS == "5") {
 	var thisMatch = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
     } else if (ROWS == "6") {
@@ -158,8 +158,8 @@ function find_matches(board) {
             if (typeof(cur_orb) == 'undefined') { continue; }
             var stack = [make_rc(i, j)];
             var count = 0;
-            if (COLS == "4") {
-                var thisMatch = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+            if (ROWS == "4") {
+	        var thisMatch = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
             } else if (ROWS == "5") {
                 var thisMatch = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
             } else if (ROWS == "6") {
@@ -179,13 +179,18 @@ function find_matches(board) {
 			var isRow = false;
 			for(var k = 0; k < ROWS; ++k)
 			{
-			if (ROWS == "5") {
-				if(thisMatch[k][0] == 1 && thisMatch[k][1] == 1 && thisMatch[k][2] == 1 && thisMatch[k][3] == 1 && thisMatch[k][4] == 1 && thisMatch[k][5] == 1)
+			if (ROWS == "4") {
+				if(thisMatch[k][0] == 1 && thisMatch[k][1] == 1 && thisMatch[k][2] == 1 && thisMatch[k][3] == 1)
+				{
+					isRow = true;
+				}			
+			} else if (ROWS == "5") {
+				if(thisMatch[k][0] == 1 && thisMatch[k][1] == 1 && thisMatch[k][2] == 1 && thisMatch[k][3] == 1 && thisMatch[k][4] == 1)
 				{
 					isRow = true;
 				}			
 			} else if (ROWS == "6") {
-				if(thisMatch[k][0] == 1 && thisMatch[k][1] == 1 && thisMatch[k][2] == 1 && thisMatch[k][3] == 1 && thisMatch[k][4] == 1 && thisMatch[k][5] == 1 && thisMatch[k][6] == 1)
+				if(thisMatch[k][0] == 1 && thisMatch[k][1] == 1 && thisMatch[k][2] == 1 && thisMatch[k][3] == 1 && thisMatch[k][4] == 1 && thisMatch[k][5] == 1)
 				{
 					isRow = true;
 				}
@@ -874,9 +879,9 @@ $(document).ready(function() {
         var hand_elem = $('#hand');
         hand_elem.stop(/*clearQueue*/true).show();
         path.forEach(function(xy, i) {
-	if (COLS == "4") {
-            var left = xy.x + 76;
-        } else {
+	if ( COLS == "5" ) {
+            var left = xy.x + 46;
+	} else {
             var left = xy.x + 14;
 	}
             var top = xy.y + 14;

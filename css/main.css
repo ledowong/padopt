@@ -46,10 +46,15 @@ body, html {
 }
 #grid6x5 > div, #grid7x6 > div, #grid5x4 > div { position: absolute; cursor: pointer; }
 #grid6x5 > div:nth-child(6n+1), #grid7x6 > div:nth-child(7n+1) { left: 0px; }
-#grid6x5 > div:nth-child(6n+2), #grid7x6 > div:nth-child(7n+2), #grid5x4 > div:nth-child(4n+1) { left: 64px; }
-#grid6x5 > div:nth-child(6n+3), #grid7x6 > div:nth-child(7n+3), #grid5x4 > div:nth-child(4n+2) { left: 128px; }
-#grid6x5 > div:nth-child(6n+4), #grid7x6 > div:nth-child(7n+4), #grid5x4 > div:nth-child(4n+3) { left: 192px; }
-#grid6x5 > div:nth-child(6n+5), #grid7x6 > div:nth-child(7n+5), #grid5x4 > div:nth-child(4n+4) { left: 256px; }
+#grid5x4 > div:nth-child(5n+1) { left: 32px; }
+#grid6x5 > div:nth-child(6n+2), #grid7x6 > div:nth-child(7n+2) { left: 64px; }
+#grid5x4 > div:nth-child(5n+2) { left: 96px; }
+#grid6x5 > div:nth-child(6n+3), #grid7x6 > div:nth-child(7n+3) { left: 128px; }
+#grid5x4 > div:nth-child(5n+3) { left: 160px; }
+#grid6x5 > div:nth-child(6n+4), #grid7x6 > div:nth-child(7n+4) { left: 192px; }
+#grid5x4 > div:nth-child(5n+4) { left: 224px; }
+#grid6x5 > div:nth-child(6n+5), #grid7x6 > div:nth-child(7n+5) { left: 256px; }
+#grid5x4 > div:nth-child(5n+5) { left: 288px; }
 #grid6x5 > div:nth-child(6n+6), #grid7x6 > div:nth-child(7n+6) { left: 320px; }
 #grid7x6 > div:nth-child(7n+7) { left: 384px; }
 .row1 { top: 0px; }
@@ -131,10 +136,18 @@ td.e5 { background-size: 20px; }
   font-size: 16px;
 }
 #profile6x5 input, #profile7x6 input, #profile5x4 input { width: 2.8em; border: 0px; margin: 2px; }
-#controls6x5, #controls5x4 {
+#controls6x5 {
   position: absolute;
   left: 20px;
   top: 346px;
+  width: 380px;
+  text-align: center;
+  line-height: 2em;
+}
+#controls5x4 {
+  position: absolute;
+  left: 20px;
+  top: 282px;
   width: 380px;
   text-align: center;
   line-height: 2em;
@@ -147,10 +160,16 @@ td.e5 { background-size: 20px; }
   text-align: center;
   line-height: 2em;
 }
-#extra-controls6x5, #extra-controls5x4 {
+#extra-controls6x5 {
   position: absolute;
   left: 37px;
   top: 459px;
+  z-index: 9999;
+}
+#extra-controls5x4 {
+  position: absolute;
+  left: 37px;
+  top: 395px;
   z-index: 9999;
 }
 #extra-controls7x6 {
@@ -231,9 +250,9 @@ td.e5 { background-size: 20px; }
 .import-textarea5x4 {
   position: absolute;
   left: 125px;
-  top: 20px;
-  width: 7em;
-  height: 8em;
+  top: 45px;
+  width: 9em;
+  height: 6em;
   font-size: 20px;
   font-family: 'Roboto', monospace;
   letter-spacing: 20px;

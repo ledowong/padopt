@@ -27,36 +27,35 @@
     <div id="contentHolder">
 
         <script type="text/javascript">
-                var ROWS = 5; var COLS = 4;
+                var ROWS = 4; var COLS = 5;
         </script>
 
         <!-- PAD CANVAS -->
-        <canvas id="path" width="256" height="316" style="left:82px;"></canvas>
+        <canvas id="path" width="316" height="252" style="left:52px;"></canvas>
         <div id="grid5x4" oncontextmenu="return false;">
             <div id="o00" class="row1"></div>
             <div id="o01" class="row1"></div>
             <div id="o02" class="row1"></div>
             <div id="o03" class="row1"></div>
+            <div id="o04" class="row1"></div>
 
             <div id="o10" class="row2"></div>
             <div id="o11" class="row2"></div>
             <div id="o12" class="row2"></div>
             <div id="o13" class="row2"></div>
+            <div id="o14" class="row2"></div>
 
             <div id="o20" class="row3"></div>
             <div id="o21" class="row3"></div>
             <div id="o22" class="row3"></div>
             <div id="o23" class="row3"></div>
+            <div id="o24" class="row3"></div>
 
             <div id="o30" class="row4"></div>
             <div id="o31" class="row4"></div>
             <div id="o32" class="row4"></div>
             <div id="o33" class="row4"></div>
-
-            <div id="o40" class="row5"></div>
-            <div id="o41" class="row5"></div>
-            <div id="o42" class="row5"></div>
-            <div id="o43" class="row5"></div>
+            <div id="o34" class="row4"></div>
         </div>
 
         <!-- SIDEBAR PROFILE -->
@@ -395,9 +394,9 @@
             <br>
             <input class="btn btn-default" type="button" value="Change orbs" id="change"/> &nbsp;
             <select class="btn btn-default" onchange="location = this.options[this.selectedIndex].value;">
+            <option value="small.html" selected>5x4</option>
             <option value="index.html">6x5</option>
             <option value="large.html">7x6</option>
-            <option value="small.html" selected>5x4</option>
             </select> &nbsp;
             <input class="btn btn-default" type="button" value="Lengthen Path" id="pathincrease"/>
             <br>
