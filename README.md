@@ -22,7 +22,7 @@ Changelist
 * Changed some heuristic values for better boards.
 * Default path length updated to 25.
 * Changed scrollbars to [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar).
-* Added 6x7 board (by [adambot](https://github.com/adambot))
+* Added 7x6 board (by [adambot](https://github.com/adambot))
 
 Usage
 -----

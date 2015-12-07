@@ -32,7 +32,7 @@
 
         <!-- PAD CANVAS -->
         <canvas id="path" width="380" height="316"></canvas>
-        <div id="grid5x6" oncontextmenu="return false;">
+        <div id="grid6x5" oncontextmenu="return false;">
             <div id="o00" class="row1"></div>
             <div id="o01" class="row1"></div>
             <div id="o02" class="row1"></div>
@@ -70,7 +70,7 @@
         </div>
 
         <!-- SIDEBAR PROFILE -->
-        <div id="profile5x6">
+        <div id="profile6x5">
         <table>
             <tr class="center-text">
                 <th></th>
@@ -376,12 +376,12 @@
 
         <!-- CONTROLS -->
         </div>
-        <div id="controls5x6">
+        <div id="controls6x5">
             <input type="checkbox" id="allow-8"/>
             <label for="allow-8">Allow 8-direction movement</label><br />
             <input class="btn btn-primary" type="button" value="Solve" id="solve"/>
         </div>
-        <div id="extra-controls5x6">
+        <div id="extra-controls6x5">
             <input class="btn btn-default" type="button" value="Drop matches" id="drop"/> &nbsp;
             <input class="btn btn-default" type="button" value="Final state" id="final"/> &nbsp;
             <input class="btn btn-default" type="button" value="Import" id="import"/> &nbsp;
@@ -405,15 +405,15 @@
             <br>
             <input class="btn btn-default" type="button" value="Change orbs" id="change"/> &nbsp;
             <select class="btn btn-default" onchange="location = this.options[this.selectedIndex].value;">
-            <option value="index.html" selected>5x6</option>
-            <option value="large.html">6x7</option>
+            <option value="index.html" selected>6x5</option>
+            <option value="large.html">7x6</option>
             <option value="small.html">5x4</option>
             </select> &nbsp;
             <input class="btn btn-default" type="button" value="Lengthen Path" id="pathincrease"/>
             <br>
         </div>
         <div id="hand"></div>
-        <div id="import-popup" class="import-popup5x6">
+        <div id="import-popup" class="import-popup6x5">
         <div id="import-legend">
             <span class="e0"></span> = 0 / r<br />
             <span class="e1"></span> = 1 / b<br />
@@ -424,8 +424,8 @@
             <span class="e6"></span> = 6 / j<br />
             <span class="eX"></span> = . / x<br />
         </div>
-        <textarea id="import-textarea" class="import-textarea5x6" maxlength="30" spellcheck="false"></textarea>
-        <div id="import-control" class="import-control5x6">
+        <textarea id="import-textarea" class="import-textarea6x5" maxlength="30" spellcheck="false"></textarea>
+        <div id="import-control" class="import-control6x5">
             <input type="button" value="Cancel" id="import-cancel"/>
             <input type="button" value="Import" id="import-import"/>
         </div>
