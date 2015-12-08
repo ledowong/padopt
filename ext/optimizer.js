@@ -7,7 +7,7 @@ var MULTI_ORB_BONUS = 0.25;
 var COMBO_BONUS = 0.25;
 var MAX_SOLUTIONS_COUNT = ROWS * COLS * $('#num-paths').val();
 //var MAX_SOLUTIONS_COUNT = ROWS * COLS * 2 * 8;
-var globalheur = -1;
+var globalmult = -1;
 
 function make_rc(row, col) {
     return {row: row, col: col};
@@ -59,16 +59,6 @@ function get_board() {
         result[row][col] = type;
     });
     return result;
-}
-
-function ensure_no_X(board) {
-    for (var i = 0; i < ROWS; ++ i) {
-        for (var j = 0; j < COLS; ++ j) {
-            if (board[i][j] == 'X') {
-                throw 'Cannot have "?" orbs when solving.';
-            }
-        }
-    }
 }
 
 function copy_board(board) {
@@ -245,7 +235,7 @@ function compute_weight(matches, weights) {
     return total_weight * combo_bonus;
 }
 
-function compute_heur(paramBoard)
+function compute_mult(paramBoard)
 {
 	board = copy_board(paramBoard)
 
@@ -260,7 +250,7 @@ function compute_heur(paramBoard)
         all_matches = all_matches.concat(matches.matches);
     }
 
-	if(globalheur == 0)//umiyama
+	if(globalmult == 0)//umiyama
 	{
 		var blue = 0;
 		var green = 0;
@@ -276,7 +266,7 @@ function compute_heur(paramBoard)
 		return 6*(blue+green+yellow+purple) + 1;
 	}
 
-	if(globalheur == 1)//kirin
+	if(globalmult == 1)//kirin
 	{
 		var red = 0;
 		var blue = 0;
@@ -294,7 +284,7 @@ function compute_heur(paramBoard)
 		return 6*(blue+green+yellow+red) + 1;
 	}
 
-	if(globalheur == 2)//ra
+	if(globalmult == 2)//ra
 	{
 		var red = 0;
 		var blue = 0;
@@ -312,7 +302,7 @@ function compute_heur(paramBoard)
 		return (7*(blue+green+yellow+red+purple) + 1);
 	}
 
-	if(globalheur == 3)//kush
+	if(globalmult == 3)//kush
 	{
 		if(all_matches.length >= 3)
 		{
@@ -320,7 +310,7 @@ function compute_heur(paramBoard)
 		}
 	}
 
-	if(globalheur == 4)//haku
+	if(globalmult == 4)//haku
 	{
 		var red = 0;
 		var blue = 0;
@@ -334,7 +324,7 @@ function compute_heur(paramBoard)
 		return 3.75*(blue+purple+red) + 1;
 	}
 
-	if(globalheur == 5)// L/L ra
+	if(globalmult == 5)// L/L ra
 	{
 		var red = 0;
 		var blue = 0;
@@ -361,7 +351,7 @@ function compute_heur(paramBoard)
 	}
 
 
-	if(globalheur == 6)//D/L Anubis
+	if(globalmult == 6)//D/L Anubis
 	{
 		if(all_matches.length < 8)
 			return all_matches.length*2;
@@ -373,7 +363,7 @@ function compute_heur(paramBoard)
 			return 100;
 	}
 
-	if(globalheur == 7)// Bastet
+	if(globalmult == 7)// Bastet
 	{
 		if(all_matches.length < 4)
 			return all_matches.length;
@@ -480,7 +470,7 @@ function copy_solution_with_cursor(solution, i, j, init_cursor) {
             path: solution.path.slice(),
             is_done: solution.is_done,
             weight: 0,
-			heur: compute_heur(solution.board),
+			mult: compute_mult(solution.board),
             matches: []};
 }
 
@@ -497,7 +487,7 @@ function make_solution(board) {
             path: [],
             is_done: false,
             weight: 0,
-            heur: compute_heur(board),
+            mult: compute_mult(board),
             matches: []};
 }
 
@@ -514,7 +504,7 @@ function in_place_evaluate_solution(solution, weights) {
         all_matches = all_matches.concat(matches.matches);
     }
     solution.weight = compute_weight(all_matches, weights);
-	solution.heur = compute_heur(solution.board);
+	solution.mult = compute_mult(solution.board);
     solution.matches = all_matches;
     return current_board;
 }
@@ -560,7 +550,7 @@ function evolve_solutions(solutions, weights, dir_step) {
         s.is_done = true;
     });
     solutions = solutions.concat(new_solutions);
-    solutions.sort(function(a, b) { return (b.weight * b.heur) - (a.weight * a.heur); });
+    solutions.sort(function(a, b) { return (b.weight * b.mult) - (a.weight * a.mult); });
     return solutions.slice(0, MAX_SOLUTIONS_COUNT);
 }
 
@@ -610,8 +600,8 @@ function add_solution_as_li(html_array, solution) {
     html_array.push(solution.weight.toFixed(2));
     html_array.push(', L=');
     html_array.push(solution.path.length);
-    html_array.push(', H=');
-    html_array.push(solution.heur.toFixed(2));
+    html_array.push(', M=');
+    html_array.push(solution.mult.toFixed(2));
     html_array.push(', &#8623;=');
     html_array.push(getSimplePathXYs(solution).length-1);
     var sorted_matches = solution.matches.slice();
@@ -800,7 +790,7 @@ $(document).ready(function() {
 			$('#e' + i + '-row').val(values[4*i+2]);
 			$('#e' + i + '-tpa').val(values[4*i+3]);
         }
-		globalheur = values[4*TYPES];
+		globalmult = values[4*TYPES];
     });
 
     $('#traditional').click(function() {
@@ -929,11 +919,12 @@ $(document).ready(function() {
     $('#import').click(function() {
         var board = get_board();
         var type_chars = 'rbgyphj';
-        var content = board.map(function(row) { return row.join(''); }).join('\n')
-            .replace(/X/g, '.')
+        var content = board.map(function(row) { return row.join(''); }).join('')
+            .replace(/X/g, 'x')
             .replace(/(\d)/g, function(s) { return type_chars.charAt(s); });
         $('#import-textarea').val(content);
         $('#import-popup').show();
+	document.getElementById("import-textarea").select();
     });
 
     $('#change').click(function() { $('#change-popup').show(); });

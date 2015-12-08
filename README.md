@@ -19,7 +19,7 @@ Changelist
 * Added LKali, DKali profiles.
 * Changed Bastet profile to the now more common A. Bastet.
 * Updated various profiles with guaranteed TPA / row values.
-* Changed some heuristic values for better boards.
+* Changed some multiplier values for better boards.
 * Default path length updated to 25.
 * Changed scrollbars to [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar).
 * Added 7x6 board (by [adambot](https://github.com/adambot))
@@ -37,7 +37,7 @@ I recommend using this tool to check solutions and for learning purposes; it rar
 Profiles and Calculations
 -------------------------
 
-All these do is change the weights of specific orb combinations to change the heuristic value of given solutions. Despite Rows being one of the possible inputs it does a pretty awful job of doing it. I wouldn't recommend using this tool for Row teams (and honestly you shouldn't need to given that they're almost never combo reliant).
+All these do is change the weights of specific orb combinations to change the multiplier value of given solutions. Despite Rows being one of the possible inputs it does a pretty awful job of doing it. I wouldn't recommend using this tool for Row teams (and honestly you shouldn't need to given that they're almost never combo reliant).
 
 For each main attribute add 1 to that color under 'N.' You can optionally add .3 to the columns for sub attributes but it won't change your results much. For color combo leads such as Kali, just put 1 for required colors and 0 for everything else.
 
