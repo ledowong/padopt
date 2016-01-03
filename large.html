@@ -375,17 +375,25 @@
             <br>
             <label for="max-length">Max path length:</label>
             <input id="max-length" value="25" size="3"/><br /><br />
-            <label for="num-paths">Path Number Scaling</label>
+            <label for="num-paths" style="padding-top:3px">Computation Length:</label>
             <input type="text" value="100" id="num-path-value" class="fast">
             <br>
             <input type="text" id="num-paths" class="span2" value="" data-slider-min="10" data-slider-max="400" data-slider-step="10" data-slider-value="100" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
-            <em style="display: block; margin-top: 4px;"><span style="color: rgb(93,167,102)" class="glyphicon glyphicon-arrow-up"></span>  larger: longer computation, better solutions</em>
+            <em style="display: block; margin-top: 4px;"><span style="color: rgb(93,167,102)" class="glyphicon glyphicon-arrow-up"></span>  Larger number means:<br /><span style="padding-left:3em">longer computation but better solutions</span></em>
         </p>
         <label>Path Type:</type><br />
         <input type="radio" name="overlap" id="traditional" value="traditional" checked>
         <label for="traditional">Traditional</label>&nbsp;
         <input type="radio" name="overlap" id="nooverlap" value="rounded">
         <label for="nooverlap">No Overlap</label></p>
+
+        <label>Sorting:</type><br />
+        <input type="radio" name="sorter" id="length" value="length" checked>
+        <label for="length">Weight (W) then Length (L)</label><br />
+        <input type="radio" name="sorter" id="complexity" value="complexity">
+        <label for="complexity">Weight (W) then Complexity (&#8623;)</label><br />
+        <input type="radio" name="sorter" id="multiplier" value="multiplier">
+        <label for="multiplier">Multiplier (M) then Complexity (&#8623;) then Weight (W)</label></p>
 
         <!-- CONTROLS -->
         </div>
