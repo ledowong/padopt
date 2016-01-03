@@ -22,7 +22,11 @@ Changelist
 * Changed some multiplier values for better boards.
 * Default path length updated to 25.
 * Changed scrollbars to [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar).
-* Added 7x6 board (by [adambot](https://github.com/adambot))
+* Added 7x6 board (by [izenn](https://github.com/izenn))
+* Added 5x4 board (by [izenn](https://github.com/izenn))
+* Added sorting (by [izenn](https://github.com/izenn))
+* Added iscribble's path lengthing (by [izenn](https://github.com/izenn))
+* Added ace-wu's no overlap drawing (by [izenn](https://github.com/izenn))
 
 Usage
 -----
