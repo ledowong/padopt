@@ -464,13 +464,15 @@ function in_place_swap_orb(board, rc, dir) {
 }
 
 function copy_solution_with_cursor(solution, i, j, init_cursor) {
+    var complexity = getSimplePathXYs(solution).length-1;
     return {board: copy_board(solution.board),
             cursor: make_rc(i, j),
             init_cursor: init_cursor || make_rc(i, j),
             path: solution.path.slice(),
             is_done: solution.is_done,
             weight: 0,
-			mult: compute_mult(solution.board),
+	    complexity: complexity,
+            mult: compute_mult(solution.board),
             matches: []};
 }
 
@@ -550,7 +552,14 @@ function evolve_solutions(solutions, weights, dir_step) {
         s.is_done = true;
     });
     solutions = solutions.concat(new_solutions);
-    solutions.sort(function(a, b) { return (b.weight * b.mult) - (a.weight * a.mult); });
+    solutions.sort(function(a, b) {
+    if ( sorter == "multiplier" ) {
+	return b.mult - a.mult  ||  a.complexity - b.complexity || b.weight - a.weight;
+    } else if (sorter == "complexity") {
+	return b.weight - a.weight || a.complexity - b.complexity;
+    } else if (sorter == "length") {
+	return b.weight - a.weight || a.path.length - b.path.length;
+    }});
     return solutions.slice(0, MAX_SOLUTIONS_COUNT);
 }
 
@@ -603,7 +612,7 @@ function add_solution_as_li(html_array, solution) {
     html_array.push(', M=');
     html_array.push(solution.mult.toFixed(2));
     html_array.push(', &#8623;=');
-    html_array.push(getSimplePathXYs(solution).length-1);
+    html_array.push(solution.complexity);
     var sorted_matches = solution.matches.slice();
     sorted_matches.sort(function(a, b) {
         if (a.count != b.count) {
@@ -756,6 +765,7 @@ var global_solutions = [];
 var global_unsimplified = [];
 var global_index = 0;
 var drawstyle;
+var sorter = "length";
 
 $(document).ready(function() {
 
@@ -799,6 +809,18 @@ $(document).ready(function() {
 
     $('#nooverlap').click(function() {
 	drawstyle = "rounded";
+    });
+
+    $('#length').click(function() {
+        sorter = "length";
+    });
+
+    $('#complexity').click(function() {
+        sorter = "complexity";
+    });
+
+    $('#multiplier').click(function() {
+        sorter = "multiplier";
     });
 
     $('#solve').click(function() {
