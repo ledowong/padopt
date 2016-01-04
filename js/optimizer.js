@@ -844,8 +844,8 @@ $(document).ready(function() {
         solver_button.disabled = true;
         $('.loading-throbber').fadeToggle('fast');
         solve_board(board, function(p, max_p) {
-            console.log(p);
-            console.log(max_p);
+            //console.log(p);
+            //console.log(max_p);
             var result = parseInt(p * 100 / parseInt(max_p));
             $('#are-you-ready').remove();
             if ($('#status').hasClass('active')) {
