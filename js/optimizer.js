@@ -768,6 +768,7 @@ var drawstyle;
 var sorter = "length";
 
 $(document).ready(function() {
+    PaintBrush.init();
 
     // Better position the solutions div based on dynamic values
     var navbar_height = $('.navbar-fixed-bottom').outerHeight();
@@ -777,17 +778,29 @@ $(document).ready(function() {
         $(this).addClass('eX');
     })
 
+    //grid click controls
     $('[id^="grid"] > div, .change-target').mousedown(function(e) {
         var type = get_type(this);
         var target_type;
         switch (e.which) {
-            case 1: target_type = advance_type(type, 1); break;     // left
+            case 1: target_type = PaintBrush.enabled? PaintBrush.color : advance_type(type, 1); break;     // left
             case 3: target_type = advance_type(type, -1); break;    // right
             case 2: target_type = 'X'; break;                       // middle
             default: break;
         }
         show_element_type($(this), target_type);
         clear_canvas();
+    });
+
+    $('html').on('mouseup', function() {
+        PaintBrush.mouseDown = false;
+        clear_canvas();
+    });
+
+    $('#grid > div, .change-target').on("mouseover",function() {
+        if (PaintBrush.mouseDown && PaintBrush.enabled) {
+          show_element_type($(this), PaintBrush.color);
+        }
     });
 
     $('#hand, #import-popup, #change-popup').hide();
@@ -831,8 +844,8 @@ $(document).ready(function() {
         solver_button.disabled = true;
         $('.loading-throbber').fadeToggle('fast');
         solve_board(board, function(p, max_p) {
-            //console.log(p);
-            //console.log(max_p);
+            console.log(p);
+            console.log(max_p);
             var result = parseInt(p * 100 / parseInt(max_p));
             $('#are-you-ready').remove();
             if ($('#status').hasClass('active')) {
@@ -1078,4 +1091,110 @@ function avoid_overlap(xys) {
         }
     }
     return xys;
+}
+/**
+ * "Painting" Model
+ */
+window.PaintBrush = {
+  init: function(){
+    PaintBrush.$image[0] = $("<img>", {id:'paintBrush', class:'palette'});
+    PaintBrush.$image[1] = PaintBrush.$image[0].clone();
+    PaintBrush.$image[0].attr("src",PaintBrush.BRUSH_0);
+    PaintBrush.$image[1].attr("src",PaintBrush.BRUSH_1);
+    PaintBrush.$image[0].appendTo("#pbPalette");
+    $("#pbPalette").css("overflow","hidden");
+//    $("<span />",{id:'pbBucketContainer'}).css("width","320px").css("display","inline-block").appendTo("#pbPalette");
+    $("<span />",{id:'pbBucketContainer'}).appendTo("#pbPalette");
+    $("<span />",{id:'pbBucket'}).css("overflow","hidden").appendTo("#pbBucketContainer").hide();
+    /*
+    $("<span />").addClass("vertLine").appendTo("#pbPalette");
+    $("<img>",{id:'paint_X'}).attr("src",PaintBrush.ERASER).attr("class","palette paint").appendTo("#pbPalette");
+    $("<div />",{id:'paint_0'}).attr("class","palette paint color e0 highlight").appendTo("#pbPalette");
+    $("<div />",{id:'paint_1'}).attr("class","palette paint color e1").appendTo("#pbPalette");
+    $("<div />",{id:'paint_2'}).attr("class","palette paint color e2").appendTo("#pbPalette");
+    $("<div />",{id:'paint_3'}).attr("class","palette paint color e3").appendTo("#pbPalette");
+    $("<div />",{id:'paint_4'}).attr("class","palette paint color e4").appendTo("#pbPalette");
+    $("<div />",{id:'paint_5'}).attr("class","palette paint color e5").appendTo("#pbPalette");
+    $("<div />",{id:'paint_6'}).attr("class","palette paint color e6").appendTo("#pbPalette");
+    */
+    $("<span />").addClass("vertLine").appendTo("#pbBucket");
+    $("<img>",{id:'paint_X'}).attr("src",PaintBrush.ERASER).attr("class","palette paint").appendTo("#pbBucket");
+    $("<div />",{id:'paint_0'}).attr("class","palette paint color e0 highlight").appendTo("#pbBucket");
+    $("<div />",{id:'paint_1'}).attr("class","palette paint color e1").appendTo("#pbBucket");
+    $("<div />",{id:'paint_2'}).attr("class","palette paint color e2").appendTo("#pbBucket");
+    $("<div />",{id:'paint_3'}).attr("class","palette paint color e3").appendTo("#pbBucket");
+    $("<div />",{id:'paint_4'}).attr("class","palette paint color e4").appendTo("#pbBucket");
+    $("<div />",{id:'paint_5'}).attr("class","palette paint color e5").appendTo("#pbBucket");
+    $("<div />",{id:'paint_6'}).attr("class","palette paint color e6").appendTo("#pbBucket");
+    $(".paint, #paintBrush").on("click", setPaint);
+  },
+  enabled: false,
+  mouseDown: false,
+  color: 0,
+  $image: [],
+  BRUSH_0: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjExR/NCNwAAAVhJREFUWEfFkrFKxjAUhf+Hsa4KLg5OOgnqXvhB+EcfwFXc+g6Cgw+gOLt17Uv0Ta49gSvJ7UlM2lSHrySn5/I1JTsR+TdouCVXx6cCsKaFLYDw9amT58OD3ByduA+gxdpYMUBOyzVh4j/57UyspwazgVrExHpqMBuqgS/en18Gcr8XDNUgVwyCzVpSYv93K8FmDSkxsH0wC5Zwf31XLAY0LOH95c1JY2K8tzMKDUvA746Jvz4+pwqfAzTMJSV+3B+mCp9TaJhDSnx7djFV+JwPDX9jHEcBa8SAhilUDIZhcBdqiRjQMIYV930vXde5dakY0DBGTIy17eZAQ0ZtMaChZQsxoKFPTAxstxQaKluKAQ2bphFFxW3bujU+xvaXEmx8qY+K/W4NfhZMatFuLdyDiRj+YA3cpWIii16+XKyIkXVqXDiG3vzFclwmJlTwXmVMEsOK5sjuG4akjK5VSzlGAAAAAElFTkSuQmCC",
+  BRUSH_1: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAIAAACQzIFuAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjExR/NCNwAAAUdJREFUSEu1kr1OwzAUhfsUdKqQkBg6VHSLKtSFjQmGPABCYgMmhkx5Ada+b3ti3/rn2MaOHa6+qj7O0ZfK7mp1Ov8jnJdgu96Aae3utgPp+0v/enx6uFEvoMctuGowbbqPWyD1kidDavnhwDSqCdXyw4Ep1WHUh7utsduCXc0nowZemENUbc9E44ViompAtRr7425fpAacc3y+fcAbqrFPzQnOOXAmofrn65tqAuc/iaqfD0eqWTiniar3t/dU8+Cc4FfNPDXgHEOrMeM44vZK1YBzgIiVehiGvu+xKFIDzgGhGgvqJOHs06QGnB1a1YDzlVCNoU4ezopl1IDy+jpa3XUdFngT1UoxK7E6o9WmUIP+El9sbLUCfESTGK89F5ypaGKjbjczbHQRTWxwqzTTX0ddsjtsdMHVicwf7GujONLDRsPpfAE11CWsQrN1eAAAAABJRU5ErkJggg==",
+  ERASER: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjExR/NCNwAAARVJREFUWEfFjoG2wyAIQ/fp/XM3XKmQRsGy8x7n3E1Tkvhqrf0bVNzhM/LTwW8RVMxiixXcWUHFLFhswV0GFTNgGQM9CBUjsCQC/QoVIzA8yy0HhQgM3MVl2UsEBlXoeTY8AgMq9DwbvgLNVXqmLZiBxipXrh5WoLnKlauHGWis4rLtBUFjlVs+ChZjugIqSIzFXSzG4Eb1XcSK3IQuDgMd/Z5FLAwufg3h2IIVssq4C8OQGt2fISsz/GUYtke9FpFX+MvX8Hhs8Znl8pFxGIbSZIuFcfhhufxl8JfzAU8fYbwudwYXHzxgt1igoqBhZ2A4u8UCFS32EWeBG/jmvBFUZNgSBu5noOJfQUXlOI5WBTMH7fUGwi4u6gcKLJ4AAAAASUVORK5CYII="
+};
+/**
+* Function to set the "paintbrush" mode.
+**/
+function setPaint(){
+  if(this.id == "paintBrush") {
+    var $cursors = $("#grid > div, #solutions li, .change-target");
+    if (PaintBrush.enabled) {
+      $('#paintBrush').replaceWith(PaintBrush.$image[0]);
+      $("html").css("cursor","auto");
+      $cursors.css("cursor","pointer");
+      disableSelection($("div"),"dragPaintbrush",true);
+      $('#pbBucket').hide(400);
+    } else {
+      $('#paintBrush').replaceWith(PaintBrush.$image[1]);
+      disableSelection($("div"),"dragPaintbrush");
+      $("html").css("cursor","url('paintbrush.cur'), auto");
+      $cursors.css("cursor","url('paintbrush.cur'), auto");
+      
+      $('#pbBucket').show(400);
+      //$('#paintBrush').css("padding-bottom","5px");
+    }  
+    $('#paintBrush').on("click", setPaint);
+    PaintBrush.enabled = !PaintBrush.enabled;
+    return;
+  }
+  PaintBrush.color = this.id.slice(-1);
+  $(".paint").removeClass("highlight");
+  $(this).addClass("highlight");
+}
+
+//enable argument is optional, defaults to false; 
+//  If set to true, el.selectstart will be re-enabled.
+//namespace argument is optional, defaults to no namespace.
+//  If provided, (and not "") then a namespace will be applied to
+//  the selectstart event.
+function disableSelection(el, namespace, enable){
+  var ns="selectstart", en = enable || false;
+  if (typeof namespace == "string" && namespace.length >0) {
+    ns = "selectstart." + namespace;
+  }
+  if (!enable) {
+    $(el).attr('unselectable','on')
+     .css({'-moz-user-select':'-moz-none',
+           '-moz-user-select':'none',
+           '-o-user-select':'none',
+           '-khtml-user-select':'none', /* you could also put this in a class */
+           '-webkit-user-select':'none',/* and add the CSS class here instead */
+           '-ms-user-select':'none',
+           'user-select':'none'
+     }).on(ns, function(){ return false; });
+  } else {
+    $(el).attr('unselectable','off')
+     .css({'-moz-user-select':'text',
+           '-moz-user-select':'text',
+           '-o-user-select':'text',
+           '-khtml-user-select':'text',
+           '-webkit-user-select':'text',
+           '-ms-user-select':'text',
+           'user-select':'text'
+     }).off(ns);
+  }
 }

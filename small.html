@@ -349,6 +349,8 @@
             </select>
             <br>
             <br>
+            <label for="max-length">Max path length:</label>
+            <input id="max-length" value="25" size="3"/><br /><br />
             <label for="num-paths" style="padding-top:3px">Computation Length:</label>
             <input type="text" value="100" id="num-path-value" class="fast">
             <br>
@@ -372,6 +374,7 @@
         <!-- CONTROLS -->
         </div>
         <div id="controls5x4">
+            <div class="palette" id="pbPalette"></div><br/>
             <input type="checkbox" id="allow-8"/>
             <label for="allow-8">Allow 8-direction movement</label><br />
             <input class="btn btn-primary" type="button" value="Solve" id="solve"/>
@@ -470,6 +473,5 @@
     <script src="js/easel.js"></script>
     <script src="js/optimizer.js"></script>
     <script src="js/main.js"></script>
-    <script type="text/javascript">
 </body>
 </html>

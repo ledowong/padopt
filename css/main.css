@@ -108,6 +108,7 @@ span.e5 { background-size: 18px; }
 }
 #change-cancel { margin-top 5px; }
 td.e5 { background-size: 20px; }
+#paint_0, #paint_1, #paint_2, #paint_3, #paint_4, #paint_5, #paint_6 { background-size: 30px; }
 #grid6x5 .e5, #grid7x6 .e5, #grid5x4 .e5 { font-size: 40px; }
 
 /*
@@ -155,7 +156,7 @@ td.e5 { background-size: 20px; }
 #controls7x6 {
   position: absolute;
   left: 20px;
-  top: 436px;
+  top: 420px;
   width: 444px;
   text-align: center;
   line-height: 2em;
@@ -163,19 +164,19 @@ td.e5 { background-size: 20px; }
 #extra-controls6x5 {
   position: absolute;
   left: 37px;
-  top: 459px;
+  top: 500px;
   z-index: 9999;
 }
 #extra-controls5x4 {
   position: absolute;
   left: 37px;
-  top: 395px;
+  top: 435px;
   z-index: 9999;
 }
 #extra-controls7x6 {
   position: absolute;
   left: 68px;
-  top: 549px;
+  top: 570px;
   z-index: 9999;
 }
 #solve {
@@ -621,3 +622,31 @@ label[for=num-paths] {
   height: auto;
   display: block;
 }
+
+#pbPalette {
+  /*border: solid 1px black;*/
+  width:360px;
+  height:40px;
+    line-height:normal;
+
+}
+.palette {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+}
+.paint.color {
+        vertical-align: top;
+        line-height: 1.8em;
+}
+.paint.highlight {
+  border-bottom: solid 3px #428bca;
+}
+.vertLine {
+width: 1px;
+background-color: black;
+height: 2em;
+position: absolute;
+top: .5em;
+}
+
