@@ -376,15 +376,23 @@
         <div id="controls5x4">
             <div class="palette" id="pbPalette"></div><br/>
             <input type="checkbox" id="allow-8"/>
-            <label for="allow-8">Allow 8-direction movement</label><br />
+            <label for="allow-8">Allow 8-direction movement</label><img src="https://ga-beacon.appspot.com/UA-71962661-1/padopt/5x4?pixel"><br />
             <input class="btn btn-primary" type="button" value="Solve" id="solve"/>
         </div>
         <div id="extra-controls5x4">
-            <input class="btn btn-default" type="button" value="Drop matches" id="drop"/> &nbsp;
             <input class="btn btn-default" type="button" value="Final state" id="final"/> &nbsp;
-            <input class="btn btn-default" type="button" value="Clear" id="clear"/> &nbsp;
-            <br>
+            <select class="btn btn-default" onchange="location = this.options[this.selectedIndex].value;">
+            <option value="small.html" selected>5x4</option>
+            <option value="index.html">6x5</option>
+            <option value="large.html">7x6</option>
+            </select> &nbsp;
+            <input class="btn btn-default" type="button" value="Import" id="import"/>
+            <br />
+            <input class="btn btn-default" type="button" value="Drop matches" id="drop"/> &nbsp;
             <input class="btn btn-default" type="button" value="Randomize" id="randomize"/> &nbsp;
+            <input class="btn btn-default" type="button" value="Change orbs" id="change"/> &nbsp;
+            <br />
+            <input class="btn btn-default" type="button" value="Clear" id="clear"/> &nbsp;
             <select class="btn btn-default"  id="randomization-type">
                 <option value="0,1,2,3,4,5">Random Type</option>
                 <option value="0,4">Ronia</option>
@@ -399,16 +407,8 @@
                 <option value="0,1,2,3,4,5">5 + Heal</option>
                 <option value="0,1,2,3,4,5,6">All</option>
             </select> &nbsp;
-            <input class="btn btn-default" type="button" value="Import" id="import"/> &nbsp;
-            <br>
-            <input class="btn btn-default" type="button" value="Change orbs" id="change"/> &nbsp;
-            <select class="btn btn-default" onchange="location = this.options[this.selectedIndex].value;">
-            <option value="small.html" selected>5x4</option>
-            <option value="index.html">6x5</option>
-            <option value="large.html">7x6</option>
-            </select> &nbsp;
-            <input class="btn btn-default" type="button" value="Lengthen Path" id="pathincrease"/>
-            <br>
+            <input class="btn btn-default" type="button" value="Lengthen Path" id="pathincrease"/> &nbsp;
+            <br />
         </div>
         <div id="hand"></div>
         <div id="import-popup" class="import-popup5x4">
