@@ -555,6 +555,8 @@ function evolve_solutions(solutions, weights, dir_step) {
     solutions.sort(function(a, b) {
     if ( sorter == "multiplier" ) {
 	return b.mult - a.mult  ||  a.complexity - b.complexity || b.weight - a.weight;
+    } else if (sorter == "multiweight") {
+	return b.mult - a.mult  || b.weight - a.weight ||  a.complexity - b.complexity;
     } else if (sorter == "complexity") {
 	return b.weight - a.weight || a.complexity - b.complexity;
     } else if (sorter == "length") {
