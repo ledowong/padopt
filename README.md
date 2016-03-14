@@ -27,6 +27,7 @@ Changelist
 * Added sorting (by [izenn](https://github.com/izenn))
 * Added iscribble's path lengthing (by [izenn](https://github.com/izenn))
 * Added ace-wu's no overlap drawing (by [izenn](https://github.com/izenn))
+* Added Junk support (both Poison and Junk at the same time.)(by [ledowong](https://github.com/ledowong))
 
 Usage
 -----
