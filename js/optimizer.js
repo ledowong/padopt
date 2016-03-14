@@ -1,4 +1,4 @@
-var TYPES = 7;
+var TYPES = 8; // Leonardo: This variable doesn't update all the places... search 'MANUAL_UPDATE_TYPE' for the places that need to update.
 var ORB_X_SEP = 64;
 var ORB_Y_SEP = 64;
 var ORB_WIDTH = 60;
@@ -153,7 +153,7 @@ function find_matches(board) {
             } else if (ROWS == "5") {
                 var thisMatch = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
             } else if (ROWS == "6") {
-                var thisMatch = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];      
+                var thisMatch = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];
             }
             while (stack.length) {
                 var n = stack.pop();
@@ -173,12 +173,12 @@ function find_matches(board) {
 				if(thisMatch[k][0] == 1 && thisMatch[k][1] == 1 && thisMatch[k][2] == 1 && thisMatch[k][3] == 1)
 				{
 					isRow = true;
-				}			
+				}
 			} else if (ROWS == "5") {
 				if(thisMatch[k][0] == 1 && thisMatch[k][1] == 1 && thisMatch[k][2] == 1 && thisMatch[k][3] == 1 && thisMatch[k][4] == 1)
 				{
 					isRow = true;
-				}			
+				}
 			} else if (ROWS == "6") {
 				if(thisMatch[k][0] == 1 && thisMatch[k][1] == 1 && thisMatch[k][2] == 1 && thisMatch[k][3] == 1 && thisMatch[k][4] == 1 && thisMatch[k][5] == 1)
 				{
@@ -209,7 +209,7 @@ function equals_matches(a, b) {
 function compute_weight(matches, weights) {
     var total_weight = 0;
 	//find num rows.
-	var numRows = [0,0,0,0,0,0,0];
+	var numRows = [0,0,0,0,0,0,0,0]; // // MANUAL_UPDATE_TYPE
 	matches.forEach(function(m)
 	{
 		if(m.isRow)
@@ -978,8 +978,9 @@ $(document).ready(function() {
                 .replace(/p/gi, '4')
                 .replace(/h/gi, '5')
                 .replace(/j/gi, '6')
+                .replace(/z/gi, '7')
                 .replace(/\s/g, '')
-                .replace(/[^0-6]/g, 'X');
+                .replace(/[^0-7]/g, 'X'); // MANUAL_UPDATE_TYPE
         if (board_joined.length != ROWS * COLS) {
             alert('Wrong number of orbs!');
             return;
@@ -1155,10 +1156,10 @@ function setPaint(){
       disableSelection($("div"),"dragPaintbrush");
       $("html").css("cursor","url('paintbrush.cur'), auto");
       $cursors.css("cursor","url('paintbrush.cur'), auto");
-      
+
       $('#pbBucket').show(400);
       //$('#paintBrush').css("padding-bottom","5px");
-    }  
+    }
     $('#paintBrush').on("click", setPaint);
     PaintBrush.enabled = !PaintBrush.enabled;
     return;
@@ -1168,7 +1169,7 @@ function setPaint(){
   $(this).addClass("highlight");
 }
 
-//enable argument is optional, defaults to false; 
+//enable argument is optional, defaults to false;
 //  If set to true, el.selectstart will be re-enabled.
 //namespace argument is optional, defaults to no namespace.
 //  If provided, (and not "") then a namespace will be applied to

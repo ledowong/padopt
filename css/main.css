@@ -34,7 +34,7 @@ body, html {
   user-select: none;
 }
 #path { pointer-events: none; z-index: 2; }
-.e0, .e1, .e2, .e3, .e4, .e5, .e6, .eX {
+.e0, .e1, .e2, .e3, .e4, .e5, .e6, .e7, .eX {
   font-family: PnDIcons;
   text-align: center;
   vertical-align: middle;
@@ -77,29 +77,32 @@ body, html {
   background-size: 52px;
 }
 .e6 { background-image: url('../img/poison_grid.png'); border-radius: 0%; color: navy; }
+.e7 { background-image: url('../img/junk_grid.png'); border-radius: 0%; color: navy; }
 .eX { background: #444; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; color: #ccc; }
 
 /* resizing */
-span.e0, span.e1, span.e2, span.e3, span.e4, span.e5, span.e6 {
+span.e0, span.e1, span.e2, span.e3, span.e4, span.e5, span.e6, span.e7 {
   background-size: 20px;
 }
-#change-popup > span.e0, #change-popup > span.e1, #change-popup > span.e2, #change-popup > span.e3, #change-popup > span.e4, #change-popup > span.e5, #change-popup > span.e6 {
+#change-popup > span.e0, #change-popup > span.e1, #change-popup > span.e2, #change-popup > span.e3, #change-popup > span.e4, #change-popup > span.e5, #change-popup > span.e6, #change-popup > span.e7 {
   background-size: 40px;
   margin-left: 4px;
 }
-td.e0, td.e1, td.e2, td.e3, td.e4, td.e5, td.e6 {
+td.e0, td.e1, td.e2, td.e3, td.e4, td.e5, td.e6, td.e7 {
   background-size: 23px;
 }
-#grid6x5 .e0, #grid6x5 .e1, #grid6x5 .e2, #grid6x5 .e3, #grid6x5 .e4, #grid6x5 .e6, #grid6x5 .eX, #grid7x6 .e0, #grid7x6 .e1, #grid7x6 .e2, #grid7x6 .e3, #grid7x6 .e4, #grid7x6 .e6, #grid7x6 .eX, #grid5x4 .e0, #grid5x4 .e1, #grid5x4 .e2, #grid5x4 .e3, #grid5x4 .e4, #grid5x4 .e6, #grid5x4 .eX {
+#grid6x5 .e0, #grid6x5 .e1, #grid6x5 .e2, #grid6x5 .e3, #grid6x5 .e4, #grid6x5 .e6, #grid6x5 .e7, #grid6x5 .eX, #grid7x6 .e0, #grid7x6 .e1, #grid7x6 .e2, #grid7x6 .e3, #grid7x6 .e4, #grid7x6 .e6, #grid7x6 .e7, #grid7x6 .eX, #grid5x4 .e0, #grid5x4 .e1, #grid5x4 .e2, #grid5x4 .e3, #grid5x4 .e4, #grid5x4 .e6, #grid5x4 .e7, #grid5x4 .eX {
   background-size: 60px;
   font-size: 40px;
 }
 /* heart orb */
 span.e5 { background-size: 18px; }
 #change-popup > span.e5 { background-size: 38px; margin-left: 6px;}
-#change-popup > span.e6 { margin-top: 10px; margin-left:4px }
+#change-popup > span.e6 { margin-left:4px }
 #change-popup > span.change-target.e6 { margin-top: 0px; margin-left:4px }
-#change-popup > span.eX { 
+#change-popup > span.e7 { margin-left:4px }
+#change-popup > span.change-target.e7 { margin-top: 0px; margin-left:4px }
+#change-popup > span.eX {
   width: 40px;
   height: 40px;
   line-height: 1.4em;
@@ -108,7 +111,7 @@ span.e5 { background-size: 18px; }
 }
 #change-cancel { margin-top 5px; }
 td.e5 { background-size: 20px; }
-#paint_0, #paint_1, #paint_2, #paint_3, #paint_4, #paint_5, #paint_6 { background-size: 30px; }
+#paint_0, #paint_1, #paint_2, #paint_3, #paint_4, #paint_5, #paint_6, #paint_7 { background-size: 30px; }
 #grid6x5 .e5, #grid7x6 .e5, #grid5x4 .e5 { font-size: 40px; }
 
 /*
@@ -208,7 +211,7 @@ td.e5 { background-size: 20px; }
 }
 .import-popup6x5, .import-popup5x4 {
   width: 350px;
-  height: 220px;
+  height: 250px;
   left: 440px;
   top: 190px;
 }
@@ -649,4 +652,3 @@ height: 2em;
 position: absolute;
 top: .5em;
 }
-
