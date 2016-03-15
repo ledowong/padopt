@@ -1,4 +1,4 @@
-var TYPES = 8; // Leonardo: This variable doesn't update all the places... search 'MANUAL_UPDATE_TYPE' for the places that need to update.
+var TYPES = 9; // Leonardo: This variable doesn't update all the places... search 'MANUAL_UPDATE_TYPE' for the places that need to update.
 var ORB_X_SEP = 64;
 var ORB_Y_SEP = 64;
 var ORB_WIDTH = 60;
@@ -209,7 +209,7 @@ function equals_matches(a, b) {
 function compute_weight(matches, weights) {
     var total_weight = 0;
 	//find num rows.
-	var numRows = [0,0,0,0,0,0,0,0]; // // MANUAL_UPDATE_TYPE
+	var numRows = [0,0,0,0,0,0,0,0,0]; // MANUAL_UPDATE_TYPE
 	matches.forEach(function(m)
 	{
 		if(m.isRow)
@@ -955,7 +955,7 @@ $(document).ready(function() {
 
     $('#import').click(function() {
         var board = get_board();
-        var type_chars = 'rbgyphj';
+        var type_chars = 'rbgyphqwj'; // MANUAL_UPDATE_TYPE
         var content = board.map(function(row) { return row.join(''); }).join('')
             .replace(/X/g, 'x')
             .replace(/(\d)/g, function(s) { return type_chars.charAt(s); });
@@ -977,10 +977,11 @@ $(document).ready(function() {
                 .replace(/y/gi, '3')
                 .replace(/p/gi, '4')
                 .replace(/h/gi, '5')
-                .replace(/j/gi, '6')
-                .replace(/z/gi, '7')
+                .replace(/q/gi, '6')
+                .replace(/w/gi, '7')
+                .replace(/j/gi, '8')
                 .replace(/\s/g, '')
-                .replace(/[^0-7]/g, 'X'); // MANUAL_UPDATE_TYPE
+                .replace(/[^0-8]/g, 'X'); // MANUAL_UPDATE_TYPE
         if (board_joined.length != ROWS * COLS) {
             alert('Wrong number of orbs!');
             return;

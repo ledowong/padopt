@@ -34,7 +34,7 @@ body, html {
   user-select: none;
 }
 #path { pointer-events: none; z-index: 2; }
-.e0, .e1, .e2, .e3, .e4, .e5, .e6, .e7, .eX {
+.e0, .e1, .e2, .e3, .e4, .e5, .e6, .e7, .e8, .eX {
   font-family: PnDIcons;
   text-align: center;
   vertical-align: middle;
@@ -77,21 +77,22 @@ body, html {
   background-size: 52px;
 }
 .e6 { background-image: url('../img/poison_grid.png'); border-radius: 0%; color: navy; }
-.e7 { background-image: url('../img/junk_grid.png'); border-radius: 0%; color: navy; }
+.e7 { background-image: url('../img/poison2_grid.png'); border-radius: 0%; color: navy; }
+.e8 { background-image: url('../img/junk_grid.png'); border-radius: 0%; color: navy; }
 .eX { background: #444; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; color: #ccc; }
 
 /* resizing */
-span.e0, span.e1, span.e2, span.e3, span.e4, span.e5, span.e6, span.e7 {
+span.e0, span.e1, span.e2, span.e3, span.e4, span.e5, span.e6, span.e7, span.e8 {
   background-size: 20px;
 }
-#change-popup > span.e0, #change-popup > span.e1, #change-popup > span.e2, #change-popup > span.e3, #change-popup > span.e4, #change-popup > span.e5, #change-popup > span.e6, #change-popup > span.e7 {
+#change-popup > span.e0, #change-popup > span.e1, #change-popup > span.e2, #change-popup > span.e3, #change-popup > span.e4, #change-popup > span.e5, #change-popup > span.e6, #change-popup > span.e7, #change-popup > span.e8 {
   background-size: 40px;
   margin-left: 4px;
 }
-td.e0, td.e1, td.e2, td.e3, td.e4, td.e5, td.e6, td.e7 {
+td.e0, td.e1, td.e2, td.e3, td.e4, td.e5, td.e6, td.e7, td.e8 {
   background-size: 23px;
 }
-#grid6x5 .e0, #grid6x5 .e1, #grid6x5 .e2, #grid6x5 .e3, #grid6x5 .e4, #grid6x5 .e6, #grid6x5 .e7, #grid6x5 .eX, #grid7x6 .e0, #grid7x6 .e1, #grid7x6 .e2, #grid7x6 .e3, #grid7x6 .e4, #grid7x6 .e6, #grid7x6 .e7, #grid7x6 .eX, #grid5x4 .e0, #grid5x4 .e1, #grid5x4 .e2, #grid5x4 .e3, #grid5x4 .e4, #grid5x4 .e6, #grid5x4 .e7, #grid5x4 .eX {
+#grid6x5 .e0, #grid6x5 .e1, #grid6x5 .e2, #grid6x5 .e3, #grid6x5 .e4, #grid6x5 .e6, #grid6x5 .e7, #grid6x5 .e8, #grid6x5 .eX, #grid7x6 .e0, #grid7x6 .e1, #grid7x6 .e2, #grid7x6 .e3, #grid7x6 .e4, #grid7x6 .e6, #grid7x6 .e7, #grid7x6 .e8, #grid7x6 .eX, #grid5x4 .e0, #grid5x4 .e1, #grid5x4 .e2, #grid5x4 .e3, #grid5x4 .e4, #grid5x4 .e6, #grid5x4 .e7, #grid5x4 .e8, #grid5x4 .eX {
   background-size: 60px;
   font-size: 40px;
 }
@@ -102,6 +103,8 @@ span.e5 { background-size: 18px; }
 #change-popup > span.change-target.e6 { margin-top: 0px; margin-left:4px }
 #change-popup > span.e7 { margin-left:4px }
 #change-popup > span.change-target.e7 { margin-top: 0px; margin-left:4px }
+#change-popup > span.e8 { margin-left:4px }
+#change-popup > span.change-target.e8 { margin-top: 0px; margin-left:4px }
 #change-popup > span.eX {
   width: 40px;
   height: 40px;
@@ -111,7 +114,7 @@ span.e5 { background-size: 18px; }
 }
 #change-cancel { margin-top 5px; }
 td.e5 { background-size: 20px; }
-#paint_0, #paint_1, #paint_2, #paint_3, #paint_4, #paint_5, #paint_6, #paint_7 { background-size: 30px; }
+#paint_0, #paint_1, #paint_2, #paint_3, #paint_4, #paint_5, #paint_6, #paint_7,  #paint_8 { background-size: 30px; }
 #grid6x5 .e5, #grid7x6 .e5, #grid5x4 .e5 { font-size: 40px; }
 
 /*
@@ -136,7 +139,9 @@ td.e5 { background-size: 20px; }
   left: 509px;
   top: 20px;
 }
-#profile6x5 .e0, #profile6x5 .e1, #profile6x5 .e2, #profile6x5 .e3, #profile6x5 .e4, #profile6x5 .e6, #profile6x5 .e5, #profile6x5 .eX, #profile7x6 .e0, #profile7x6 .e1, #profile7x6 .e2, #profile7x6 .e3, #profile7x6 .e4, #profile7x6 .e6, #profile7x6 .e5, #profile7x6 .eX, #profile5x4 .e0, #profile5x4 .e1, #profile5x4 .e2, #profile5x4 .e3, #profile5x4 .e4, #profile5x4 .e6, #profile5x4 .e5, #profile5x4 .eX {
+#profile6x5 .e0, #profile6x5 .e1, #profile6x5 .e2, #profile6x5 .e3, #profile6x5 .e4, #profile6x5 .e5, #profile6x5 .e6, #profile6x5 .e7, #profile6x5 .e8, #profile6x5 .eX,
+#profile7x6 .e0, #profile7x6 .e1, #profile7x6 .e2, #profile7x6 .e3, #profile7x6 .e4, #profile7x6 .e5, #profile7x6 .e6, #profile7x6 .e7, #profile7x6 .e8, #profile7x6 .eX,
+#profile5x4 .e0, #profile5x4 .e1, #profile5x4 .e2, #profile5x4 .e3, #profile5x4 .e4, #profile5x4 .e5, #profile5x4 .e6, #profile5x4 .e7, #profile5x4 .e8, #profile5x4 .eX {
   font-size: 16px;
 }
 #profile6x5 input, #profile7x6 input, #profile5x4 input { width: 2.8em; border: 0px; margin: 2px; }
@@ -211,13 +216,13 @@ td.e5 { background-size: 20px; }
 }
 .import-popup6x5, .import-popup5x4 {
   width: 350px;
-  height: 250px;
+  height: 280px;
   left: 440px;
   top: 190px;
 }
 .import-popup7x6 {
   width: 390px;
-  height: 240px;
+  height: 300px;
   left: 440px;
   top: 190px;
 }
