@@ -29,6 +29,8 @@ Changelist
 * Added ace-wu's no overlap drawing (by [izenn](https://github.com/izenn))
 * Added Junk support (both Poison and Junk at the same time.)(by [ledowong](https://github.com/ledowong))
 * Added Stronger Poison support (PAD)(by [ledowong](https://github.com/ledowong))
+* Rewrite image analysis!! Support any size of screenshot, even not full screen. UI not done yet. Now you can just drag and drop the image file into the browser (by [ledowong](https://github.com/ledowong)) ![Screenshot](screenshot3.png)
+
 
 Usage
 -----
@@ -74,3 +76,4 @@ TODO
 * Simulate swapping and matching when playing the animation and dropping the matches.
 * The default weight of the profiles may need to be adjusted.
 * Randomizer is actually pretty awful and extremely slow the less orbs there are (due to trying to find a board setup without any matches). For some reason this crashes the page if I remove the find_matches function as well. Fix sometime soon hopefully since Sonia boards are really useful to learn.
+* Redesign UI, HTML/JS structure.
