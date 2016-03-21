@@ -51,7 +51,7 @@ var fire_default =    [  5,  15, 15000, 26000];
 var light_default =   [ 45,  60, 15000, 26000];
 var wood_default =    [125, 150, 15000, 26000];
 var water_default =   [195, 215, 18000, 26000];
-var junk_default =    [205, 210, 13000, 19000];
+var junk_default =    [205, 225,  8000, 17999];
 var poison2_default = [268, 275, 15000, 25000];
 var poison_default =  [276, 284, 15000, 21000];
 var dark_default =    [285, 300, 15000, 26000];
@@ -327,10 +327,12 @@ function sampleEachGem(){
       var ty = y * half_height * 2 + half_width + grid_position[1];
       var p = ctx.getImageData(tx, ty, 1, 1).data;
       var key = sampleGemToKey(rgb2hsv(p[0], p[1], p[2]));
+      if (key == 'x') {
+        console.log(y+1, x+1, rgb2hsv(p[0], p[1], p[2]), key);
+      }
       ctx.fillStyle = "#ffffff";
       ctx.font = "30px Arial";
       ctx.fillText(key,tx,ty);
-      // console.log(y+1, x+1, rgb2hsv(p[0], p[1], p[2]), key);
       results.push(key);
     }
   }
