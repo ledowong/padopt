@@ -130,6 +130,58 @@
 
 
 
+  $('body').on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  })
+  // .on('dragover dragenter', function() {
+  //   $form.addClass('is-dragover');
+  // })
+  // .on('dragleave dragend drop', function() {
+  //   $form.removeClass('is-dragover');
+  // })
+  .on('drop', function(e) {
+    // droppedFiles = e.originalEvent.dataTransfer.files;
+    var elem = document.getElementById("screenshot_canvas");
+    if (elem) elem.parentElement.removeChild(elem); // reset canvas
+    var fr = new FileReader();
+    fr.onload = createImage;   // onload fires after reading is complete
+    fr.readAsDataURL(e.originalEvent.dataTransfer.files[0]);    // begin reading
+  });
+
+  // $("#upload_screenshot").on('change', function(){
+  //   var elem = document.getElementById("screenshot_canvas");
+  //   if (elem) elem.parentElement.removeChild(elem); // reset canvas
+  //   var fr = new FileReader();
+  //   fr.onload = createImage;   // onload fires after reading is complete
+  //   fr.readAsDataURL($(this)[0].files[0]);    // begin reading
+  // });
+
+  function createImage(p){
+    var img = new Image();
+    img.onload = imageLoaded;
+    img.src = p.currentTarget.result;
+  }
+
+  function imageLoaded(p){
+    var img = p.path[0];
+    var canvas = document.createElement('canvas');
+    canvas.width = img.width;      // set canvas size big enough for the image
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img,0,0);         // draw the image
+    imageAnalysis(canvas.toDataURL("image/png"), COLS, ROWS, function(result_string){
+      $('#import-textarea').val(result_string);
+      $('#import-import').click();
+      if (result_string.indexOf('x') === -1) {
+        // no x in the result, everything matched, solve the puzzle
+        $('#solve').click();
+      }
+    });
+    canvas = null; // clear
+  }
+
+
 
   //helpers
 
