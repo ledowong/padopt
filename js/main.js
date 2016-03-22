@@ -171,11 +171,15 @@
     var ctx = canvas.getContext("2d");
     ctx.drawImage(img,0,0);         // draw the image
     imageAnalysis(canvas.toDataURL("image/png"), COLS, ROWS, function(result_string){
-      $('#import-textarea').val(result_string);
-      $('#import-import').click();
-      if (result_string.indexOf('x') === -1) {
-        // no x in the result, everything matched, solve the puzzle
-        $('#solve').click();
+      if (result_string) {
+        $('#import-textarea').val(result_string);
+        $('#import-import').click();
+        if (result_string.indexOf('x') === -1) {
+          // no x in the result, everything matched, solve the puzzle
+          $('#solve').click();
+        }
+      } else {
+        alert('Game board not found.')
       }
     });
     canvas = null; // clear

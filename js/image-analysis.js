@@ -300,14 +300,14 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
       while (y > 0) {
         if (isBlack(x,y)) {
           // check the right side, see if all white, it should be HP bar if it does.
-          var shifted_x = x + (one_block / 2);
+          var shifted_x = x - one_block;
           var all_black = true;
-          while (x - (one_block / 2) < shifted_x) {
+          while (x > shifted_x) {
             if (!isBlack(shifted_x,y)) {
               all_black = false;
               break;
             }
-            shifted_x -= sample_per_pixel;
+            shifted_x += sample_per_pixel;
           }
           if (all_black) {
             return y;
