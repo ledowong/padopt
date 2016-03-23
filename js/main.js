@@ -149,13 +149,14 @@
     fr.readAsDataURL(e.originalEvent.dataTransfer.files[0]);    // begin reading
   });
 
-  // $("#upload_screenshot").on('change', function(){
-  //   var elem = document.getElementById("screenshot_canvas");
-  //   if (elem) elem.parentElement.removeChild(elem); // reset canvas
-  //   var fr = new FileReader();
-  //   fr.onload = createImage;   // onload fires after reading is complete
-  //   fr.readAsDataURL($(this)[0].files[0]);    // begin reading
-  // });
+
+  $("#upload_screenshot").on('change', function(){
+    var elem = document.getElementById("screenshot_canvas");
+    if (elem) elem.parentElement.removeChild(elem); // reset canvas
+    var fr = new FileReader();
+    fr.onload = createImage;   // onload fires after reading is complete
+    fr.readAsDataURL($(this)[0].files[0]);    // begin reading
+  });
 
   function createImage(p){
     var img = new Image();
