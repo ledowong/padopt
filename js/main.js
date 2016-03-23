@@ -160,14 +160,8 @@
 
 
   function imageLoaded(p){
-    var img = new Image();
-    img.src = p.currentTarget.result;
-    var canvas = document.createElement('canvas');
-    canvas.width = img.width;      // set canvas size big enough for the image
-    canvas.height = img.height;
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img,0,0);         // draw the image
-    imageAnalysis(canvas.toDataURL("image/png"), COLS, ROWS, function(result_string){
+    var data_uri = p.currentTarget.result;
+    imageAnalysis(data_uri, COLS, ROWS, function(result_string){
       if (result_string) {
         $('#import-textarea').val(result_string);
         $('#import-import').click();
