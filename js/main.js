@@ -145,7 +145,7 @@
     var elem = document.getElementById("screenshot_canvas");
     if (elem) elem.parentElement.removeChild(elem); // reset canvas
     var fr = new FileReader();
-    fr.onload = createImage;   // onload fires after reading is complete
+    fr.onload = imageLoaded;   // onload fires after reading is complete
     fr.readAsDataURL(e.originalEvent.dataTransfer.files[0]);    // begin reading
   });
 
@@ -154,18 +154,14 @@
     var elem = document.getElementById("screenshot_canvas");
     if (elem) elem.parentElement.removeChild(elem); // reset canvas
     var fr = new FileReader();
-    fr.onload = createImage;   // onload fires after reading is complete
+    fr.onload = imageLoaded;   // onload fires after reading is complete
     fr.readAsDataURL($(this)[0].files[0]);    // begin reading
   });
 
-  function createImage(p){
-    var img = new Image();
-    img.onload = imageLoaded;
-    img.src = p.currentTarget.result;
-  }
 
   function imageLoaded(p){
-    var img = p.path[0];
+    var img = new Image();
+    img.src = p.currentTarget.result;
     var canvas = document.createElement('canvas');
     canvas.width = img.width;      // set canvas size big enough for the image
     canvas.height = img.height;

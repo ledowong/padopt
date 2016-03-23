@@ -114,7 +114,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     screenshot_canvas = document.createElement('canvas');
     screenshot_canvas.id = 'screenshot_canvas';
     if (!debug) {
-      screenshot_canvas.style = 'display:none';
+      screenshot_canvas.style.display = 'none';
     }
     document.body.appendChild(screenshot_canvas);
     var blur = dark_mode ? 30 : 60;
@@ -131,7 +131,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     screenshot_canvas = document.createElement('canvas');
     screenshot_canvas.id = 'screenshot_canvas';
     if (!debug) {
-      screenshot_canvas.style = 'display:none';
+      screenshot_canvas.style.display = 'none';
     }
     document.body.appendChild(screenshot_canvas);
     Caman(screenshot_canvas, screenshot_url, function () {
@@ -148,7 +148,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     screenshot_canvas = document.createElement('canvas');
     screenshot_canvas.id = 'screenshot_canvas';
     if (!debug) {
-      screenshot_canvas.style = 'display:none';
+      screenshot_canvas.style.display = 'none';
     }
     document.body.appendChild(screenshot_canvas);
     Caman(screenshot_canvas, screenshot_url, function () {
