@@ -39,7 +39,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   var poison2_default = [[268, 275, 15000, 25000],[  5,  15, 30000, 30000],[  3,  15, 30000, 30000]];
   var poison_default =  [[276, 284, 15000, 21000],[  5,  15,  9000, 15000],[346, 360,  5000, 10000]];
   var dark_default =    [[285, 300, 15000, 26000],[325, 345, 10000, 15000],[305, 329,  5000, 15000]];
-  var heart_default =   [[315, 330, 15000, 26000],[340, 350, 10000, 25000],[330, 345,  5000, 15000]];
+  var heart_default =   [[310, 330, 15000, 26000],[340, 350, 10000, 25000],[330, 345,  5000, 15000]];
 
   /*****************************************************************************
   * Helper functions
@@ -183,7 +183,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
             if (rows == 6) {
               d = 17;
             } else {
-              d = 19;
+              d = 18;
             }
             tx = x * block_width + (block_width/2) + grid_position[0];
             ty = y * block_height + (block_height/d) + grid_position[1]; // ~94%
