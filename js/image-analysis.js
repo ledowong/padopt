@@ -21,6 +21,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   * Variables
   *****************************************************************************/
   var debug = false;
+  var debug_shape = false;
   var grid = [cols, rows];
   var grid_position;
   var end_results;
@@ -31,16 +32,16 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   // GEM color profile
   //                            Normal              Transparent Light BG     Transparent Dark BG
   //                     minH,maxH,  minV,  maxV  minH,maxH,  minV,  maxV  minH,maxH,  minV,  maxV
-  var fire_default =    [[  5,  15, 15000, 26000],[  1,  15, 10000, 25000],[  2,  15,  5000, 15000]];
+  var fire_default =    [[  5,  20, 15000, 26000],[  1,  15, 11701, 25000],[  2,  15,  5000, 15000]];
   var light_default =   [[ 45,  60, 15000, 26000],[ 30,  40, 10000, 25000],[ 30,  40,  5000, 15000]];
-  var wood_default =    [[125, 150, 15000, 26000],[ 50,  85,  5000, 15000],[ 90, 130,  5000, 15000]];
+  var wood_default =    [[125, 150, 15000, 26000],[ 45,  85,  5000, 15000],[ 85, 130,  5000, 15000]];
   var water_default =   [[195, 215, 18000, 26000],[225, 295,  5000, 15000],[215, 255,  5000, 15000]];
-  var junk_default =    [[195, 235,  8000, 17999],[  1,  15,  7000, 10000],[330, 340,  4000, 10000]];
+  var junk_default =    [[195, 235,  8000, 17999],[  1,  15,  7000, 10000],[330, 340,  4000,  7999]];
   var poison2_default = [[268, 275, 15000, 25000],[  5,  15, 30000, 30000],[  3,  15, 30000, 30000]];
-  var poison_default =  [[276, 284, 15000, 21000],[  5,  15,  9000, 15000],[340, 360,  5000, 10000]];
+  var poison_default =  [[276, 284, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
   var dark_default =    [[285, 300, 15000, 26000],[325, 345, 10000, 15000],[305, 329,  5000, 15000]];
-  var heart_default =   [[310, 330, 15000, 26000],[340, 350, 10000, 25000],[330, 345,  5000, 15000]];
-  // {h: 336, s: 9, v: 16300}
+  var heart_default =   [[310, 330, 15000, 26000],[340, 350, 10000, 25000],[330, 345,  8000, 15000]];
+  // {h: 8, s: 61, v: 11900}
 
   /*****************************************************************************
   * Helper functions
@@ -182,9 +183,9 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
         for (var y=0; y < grid[1]; y++) {
           for (var x=0; x < grid[0]; x++) {
             if (rows == 6) {
-              d = 17;
+              d = 16; // 7x6
             } else {
-              d = 18;
+              d = 17.5; // 6x5 / 5x4
             }
             tx = x * block_width + (block_width/2) + grid_position[0];
             ty = y * block_height + (block_height/d) + grid_position[1]; // ~94%
@@ -214,6 +215,9 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
               shape_results.push('?');
             }
           }
+        }
+        if (debug && debug_shape) {
+          throw('debug shape');
         }
         removeCanvas();
         preProcessScreenshotForGemSampling();
@@ -344,6 +348,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     }
   }
   function sampleGemToKey(hsv, result_index, dark_bg){
+    var it_can_be = [];
     var mode_index = 0; // normal
     if (dark_mode) {
       mode_index = 1; // Transparent mode with light background
@@ -355,55 +360,59 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     if (hsv.h >= fire_default[mode_index][0] && fire_default[mode_index][1] >= hsv.h &&
         hsv.v >= fire_default[mode_index][2] && fire_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'o'))) {
-      return 'r';
+      it_can_be.push('r');
     }
     // water
     if (hsv.h >= water_default[mode_index][0] && water_default[mode_index][1] >= hsv.h &&
         hsv.v >= water_default[mode_index][2] && water_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'o'))) {
-      return 'b';
+      it_can_be.push('b');
     }
     // wood
     if (hsv.h >= wood_default[mode_index][0] && wood_default[mode_index][1] >= hsv.h &&
         hsv.v >= wood_default[mode_index][2] && wood_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'o'))) {
-      return 'g';
+      it_can_be.push('g');
     }
     // light
     if (hsv.h >= light_default[mode_index][0] && light_default[mode_index][1] >= hsv.h &&
         hsv.v >= light_default[mode_index][2] && light_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'o'))) {
-      return 'y';
+      it_can_be.push('y');
     }
     // dark
     if (hsv.h >= dark_default[mode_index][0] && dark_default[mode_index][1] >= hsv.h &&
         hsv.v >= dark_default[mode_index][2] && dark_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'o'))) {
-      return 'p';
+      it_can_be.push('p');
     }
     // heart
     if (hsv.h >= heart_default[mode_index][0] && heart_default[mode_index][1] >= hsv.h &&
         hsv.v >= heart_default[mode_index][2] && heart_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === '?'))) {
-      return 'h';
+      it_can_be.push('h');
     }
     // junk
     if (hsv.h >= junk_default[mode_index][0] && junk_default[mode_index][1] >= hsv.h &&
         hsv.v >= junk_default[mode_index][2] && junk_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === '?'))) {
-      return 'j';
+      it_can_be.push('j');
     }
     // poison
     if (hsv.h >= poison_default[mode_index][0] && poison_default[mode_index][1] >= hsv.h &&
         hsv.v >= poison_default[mode_index][2] && poison_default[mode_index][3] >= hsv.v) {
-      return 'q';
+      it_can_be.push('q');
     }
     // poison2
     if (hsv.h >= poison2_default[mode_index][0] && poison2_default[mode_index][1] >= hsv.h &&
         hsv.v >= poison2_default[mode_index][2] && poison2_default[mode_index][3] >= hsv.v) {
-      return 'w';
+      it_can_be.push('w');
     }
-    return 'x'; // unknown
+    if (it_can_be.length === 0 || it_can_be.length > 1) {
+      return 'x' // unknown
+    } else {
+      return it_can_be[0];
+    }
   }
   function sampleEachGem(){
     if (debug) {
@@ -429,7 +438,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
         }
         p = ctx.getImageData(tx, ty, 1, 1).data;
         key = sampleGemToKey(rgb2hsv(p[0], p[1], p[2]), result_index, dark_bg);
-        if (debug || key == 'x') {
+        if (debug || key === 'x') {
           console.log(y+1, x+1, rgb2hsv(p[0], p[1], p[2]), key,( shape_results ? shape_results[result_index] : null), dark_bg);
         }
         if (debug) {
