@@ -34,12 +34,13 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   var fire_default =    [[  5,  15, 15000, 26000],[  1,  15, 10000, 25000],[  2,  15,  5000, 15000]];
   var light_default =   [[ 45,  60, 15000, 26000],[ 30,  40, 10000, 25000],[ 30,  40,  5000, 15000]];
   var wood_default =    [[125, 150, 15000, 26000],[ 50,  85,  5000, 15000],[ 90, 130,  5000, 15000]];
-  var water_default =   [[195, 215, 18000, 26000],[225, 285,  5000, 15000],[215, 255,  5000, 15000]];
-  var junk_default =    [[205, 225,  8000, 17999],[  1,  15,  7000, 10000],[330, 340,  4000, 10000]];
+  var water_default =   [[195, 215, 18000, 26000],[225, 295,  5000, 15000],[215, 255,  5000, 15000]];
+  var junk_default =    [[195, 235,  8000, 17999],[  1,  15,  7000, 10000],[330, 340,  4000, 10000]];
   var poison2_default = [[268, 275, 15000, 25000],[  5,  15, 30000, 30000],[  3,  15, 30000, 30000]];
-  var poison_default =  [[276, 284, 15000, 21000],[  5,  15,  9000, 15000],[346, 360,  5000, 10000]];
+  var poison_default =  [[276, 284, 15000, 21000],[  5,  15,  9000, 15000],[340, 360,  5000, 10000]];
   var dark_default =    [[285, 300, 15000, 26000],[325, 345, 10000, 15000],[305, 329,  5000, 15000]];
   var heart_default =   [[310, 330, 15000, 26000],[340, 350, 10000, 25000],[330, 345,  5000, 15000]];
+  // {h: 336, s: 9, v: 16300}
 
   /*****************************************************************************
   * Helper functions
@@ -117,7 +118,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
       screenshot_canvas.style.display = 'none';
     }
     document.body.appendChild(screenshot_canvas);
-    var blur = dark_mode ? 30 : 60;
+    var blur = dark_mode ? 30 : 40;
     Caman(screenshot_canvas, screenshot_url, function () {
       this.resize({
         width: 1024
@@ -230,14 +231,14 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     var hex = ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     if (hex == "000000") {
       if (debug && draw) {
-        ctx.fillStyle = "#FF0000";
+        ctx.fillStyle = "#00FF00";
         ctx.fillRect(x,y,2,2);
       }
       return true;
     } else {
       if (debug) {
         ctx.fillStyle = "#FF0000";
-        ctx.fillRect(x,y,1,1);
+        ctx.fillRect(x,y,2,2);
       }
       return false;
     }
