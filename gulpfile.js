@@ -4,10 +4,15 @@ var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 var connect = require('gulp-connect');
+var concat = require('gulp-concat');
 
 // static file that need to process.
 var paths = {
-  js: ['js/image-analysis.js'],
+  js: ['js/bootstrap/modal.js',
+       'js/bootstrap/tooltip.js',
+       'js/board.js',
+       'js/image-analysis.js',
+       'js/source.js'],
   sass: ['css/source.scss'],
   html: ['testing.html']
 };
@@ -24,6 +29,7 @@ gulp.task('default', ['watch', 'sass', 'js'], function() {
 // js
 gulp.task('js', function () {
   gulp.src(paths.js)
+    .pipe(concat('all.js'))
     .pipe(uglify())
     .pipe(rename({suffix: '.min', basename: 'build'}))
     .pipe(gulp.dest("js"));
