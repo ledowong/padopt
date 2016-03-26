@@ -10,6 +10,7 @@ var concat = require('gulp-concat');
 var paths = {
   js: ['js/bootstrap/modal.js',
        'js/bootstrap/tooltip.js',
+       'js/optimizer2.js',
        'js/board.js',
        'js/image-analysis.js',
        'js/source.js'],
@@ -30,7 +31,7 @@ gulp.task('default', ['watch', 'sass', 'js'], function() {
 gulp.task('js', function () {
   gulp.src(paths.js)
     .pipe(concat('all.js'))
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(rename({suffix: '.min', basename: 'build'}))
     .pipe(gulp.dest("js"));
 });

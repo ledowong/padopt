@@ -12,6 +12,7 @@
 
   <script src="js/modernizr-custom.js"></script>
 
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto' rel='stylesheet' type='text/css'>
   <link href="css/build.min.css" rel="stylesheet">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -39,10 +40,10 @@
             <label>
               Grid:
             </label>
-            <select class="form-control" id="grid_size">
-              <option value="6x5">6x5</option>
-              <option value="7x6">7x6</option>
+            <select class="form-control" id="form_grid_size">
               <option value="5x4">5x4</option>
+              <option value="6x5" selected>6x5</option>
+              <option value="7x6">7x6</option>
             </select>
           </div>
         </div>
@@ -136,7 +137,7 @@
             <label>
               Max Path:
             </label>
-            <select class="form-control">
+            <select class="form-control" id="form_max_length">
               <option value="10">10 (Shorter)</option>
               <option value="11">11</option>
               <option value="12">12</option>
@@ -164,16 +165,16 @@
             <label>
               Path Type:
             </label>
-            <select class="form-control">
-              <option value="0">Overlap</option>
-              <option value="1">No Overlap</option>
+            <select class="form-control" id="form_draw_style">
+              <option value="traditional">Overlap</option>
+              <option value="rounded">No Overlap</option>
             </select>
           </div>
           <div class="col-xs-4">
             <label>
               Computation:
             </label>
-            <select class="form-control">
+            <select class="form-control" id="form_max_paths">
               <option value="100" selected>100 (Faster)</option>
               <option value="120">120</option>
               <option value="140">140</option>
@@ -193,32 +194,53 @@
             </select>
           </div>
         </div>
-        <div class="row">
+        <div class="row hidden-xs">
           <div class="col-xs-12">
             <label>
               Sorting:
             </label>
-            <select class="form-control">
-              <option value="0">Weight (W) &gt; Length (L)</option>
-              <option value="1">Weight (W) &gt; Complexity (↯)</option>
-              <option value="2">Multiplier (M) &gt; Complexity (↯) &gt; Weight (W)</option>
-              <option value="3">Multiplier (M) &gt; Weight (W) &gt; Complexity (↯)</option>
+            <select class="form-control" id="form_sorting">
+              <option value="length">Weight (W) &gt; Length (L)</option>
+              <option value="complexity">Weight (W) &gt; Complexity (↯)</option>
+              <option value="multiplier">Multiplier (M) &gt; Complexity (↯) &gt; Weight (W)</option>
+              <option value="multiweight">Multiplier (M) &gt; Weight (W) &gt; Complexity (↯)</option>
             </select>
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-4 text-center form-horizontal" id="buttons">
         <canvas id="board_canvas"></canvas>
+        <!-- buttons -->
+        <button type="button" class="btn btn-primary btn hidden-xs form_solve_button">Solve</button>
         <button type="button" class="btn btn-default btn" data-toggle="modal" data-target="#changeOrbsModal">
           Change Orbs
         </button>
-        <button type="button" class="btn btn-default btn">Drop Matches</button>
-        <button type="button" class="btn btn-default btn">Final State</button>
-        <button type="button" class="btn btn-default btn hidden-xs" data-toggle="modal" data-target="#importModal">
+        <button type="button" class="btn btn-default btn hidden-xs" id="form_drop_match_button">Drop Matches</button>
+        <button type="button" class="btn btn-primary btn visible-xs-inline form_solve_button">Solve</button>
+        <button type="button" class="btn btn-default btn" id="form_final_state_button">Final State</button>
+        <button type="button" class="btn btn-default btn hidden-xs" id="form_import_button">
           Import
         </button>
-        <button type="button" class="btn btn-default btn">Clear</button>
-        <button type="button" class="btn btn-default btn">Randomize</button>
+        <button type="button" class="btn btn-default btn hidden-xs" id="form_clear_button">Clear</button>
+        <button type="button" class="btn btn-default btn hidden-xs" id="form_randomize_button">Randomize</button>
+        <div class="row form-group hidden-xs">
+          <label class="col-sm-5 control-label">Random Type:</label>
+          <div class="col-sm-7">
+            <select class="form-control" id="form_random_type">
+              <option value="r,b,g,y,p,h">5 + Heal</option>
+              <option value="r,p">Ronia</option>
+              <option value="b,p">Bonia</option>
+              <option value="g,p">Gonia</option>
+              <option value="r,b,h">Urd</option>
+              <option value="b,g,h">Skuld</option>
+              <option value="r,b,h">Verdandi</option>
+              <option value="r,b,g">3-color</option>
+              <option value="r,b,g,h">3 + Heal</option>
+              <option value="r,b,g,y,p">5-color</option>
+              <option value="r,b,g,y,p,h,q,w,j">All</option>
+            </select>
+          </div>
+        </div>
       </div>
       <div class="col-sm-4">Results</div>
     </div>
@@ -255,7 +277,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Import & Solve</button>
+            <button type="button" class="btn btn-primary">Import &amp; Solve</button>
           </div>
         </div>
       </div>
@@ -300,6 +322,7 @@
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
   <script src="js/build.min.js"></script>
 </body>
 </html>

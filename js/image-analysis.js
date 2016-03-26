@@ -21,13 +21,15 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   * Variables
   *****************************************************************************/
   var debug = false;
-  var debug_shape = false;
+  var debug_grid = true;
+  var debug_shape = true;
   var grid = [cols, rows];
   var grid_position;
   var end_results;
   var shape_results;
   var dark_mode = false;
   var screenshot_canvas = null;
+  var resize_board_to = 800;
 
   // GEM color profile
   //                            Normal              Transparent Light BG     Transparent Dark BG
@@ -38,10 +40,10 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   var water_default =   [[195, 215, 18000, 26000],[225, 295,  5000, 15000],[215, 255,  5000, 15000]];
   var junk_default =    [[195, 235,  8000, 17999],[  1,  15,  7000, 10000],[330, 340,  4000,  7999]];
   var poison2_default = [[268, 275, 15000, 25000],[  5,  15, 30000, 30000],[  3,  15, 30000, 30000]];
-  var poison_default =  [[276, 284, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
-  var dark_default =    [[285, 300, 15000, 26000],[325, 345, 10000, 15000],[305, 329,  5000, 15000]];
+  var poison_default =  [[276, 281, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
+  var dark_default =    [[282, 300, 15000, 26000],[325, 345, 10000, 15000],[305, 329,  5000, 15000]];
   var heart_default =   [[310, 330, 15000, 26000],[340, 350, 10000, 25000],[330, 345,  8000, 15000]];
-  // {h: 8, s: 61, v: 11900}
+  // {h: 231, s: 30, v: 8900}
 
   /*****************************************************************************
   * Helper functions
@@ -83,20 +85,26 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     document.body.appendChild(screenshot_canvas);
     Caman(screenshot_canvas, screenshot_url, function () {
       // greyscale > threshold // stackBlur(10).
-      this.resize({
-        width: 1024
+      this.crop(
+        grid_position[2] - grid_position[0],
+        grid_position[3] - grid_position[1],
+        grid_position[0],
+        grid_position[1]
+      ).resize({
+        width: resize_board_to
       }).render(function(){
+
         var canvas = document.getElementById('screenshot_canvas');
         var ctx = canvas.getContext("2d");
         ctx.strokeStyle="#FFFF00";
         ctx.lineWidth=5;
-        ctx.strokeRect(grid_position[0], grid_position[1], grid_position[2] - grid_position[0], grid_position[3] - grid_position[1]);
-        var half_width = ((grid_position[2] - grid_position[0]) / grid[0]) / 2;
-        var half_height = ((grid_position[3] - grid_position[1]) / grid[1]) / 2;
+        var block_size = resize_board_to / grid[0];
+        ctx.strokeRect(0, 0, resize_board_to, block_size * grid[1]);
+        var half_block_size = block_size / 2;
         for (var y=0; y < grid[1]; y++) {
           for (var x=0; x < grid[0]; x++) {
-            var tx = x * half_width * 2 + half_width + grid_position[0];
-            var ty = y * half_height * 2 + half_height + grid_position[1];
+            var tx = x * half_block_size * 2 + half_block_size;
+            var ty = y * half_block_size * 2 + half_block_size;
             var index = (grid[1]*y)+x+y;
             ctx.fillStyle = "#ffffff";
             ctx.font = "36px Arial";
@@ -121,8 +129,13 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     document.body.appendChild(screenshot_canvas);
     var blur = dark_mode ? 30 : 40;
     Caman(screenshot_canvas, screenshot_url, function () {
-      this.resize({
-        width: 1024
+      this.crop(
+        grid_position[2] - grid_position[0],
+        grid_position[3] - grid_position[1],
+        grid_position[0],
+        grid_position[1]
+      ).resize({
+        width: resize_board_to
       }).stackBlur(blur).render(sampleEachGem);
     });
   }
@@ -137,9 +150,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     }
     document.body.appendChild(screenshot_canvas);
     Caman(screenshot_canvas, screenshot_url, function () {
-      this.resize({
-        width: 1024
-      }).threshold(20).render(findGrid);
+      this.threshold(20).render(findGrid);
     });
   }
   function preProcessScreenshotForFindingShape(){
@@ -154,29 +165,33 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     }
     document.body.appendChild(screenshot_canvas);
     Caman(screenshot_canvas, screenshot_url, function () {
-      this.resize({
-        width: 1024
+      this.crop(
+        grid_position[2] - grid_position[0],
+        grid_position[3] - grid_position[1],
+        grid_position[0],
+        grid_position[1]
+      ).resize({
+        width: resize_board_to
       }).stackBlur(6).threshold(82).render(function(){ // best config, to make sure the background of gem is removed.
-        var block_width = ((grid_position[2] - grid_position[0]) / grid[0]);
-        var block_height = ((grid_position[3] - grid_position[1]) / grid[1]);
+        var block_size = resize_board_to / grid[0];
         screenshot_canvas = document.getElementById('screenshot_canvas'); // need to get again, otherwise draw not working...
         var ctx = screenshot_canvas.getContext("2d");
         if (debug) {
           ctx.strokeStyle="#FFFF00";
           ctx.lineWidth=5;
-          ctx.strokeRect(grid_position[0], grid_position[1], grid_position[2] - grid_position[0], grid_position[3] - grid_position[1]);
+          ctx.strokeRect(0, 0, resize_board_to, block_size * grid[1]);
           ctx.fillStyle="#FF0000";
           for (var y=1; y < grid[1]; y++) {
-            ctx.fillRect(grid_position[0],
-                         grid_position[1] + (block_height * (y)),
-                         grid_position[2] - grid_position[0],
+            ctx.fillRect(0,
+                         block_size * y,
+                         resize_board_to,
                          2);
           }
           for (var x=1; x < grid[0]; x++) {
-            ctx.fillRect(grid_position[0] + (block_width * (x)),
-                         grid_position[1],
+            ctx.fillRect(block_size * x,
+                         0,
                          2,
-                         grid_position[3] - grid_position[1]);
+                         block_size * grid[1]);
           }
         }
         var shape_result, p, tx, ty, sample1, sample2, sample3, d;
@@ -187,22 +202,22 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
             } else {
               d = 17.5; // 6x5 / 5x4
             }
-            tx = x * block_width + (block_width/2) + grid_position[0];
-            ty = y * block_height + (block_height/d) + grid_position[1]; // ~94%
+            tx = x * block_size + (block_size/2);
+            ty = y * block_size + (block_size/d); // ~94%
             // if this point is...
             // black: it can be Heart/Junk/Poison
             // white: it can be Circle/Poison/Poison2
             sample1 = isBlack(tx, ty, true)
             //******************************************************
-            tx = x * block_width + (block_width/19) + grid_position[0];
-            ty = y * block_height + (block_height/19) + grid_position[1];
+            tx = x * block_size + (block_size/19);
+            ty = y * block_size + (block_size/19);
             // if this point is...
             // black, it can be Circle/Heart/Junk/Poison/Poison2
             // white: it can be Poison/Poison2
             sample2 = isBlack(tx, ty, true)
             //******************************************************
-            tx = x * block_width + (block_width/11) + grid_position[0];
-            ty = y * block_height + (block_height/11) + grid_position[1];
+            tx = x * block_size + (block_size/11);
+            ty = y * block_size + (block_size/11);
             // if this point is...
             // black, it can be Circle/Heart/Junk/Poison/Poison2
             // white: it can be Poison/Poison2
@@ -236,13 +251,13 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     if (hex == "000000") {
       if (debug && draw) {
         ctx.fillStyle = "#00FF00";
-        ctx.fillRect(x,y,2,2);
+        ctx.fillRect(x,y,1,1);
       }
       return true;
     } else {
       if (debug) {
         ctx.fillStyle = "#FF0000";
-        ctx.fillRect(x,y,2,2);
+        ctx.fillRect(x,y,1,1);
       }
       return false;
     }
@@ -252,6 +267,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
       console.log('findGrid');
     }
     function findTopX(x, y, w, h){
+      if (debug) console.log('findTopX', x, y, w, h);
       while (x > 0) {
         if (isBlack(x,y)) {
           // check the right side, see if all white, it should be HP bar if it does.
@@ -338,6 +354,9 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
                      topY,
                      bottomX,
                      findBottomY(topX, topY, bottomX)];
+    if (debug && debug_grid) {
+      throw('debug grid', grid_position);
+    }
     removeCanvas();
     if (grid_position[0] == null || grid_position[1] == null || grid_position[2] == null || grid_position[3] == null) {
       // TODO, show error message
@@ -422,19 +441,18 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     var result_index = 0;
     screenshot_canvas = document.getElementById('screenshot_canvas'); // need to get again, otherwise draw not working...
     var ctx = screenshot_canvas.getContext("2d");
-    var half_width = ((grid_position[2] - grid_position[0]) / grid[0]) / 2;
-    var half_height = ((grid_position[3] - grid_position[1]) / grid[1]) / 2;
+    var half_block = (resize_board_to / grid[0]) / 2;
     var tx, ty, p, key, dark_bg;
     for (var y=0; y < grid[1]; y++) {
       dark_bg = (y % 2 === 0) ;
       for (var x=0; x < grid[0]; x++) {
         if (dark_mode) {
           // in dark mode, sample a bit lower left, not center. it will be easier for poison, heart and junk.
-          tx = x * half_width * 2 + (half_width * 2 / 3) + grid_position[0];
-          ty = y * half_height * 2 + (half_width * 2 / 3 * 2) + grid_position[1];
+          tx = x * half_block * 2 + (half_block * 2 / 3);
+          ty = y * half_block * 2 + (half_block * 2 / 3 * 2);
         } else {
-          tx = x * half_width * 2 + half_width + grid_position[0];
-          ty = y * half_height * 2 + half_width + grid_position[1];
+          tx = x * half_block * 2 + half_block;
+          ty = y * half_block * 2 + half_block;
         }
         p = ctx.getImageData(tx, ty, 1, 1).data;
         key = sampleGemToKey(rgb2hsv(p[0], p[1], p[2]), result_index, dark_bg);

@@ -13,12 +13,11 @@ $modal-header-border-color: #ccc;
   padding-right: 5px;
 }
 
-
-// Our CSS
+// body background, and monospace font (for better alignment)
 body {
   background-image: url('/img/bg.gif');
   background-repeat: repeat;
-  font-family: monospace;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .modal{
@@ -28,6 +27,7 @@ body {
   }
 }
 
+// old browser error message
 #main{
   display:none;
 }
@@ -102,6 +102,8 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage{
     }
   }
 }
+
+// change orbs
 .gem-target{
   cursor: pointer;
 }
@@ -125,4 +127,46 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage{
 
 #board_canvas{ // make canvas responsive without resize it using JS.
   width: 100%;
+  margin: 5px 0;
+  cursor:pointer;
+}
+
+#buttons{
+  button{
+    overflow: hidden;
+    width: 31%;
+    padding-left:0;
+    padding-right:0;
+    margin-bottom:5px;
+  }
+  .btn-primary.hidden-xs{
+    width:100%;
+  }
+}
+
+#importModal{
+  textarea{
+    resize: none;
+    &.grid5x4{
+      height: 8em;
+      width: 10em;
+      font-size: 1.2em;
+      letter-spacing: 1.2em;
+      line-height: 2em;
+    }
+    &.grid6x5{
+      height: 10em;
+      width: 12em;
+      font-size: 1.2em;
+      letter-spacing: 1.2em;
+      line-height: 2em;
+    }
+    &.grid7x6{
+      height: 12em;
+      width: 14em;
+      font-size: 1.2em;
+      letter-spacing: 1.2em;
+      line-height: 2em;
+    }
+  }
 }
