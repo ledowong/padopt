@@ -44,7 +44,7 @@ body {
 #unsupport-browser{
   display:block;
 }
-html.filereader.canvas.todataurljpeg.todataurlpng.localstorage{
+html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationframe{
   #main{
     display:block;
   }
@@ -203,5 +203,10 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage{
   &.selected {
     background-color: #363634;
     border-color: yellow;
+  }
+  a{
+    display:block;
+    color: #fff;
+    text-decoration: none;
   }
 }

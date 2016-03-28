@@ -21,7 +21,6 @@ var Optimizer = function(opts){
   var _debug = true;
   var _rows = opts['rows'];
   var _cols = opts['cols'];
-  var _draw_style = opts['draw_style'];
   var _sorting = opts['sorting'];
   var _max_path = opts['max_path']; // Computation
   var _is_8_dir_movement_supported = opts['is_8_dir_movement'];
@@ -431,7 +430,7 @@ var Optimizer = function(opts){
     });
     return _simplifyPath(xys);
   }
-  function _simplifyPath(xys) {
+  var _simplifyPath = function(xys) {
     // 1. Remove intermediate points.
     var simplified_xys = [xys[0]];
     var xys_length_1 = xys.length - 1;
@@ -526,14 +525,14 @@ var Optimizer = function(opts){
   }
   var _canMoveOrb = function(rc, dir) {
     switch (dir) {
-      case 0: return                    rc.col < _cols-1;
+      case 0: return                     rc.col < _cols-1;
       case 1: return rc.row < _rows-1 && rc.col < _cols-1;
       case 2: return rc.row < _rows-1;
       case 3: return rc.row < _rows-1 && rc.col > 0;
-      case 4: return                    rc.col > 0;
-      case 5: return rc.row > 0      && rc.col > 0;
+      case 4: return                     rc.col > 0;
+      case 5: return rc.row > 0       && rc.col > 0;
       case 6: return rc.row > 0;
-      case 7: return rc.row > 0      && rc.col < _cols-1;
+      case 7: return rc.row > 0       && rc.col < _cols-1;
     }
     return false;
   }
@@ -587,10 +586,6 @@ var Optimizer = function(opts){
       _rows = parseInt(tmp[1]);
       _cols = parseInt(tmp[0]);
     },
-    changeDrawStyle: function(new_draw_style){
-      if (_debug) console.log('changeDrawStyle', new_draw_style);
-      _draw_style = new_draw_style;
-    },
     changeSorting: function(new_sorting){
       if (_debug) console.log('changeSorting', new_sorting);
       _sorting = new_sorting;
@@ -634,8 +629,39 @@ var Optimizer = function(opts){
       };
       _solveBoardStep(solve_state);
     },
-    drawSolution: function(index){
-      
+    getSolution: function(index){
+      var solution = _solutions[index];
+      solution.init_board = _board;
+      return solution;
+    },
+    lengthenSolution: function(stepCallback, finishCallback) {
+      var board = _board;
+      var solutions = _unsimplified_solutions;
+      var weights = _getWeights();
+
+      var seed_solution = _makeSeedSolution(board);
+      _inPlaceEvaluateSolution(seed_solution, weights);
+
+      for (var i = 0, s = 0; i < _rows; ++ i) {
+        for (var j = 0; j < _cols; ++ j, ++ s) {
+          solutions.push(_copySolutionWithCursor(seed_solution, i, j));
+        }
+      }
+
+      var oldmax = _getMaxPathLength();
+      var newmax = oldmax + 1;
+
+      var solve_state = {
+        stepCallback: stepCallback,
+        finishCallback: finishCallback,
+        max_length: newmax,
+        dir_step: is_8_dir_movement_supported ? 1 : 2,
+        p: oldmax,
+        solutions: solutions,
+        weights: weights,
+      };
+      // TODO, update DOM at source.js $('#form_max_length').val(solve_state.max_length);
+      _solveBoardStep(solve_state);
     }
   };
 }
@@ -662,11 +688,6 @@ var Optimizer = function(opts){
 //   }
 // }
 //
-//
-//
-//
-//
-//
 // function show_element_type(jqel, type) {
 //   jqel.removeClass('eX');
 //   for (var i = 0; i < TYPES; ++ i) {
@@ -688,149 +709,10 @@ var Optimizer = function(opts){
 // }
 //
 //
-//
-// function draw_line_to(canvas, px, py, x, y) {
-//   var mx = (px*2 + x) / 3;
-//   var my = (py*2 + y) / 3;
-//   canvas.lineTo(mx, my);
-//   var dx = x - px;
-//   var dy = y - py;
-//   var dr = Math.sqrt(dx*dx + dy*dy) / 3;
-//   dx /= dr;
-//   dy /= dr;
-//   canvas.lineTo(mx - (dx+dy), my + (dx-dy));
-//   canvas.lineTo(mx - (dx-dy), my - (dx+dy));
-//   canvas.lineTo(mx, my);
-//   canvas.lineTo(x, y);
-// }
-//
-// function sign(x) {
-//   return x > 0 ? 1 : x < 0 ? -1 : 0;
-// }
-//
-// function draw_line_to2(canvas, px, py, x, y) {
-//   var dr = 0.1;
-//   var dx = ORB_WIDTH  * dr * sign(x - px);
-//   var dy = ORB_HEIGHT * dr * sign(y - py);
-//   canvas.lineTo(px + dx, py + dy);
-//   canvas.lineTo( x - dx,  y - dy);
-// }
-//
-// function draw_path(init_rc, path) {
-//   var canvas = clear_canvas();
-//   var rc = copy_rc(init_rc);
-//   var xys = [to_xy(rc)];
-//   path.forEach(function(p) {
-//     _inPlaceMoveRC(rc, p);
-//     xys.push(to_xy(rc));
-//   });
-//
-//   xys = _simplifyPath(xys);
-//   if ( drawstyle == "rounded" ) {
-//     avoid_overlap(xys);
-//   }
-//
-//   canvas.lineWidth = 4;
-//   canvas.strokeStyle = 'rgba(0, 0, 0, 0.75)';
-//   canvas.beginPath();
-//   for (var i = 0; i < xys.length; ++ i) {
-//     var xy = xys[i];
-//     if (i == 0) {
-//       canvas.moveTo(xy.x, xy.y);
-//     } else {
-//       var prev_xy = xys[i-1];
-//       if ( drawstyle == "rounded" ) {
-//         draw_line_to2(canvas, prev_xy.x, prev_xy.y, xy.x, xy.y);
-//       } else {
-//         draw_line_to(canvas, prev_xy.x, prev_xy.y, xy.x, xy.y);
-//       }
-//     }
-//   }
-//   canvas.stroke();
-//
-//   var init_xy = xys[0];
-//   var final_xy = xys[xys.length-1];
-//
-//   canvas.lineWidth = 2;
-//   canvas.fillStyle = 'red';
-//   canvas.strokeStyle = 'black';
-//   canvas.beginPath();
-//   canvas.rect(init_xy.x-5, init_xy.y-5, 10, 10);
-//   canvas.fill();
-//   canvas.stroke();
-//
-//   canvas.fillStyle = 'lime';
-//   canvas.beginPath();
-//   canvas.rect(final_xy.x-5, final_xy.y-5, 10, 10);
-//   canvas.fill();
-//   canvas.stroke();
-//
-//   return xys;
-// }
-//
 // function clear_canvas() {
 //   var canvas_elem = $('#path')[0];
 //   var canvas = canvas_elem.getContext('2d');
 //   canvas.clearRect(0, 0, canvas_elem.width, canvas_elem.height);
 //   $('#hand').hide();
 //   return canvas;
-// }
-//
-//
-//
-//
-// function lengthenSolution (board, solutions, step_callback, finish_callback) {
-//   var weights = get_weights();
-//
-//   var seed_solution = make_solution(board);
-//   _inPlaceEvaluateSolution(seed_solution, weights);
-//
-//   for (var i = 0, s = 0; i < _rows; ++ i) {
-//     for (var j = 0; j < _cols; ++ j, ++ s) {
-//       solutions.push(_copySolutionWithCursor(seed_solution, i, j));
-//     }
-//   }
-//
-//   var oldmax = parseInt(_getMaxPathLength());
-//   var newmax = oldmax + 1;
-//
-//   var solve_state = {
-//     step_callback: step_callback,
-//     finish_callback: finish_callback,
-//     max_length: newmax,
-//     dir_step: is_8_dir_movement_supported() ? 1 : 2,
-//     p: oldmax,
-//     solutions: solutions,
-//     weights: weights,
-//   };
-//   $('#form_max_length').val(solve_state.max_length);
-//   _solveBoardStep(solve_state);
-// }
-//
-//
-//
-// function avoid_overlap(xys) {
-//   var rail_num = 5; // should be odd integer
-//   var rail_half = Math.floor(rail_num / 2);
-//   var dr = Math.max(0.08, 0.4 / rail_num);
-//   var rail_x = {};
-//   var rail_y = {};
-//   for (var i = 1; i < xys.length; ++ i) {
-//     if (xys[i].y == xys[i-1].y) {
-//       y = xys[i].y;
-//       rail_y[y] = rail_y[y] || 0;
-//       var dy = ORB_HEIGHT * (rail_y[y] - rail_half) * dr;
-//       rail_y[y] = (rail_y[y] + rail_half) % rail_num;
-//       xys[i].y += dy;
-//       xys[i-1].y += dy;
-//     } else if (xys[i].x == xys[i-1].x) {
-//       x = xys[i].x;
-//       rail_x[x] = rail_x[x] || 0;
-//       var dx = ORB_WIDTH * (rail_x[x] - rail_half) * dr;
-//       rail_x[x] = (rail_x[x] + rail_half) % rail_num;
-//       xys[i].x += dx;
-//       xys[i-1].x += dx;
-//     }
-//   }
-//   return xys;
 // }

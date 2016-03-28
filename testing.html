@@ -23,7 +23,6 @@
   <![endif]-->
 </head>
 <body>
-  <a href="https://github.com/ledowong/padopt"><img id="fork" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
   <div id="main" class="container-fluid">
     <div id="status_bar">
       Click here to select a screenshot<span class="hidden-xs">, or drag &amp; drop a screenshot into this page</span>.
@@ -224,12 +223,12 @@
       <div class="col-sm-4 text-center form-horizontal" id="buttons">
         <canvas id="board_canvas"></canvas>
         <!-- buttons -->
-        <button type="button" class="btn btn-primary btn hidden-xs form_solve_button">Solve</button>
+        <button type="button" class="btn btn-primary btn hidden-xs form_solve_button" data-loading-text="Solving...">Solve</button>
         <button type="button" class="btn btn-default btn" data-toggle="modal" data-target="#changeOrbsModal">
           Change Orbs
         </button>
         <button type="button" class="btn btn-default btn hidden-xs" id="form_drop_match_button">Drop Matches</button>
-        <button type="button" class="btn btn-primary btn visible-xs-inline form_solve_button">Solve</button>
+        <button type="button" class="btn btn-primary btn visible-xs-inline form_solve_button" data-loading-text="Solving...">Solve</button>
         <button type="button" class="btn btn-default btn" id="form_final_state_button">Final State</button>
         <button type="button" class="btn btn-default btn hidden-xs" id="form_import_button">
           Import
@@ -256,7 +255,7 @@
         </div>
       </div>
       <div class="col-sm-4">
-        Solutions:
+        <label>Solutions:</label>
         <ol id="solutions"></ol>
       </div>
     </div>
@@ -293,7 +292,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Import &amp; Solve</button>
+            <button type="button" class="btn btn-primary">Import</button>
           </div>
         </div>
       </div>
@@ -337,7 +336,7 @@
     <h1>Your browser is outdated! Click <a href="http://outdatedbrowser.com/en">here</a> to get a new browser.</h1>
   </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.2.min.js" integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
   <script src="js/build.min.js"></script>
 </body>

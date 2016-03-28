@@ -54,12 +54,12 @@ $(document).ready(function() {
 
   // prepare and draw game board
   var board = new Board('board_canvas',
-                        parseInt($('#form_grid_size').val().split('x')[0]),
-                        parseInt($('#form_grid_size').val().split('x')[1]));
+    {rows: parseInt($('#form_grid_size').val().split('x')[1]),
+     cols: parseInt($('#form_grid_size').val().split('x')[0]),
+     draw_style: $('#form_draw_style').val()});
   var optimizer = new Optimizer({
     rows: parseInt($('#form_grid_size').val().split('x')[1]),
     cols: parseInt($('#form_grid_size').val().split('x')[0]),
-    draw_style: $('#form_draw_style').val(),
     sorting: $('#form_sorting').val(),
     max_path: parseInt($('#form_max_paths').val()),
     is_8_dir_movement: $("#form_direction").val() === "8",
@@ -77,6 +77,7 @@ $(document).ready(function() {
   $('#form_grid_size').on('change', function(){
     board.changeGrid($(this).val()); // update board
     optimizer.changeGrid($(this).val());
+    $("#solutions li").remove();
   });
 
   $('#profile-selector').change(function() {
@@ -92,7 +93,10 @@ $(document).ready(function() {
   });
 
   $('#form_draw_style').on('change', function() {
-    optimizer.changeDrawStyle($(this).val());
+    board.changeDrawStyle($(this).val());
+    if ($('#solutions li.selected').length > 0) {
+      $('#solutions li.selected').click();
+    }
   });
 
   $('#form_sorting').on('change', function() {
@@ -100,14 +104,22 @@ $(document).ready(function() {
   });
 
   $('.form_solve_button').click(function() {
-    // TODO should not begin if board is not ready. (with '?' unknown orbs)
+    // should not begin if board is not ready. (with '?' unknown orbs)
+    // TODO
+    // disable solve button
+    $('.form_solve_button').button('loading');
+    // remove all existing solutions
+    $('#solutions li').remove();
+    // redraw board, to clear path and animation
+    board.redraw();
+    // solve board
     optimizer.solveBoard(board.export(), function(p, max_p){ // step callback
       console.log('step callback', p, max_p);
       // TODO
+      var percentage = parseInt(p * 100 / parseInt(max_p));
     }, function(solutions){ // finish callback
-      // console.log('finish callback', solutions);
       function _addSolutionAsLi(html_array, solution) {
-        html_array.push('<li>W=');
+        html_array.push('<li><a href="#">W=');
         html_array.push(solution.weight.toFixed(2));
         html_array.push(', L=');
         html_array.push(solution.path.length);
@@ -134,7 +146,7 @@ $(document).ready(function() {
           html_array.push('"></span>&times;');
           html_array.push(match.count);
         });
-        html_array.push('</li>');
+        html_array.push('</a></li>');
       }
       // display solution in HTML
       var html_array = [];
@@ -142,37 +154,9 @@ $(document).ready(function() {
         _addSolutionAsLi(html_array, solution);
       });
       $('#solutions').html(html_array.join(''));
+      // reset solve buttons
+      $('.form_solve_button').button('reset');
     });
-    // $('[id^="grid"] > div').each(function(){ $(this).removeClass('border-flash'); });
-    // var solver_button = this;
-    // var board = get_board();
-    // global_board = board;
-    // solver_button.disabled = true;
-    // $('.loading-throbber').fadeToggle('fast');
-    // solve_board(board, function(p, max_p) {
-    //   //console.log(p);
-    //   //console.log(max_p);
-    //   var result = parseInt(p * 100 / parseInt(max_p));
-    //   $('#are-you-ready').remove();
-    //   if ($('#status').hasClass('active')) {
-    //     $('#solutions ol li').fadeToggle();
-    //     $('#status').removeClass('active');
-    //   }
-    //   $('#status').text('Solving ( ' + result + '% )');
-    // }, function(solutions) {
-    //   $('.loading-throbber').fadeToggle();
-    //   var html_array = [];
-    //   global_unsimplified = solutions;
-    //   solutions = simplify_solutions(solutions);
-    //   global_solutions = solutions;
-    //   solutions.forEach(function(solution) {
-    //     add_solution_as_li(html_array, solution, board);
-    //   });
-    //   $('#solutions > ol').html(html_array.join(''));
-    //   solver_button.disabled = false;
-    //   $('#status').addClass('active');
-    // });
-    console.log('TODO');
   });
 
 
@@ -185,22 +169,8 @@ $(document).ready(function() {
     // update li highlight
     $('#solutions li.selected').removeClass('selected');
     $(this).addClass('selected');
-    // show_board(global_board);
-    // global_index = $(this).index();
-    // var solution = global_solutions[global_index];
-    // var path = draw_path(solution.init_cursor, solution.path);
-    // var hand_elem = $('#hand');
-    // hand_elem.stop(/*clearQueue*/true).show();
-    // path.forEach(function(xy, i) {
-    //   if ( COL_ROW[0] == "5" ) {
-    //     var left = xy.x + 46;
-    //   } else {
-    //     var left = xy.x + 14;
-    //   }
-    //   var top = xy.y + 14;
-    //   hand_elem[i == 0 ? 'offset' : 'animate']({left: left, top: top});
-    // });
-    console.log('TODO');
+    var solution = optimizer.getSolution($(this).index());
+    board.drawSolution(solution);
   });
 
   $('#form_randomize_button').click(function() {
@@ -210,7 +180,6 @@ $(document).ready(function() {
 
   $('#form_clear_button').click(function() {
     board.changeGrid($("#form_grid_size").val());
-    // TODO claer results
   });
 
   $('#form_drop_match_button').click(function() {
