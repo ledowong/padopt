@@ -53,11 +53,30 @@ $(document).ready(function() {
 
 
   // prepare and draw game board
-  var board = new Board('6x5');
+  var board = new Board('board_canvas',
+                        parseInt($('#form_grid_size').val().split('x')[0]),
+                        parseInt($('#form_grid_size').val().split('x')[1]));
+  var optimizer = new Optimizer({
+    rows: parseInt($('#form_grid_size').val().split('x')[1]),
+    cols: parseInt($('#form_grid_size').val().split('x')[0]),
+    draw_style: $('#form_draw_style').val(),
+    sorting: $('#form_sorting').val(),
+    max_path: parseInt($('#form_max_paths').val()),
+    is_8_dir_movement: $("#form_direction").val() === "8",
+    max_length: parseInt($('#form_max_length').val()),
+  });
+
+  $('#form_direction').on('change', function(){
+    optimizer.change8dirMovement($("#form_direction").val() === "8");
+  });
+
+  $('#form_max_paths').on('change', function(){
+    optimizer.changeMaxPath(parseInt($('#form_max_paths').val()));
+  });
 
   $('#form_grid_size').on('change', function(){
     board.changeGrid($(this).val()); // update board
-    COL_ROW = $(this).val().split('x'); // update optimizer variables
+    optimizer.changeGrid($(this).val());
   });
 
   $('#profile-selector').change(function() {
@@ -73,14 +92,57 @@ $(document).ready(function() {
   });
 
   $('#form_draw_style').on('change', function() {
-    drawstyle = $(this).val();
+    optimizer.changeDrawStyle($(this).val());
   });
 
   $('#form_sorting').on('change', function() {
-    sorter = $(this).val();
+    optimizer.changeSorting($(this).val());
   });
 
   $('.form_solve_button').click(function() {
+    // TODO should not begin if board is not ready. (with '?' unknown orbs)
+    optimizer.solveBoard(board.export(), function(p, max_p){ // step callback
+      console.log('step callback', p, max_p);
+      // TODO
+    }, function(solutions){ // finish callback
+      // console.log('finish callback', solutions);
+      function _addSolutionAsLi(html_array, solution) {
+        html_array.push('<li>W=');
+        html_array.push(solution.weight.toFixed(2));
+        html_array.push(', L=');
+        html_array.push(solution.path.length);
+        html_array.push(', M=');
+        html_array.push(solution.mult.toFixed(2));
+        html_array.push(', &#8623;=');
+        html_array.push(solution.complexity);
+        html_array.push('<br/>');
+        var sorted_matches = solution.matches.slice();
+        sorted_matches.sort(function(a, b) {
+          if (a.count != b.count) {
+            return b.count - a.count;
+          } else if (a.type > b.type) {
+            return 1;
+          } else if (a.type < b.type) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        sorted_matches.forEach(function(match, i) {
+          html_array.push('<span class="gem gem');
+          html_array.push(match.type);
+          html_array.push('"></span>&times;');
+          html_array.push(match.count);
+        });
+        html_array.push('</li>');
+      }
+      // display solution in HTML
+      var html_array = [];
+      solutions.forEach(function(solution) {
+        _addSolutionAsLi(html_array, solution);
+      });
+      $('#solutions').html(html_array.join(''));
+    });
     // $('[id^="grid"] > div').each(function(){ $(this).removeClass('border-flash'); });
     // var solver_button = this;
     // var board = get_board();
@@ -113,35 +175,16 @@ $(document).ready(function() {
     console.log('TODO');
   });
 
-  // $('#pathincrease').click(function() {
-  //   $('[id^="grid"] > div').each(function(){ $(this).removeClass('border-flash'); });
-  //   board = global_board
-  //   $('.loading-throbber').fadeToggle('fast');
-  //   lengthenSolution(board, global_unsimplified, function(p, max_p) {
-  //     //console.log(p);
-  //     //console.log(max_p);
-  //     var result = parseInt(p * 100 / parseInt(max_p));
-  //     $('#are-you-ready').remove();
-  //     if ($('#status').hasClass('active')) {
-  //       $('#solutions ol li').fadeToggle();
-  //       $('#status').removeClass('active');
-  //     }
-  //     $('#status').text('Solving ( ' + result + '% )');
-  //   }, function(solutions) {
-  //     $('.loading-throbber').fadeToggle();
-  //     var html_array = [];
-  //     global_unsimplified = solutions;
-  //     solutions = simplify_solutions(solutions);
-  //     global_solutions = solutions;
-  //     solutions.forEach(function(solution) {
-  //       add_solution_as_li(html_array, solution, board);
-  //     });
-  //     $('#solutions > ol').html(html_array.join(''));
-  //     $('#status').addClass('active');
-  //   });
-  // });
+
+  $('#form_max_length').on('change', function(){
+    optimizer.changeMaxLength(parseInt($(this).val()));
+  });
+
 
   $('#solutions').on('click', 'li', function(e) {
+    // update li highlight
+    $('#solutions li.selected').removeClass('selected');
+    $(this).addClass('selected');
     // show_board(global_board);
     // global_index = $(this).index();
     // var solution = global_solutions[global_index];
@@ -157,8 +200,6 @@ $(document).ready(function() {
     //   var top = xy.y + 14;
     //   hand_elem[i == 0 ? 'offset' : 'animate']({left: left, top: top});
     // });
-    // $('#solutions li.prev-selection').removeClass('prev-selection');
-    // $(this).addClass('prev-selection');
     console.log('TODO');
   });
 
@@ -169,6 +210,7 @@ $(document).ready(function() {
 
   $('#form_clear_button').click(function() {
     board.changeGrid($("#form_grid_size").val());
+    // TODO claer results
   });
 
   $('#form_drop_match_button').click(function() {
@@ -235,6 +277,7 @@ $(document).ready(function() {
   $('#importModal .btn-primary').click(function() {
     board.import($('#importModal textarea').val());
     $('#importModal').modal('hide');
+    // TODO, solve
   });
 
   $('#change-change').click(function() {

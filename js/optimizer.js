@@ -858,7 +858,7 @@ $(document).ready(function() {
         }, function(solutions) {
             $('.loading-throbber').fadeToggle();
             var html_array = [];
-	    global_unsimplified = solutions;
+            global_unsimplified = solutions;
             solutions = simplify_solutions(solutions);
             global_solutions = solutions;
             solutions.forEach(function(solution) {
