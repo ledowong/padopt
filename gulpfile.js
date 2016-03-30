@@ -32,7 +32,7 @@ gulp.task('default', ['watch', 'sass', 'js'], function() {
 gulp.task('js', function () {
   gulp.src(paths.js)
     .pipe(concat('all.js'))
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(rename({suffix: '.min', basename: 'build'}))
     .pipe(gulp.dest("js"));
 });
