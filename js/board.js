@@ -38,10 +38,10 @@ var Board = function(canvas_id, opts){
   var _requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                                window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
   var _cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
-  var _path_animation = {step: 0, x: null, y: null, xys: [], request_id: 0, move_distance: 1, frame_start_at: null};
+  var _path_animation = {step: 0, x: null, y: null, xys: [], request_id: 0, move_distance_x: 1, move_distance_y: 1, frame_start_at: null};
   var _PATH_SQUARE_SIZE = 10; // starting point, ending point, and moving point.
   var _FPS = 60;
-  var _NUMBER_OF_STEP_BETWEEN_TWO_POINT = 21; // adjust this value for the path moving speed. (20 similar to jquery animation 400ms)
+  var _NUMBER_OF_STEP_BETWEEN_TWO_POINT = 20; // adjust this value for the path moving speed. (20 similar to jquery animation 400ms)
 
   // private methods
   var _width = function(){
@@ -322,16 +322,16 @@ var Board = function(canvas_id, opts){
           // next target
           var next_target_xy = _path_animation.xys[_path_animation.step+1];
           if (typeof(next_target_xy) != 'undefined') {
-            var distance = Math.sqrt( (target_xy.x-next_target_xy.x)*(target_xy.x-next_target_xy.x) + (target_xy.y-next_target_xy.y)*(target_xy.y-next_target_xy.y) );
-            _path_animation.move_distance = distance / _NUMBER_OF_STEP_BETWEEN_TWO_POINT;
+            _path_animation.move_distance_x = (target_xy.x > next_target_xy.x ? target_xy.x - next_target_xy.x : next_target_xy.x - target_xy.x) / _NUMBER_OF_STEP_BETWEEN_TWO_POINT;
+            _path_animation.move_distance_y = (target_xy.y > next_target_xy.y ? target_xy.y - next_target_xy.y : next_target_xy.y - target_xy.y) / _NUMBER_OF_STEP_BETWEEN_TWO_POINT;
           }
         } else {
           // still not arrive target xy, keep moving.
           if (_path_animation.x !== target_xy.x) {
-            _path_animation.x += (target_xy.x > _path_animation.x) ? _path_animation.move_distance : _path_animation.move_distance * -1;
+            _path_animation.x += (target_xy.x > _path_animation.x) ? _path_animation.move_distance_x : _path_animation.move_distance_x * -1;
           }
           if (_path_animation.y !== target_xy.y) {
-            _path_animation.y += (target_xy.y > _path_animation.y) ? _path_animation.move_distance : _path_animation.move_distance * -1;
+            _path_animation.y += (target_xy.y > _path_animation.y) ? _path_animation.move_distance_y : _path_animation.move_distance_y * -1;
           }
         }
         _path_animation.request_id = _requestAnimationFrame(_drawPathAnimation);
