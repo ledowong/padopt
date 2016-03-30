@@ -244,6 +244,13 @@ $(document).ready(function() {
     }
   });
 
+  // play button
+  $('#form_play_button').click(function() {
+    if ($('#solutions li.selected').length > 0) {
+      $('#solutions li.selected').click();
+    }
+  });
+
   // import textarea only accept pre-set character.
   $("#importModal textarea").on('keydown', function (e) {
     if ($.inArray(e.keyCode, [46, 8, 9, 27]) !== -1 || // Allow: 8backspace, 46delete, 9tab, 27escape

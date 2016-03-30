@@ -8,6 +8,7 @@ $modal-header-border-color: #ccc;
 @import "_bootstrap";
 
 $status_bar_height: 30px;
+$mobile_solutions_height: 180px;
 
 // override bootstrap, xs need less padding.
 .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9{
@@ -51,6 +52,9 @@ body {
 #main{
   display:none;
   padding-top: $status_bar_height;
+  @media (max-width: $screen-xs-max) {
+    padding-bottom: $mobile_solutions_height + 5px;
+  }
 }
 #unsupport-browser{
   display:block;
@@ -155,13 +159,13 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
 #buttons{
   button{
     overflow: hidden;
-    width: 30%;
+    width: 100%;
     padding-left:0;
     padding-right:0;
     margin-bottom:5px;
   }
-  .btn-primary.hidden-xs{
-    width:100%;
+  select{
+    margin-bottom:5px;
   }
 }
 
@@ -264,6 +268,15 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
     position: fixed;
     top: $status_bar_height;
     right: 0;
+  }
+  @media (max-width: $screen-xs-max) {
+    position: fixed;
+    bottom: 0;
+    background: #666;
+    width: 100%;
+    overflow: auto;
+    z-index: 1;
+    height: $mobile_solutions_height;
   }
   li {
     font-size: 0.9em;

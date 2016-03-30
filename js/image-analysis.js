@@ -359,8 +359,6 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     }
     removeCanvas();
     if (grid_position[0] == null || grid_position[1] == null || grid_position[2] == null || grid_position[3] == null) {
-      // TODO, show error message
-      //console.log('border not found', grid_position);
       callback(false);
     } else {
       preProcessScreenshotForGemSampling();
