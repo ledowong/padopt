@@ -15,6 +15,13 @@ $status_bar_height: 30px;
   padding-right: 5px;
 }
 
+// http://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 // body background, and monospace font (for better alignment)
 body {
   background-image: url('/img/bg.gif');
@@ -122,7 +129,7 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   input{
     @extend .form-control;
     @extend .input-sm;
-    width: 40px;
+    width: 50px;
     padding: 3px 6px;
     height: auto;
   }
@@ -144,7 +151,7 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
 #buttons{
   button{
     overflow: hidden;
-    width: 31%;
+    width: 30%;
     padding-left:0;
     padding-right:0;
     margin-bottom:5px;
@@ -157,6 +164,7 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
 #importModal{
   textarea{
     resize: none;
+    overflow: hidden;
     &.grid5x4{
       height: 8em;
       width: 10em;
@@ -188,25 +196,88 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   left: 0;
   width: 100%;
   height: $status_bar_height;
-  background-color: red;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: $status_bar_height;
+  background-color: $brand-success;
+  #file_upload{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px !important;
+    direction: ltr;
+    cursor: pointer;
+  }
+  label{
+    display:none;
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin: 0; // override bootstrap label margin.
+  }
+  .upload_label{
+    display:block;
+  }
+  &.solving{
+    background-color: $brand-danger;
+    .upload_label{
+      display:none;
+    }
+    .solving_label{
+      display:block;
+    }
+  }
+  &.image_analysing{
+    background-color: $brand-danger;
+    .upload_label{
+      display:none;
+    }
+    .image_analysing_label{
+      display:block;
+    }
+  }
+  &.error{
+    background-color: $brand-danger;
+    .upload_label{
+      display:none;
+    }
+    .error_label{
+      display:block;
+    }
+  }
 }
 
-#solutions li {
-  font-size: 0.9em;
-  cursor: pointer;
-  border: 2px solid transparent;
-  padding: 0 5px;
-  &:hover {
-    background-color: #363634;
-    border-color: #363634;
+#solutions{
+  @media (min-width: $screen-sm-min) {
+    overflow: auto;
+    position: fixed;
+    top: $status_bar_height;
+    right: 0;
   }
-  &.selected {
-    background-color: #363634;
-    border-color: yellow;
-  }
-  a{
-    display:block;
-    color: #fff;
-    text-decoration: none;
+  li {
+    font-size: 0.9em;
+    cursor: pointer;
+    border: 2px solid transparent;
+    padding: 0 5px;
+    &:hover {
+      background-color: #363634;
+      border-color: #363634;
+    }
+    &.selected {
+      background-color: #363634;
+      border-color: yellow;
+    }
+    a{
+      display:block;
+      color: #fff;
+      text-decoration: none;
+    }
   }
 }

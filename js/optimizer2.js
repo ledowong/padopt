@@ -32,7 +32,6 @@ var Optimizer = function(opts){
   var MULTI_ORB_BONUS = 0.25;
   var COMBO_BONUS = 0.25;
   var _max_length = opts['max_length'];
-  var globalmult = -1; // TODO, change it, so UI can modify
 
   // private methods
   var _maxSolutionCount = function(){
@@ -44,11 +43,6 @@ var Optimizer = function(opts){
   var _makeMatch = function (type, count, isRow) {
     return {type: type, count: count, isRow: isRow};
   }
-  // var _to_xy = function (rc) {
-  //   var x = rc.col * ORB_X_SEP + ORB_WIDTH/2;
-  //   var y = rc.row * ORB_Y_SEP + ORB_HEIGHT/2;
-  //   return {x: x, y: y};
-  // }
   var _copyRC = function(rc) {
     return {row: rc.row, col: rc.col};
   }
@@ -581,17 +575,14 @@ var Optimizer = function(opts){
       _is_8_dir_movement_supported = is_8_dir_movement;
     },
     changeGrid: function(new_grid){
-      if (_debug) console.log('changeGrid', new_grid);
       var tmp = new_grid.split('x');
       _rows = parseInt(tmp[1]);
       _cols = parseInt(tmp[0]);
     },
     changeSorting: function(new_sorting){
-      if (_debug) console.log('changeSorting', new_sorting);
       _sorting = new_sorting;
     },
     changeMaxPath: function(new_max_path){
-      if (_debug) console.log('changeMaxPath', new_max_path);
       _max_path = new_max_path
     },
     solveBoard: function(board_data, stepCallback, finishCallback) {
@@ -634,6 +625,11 @@ var Optimizer = function(opts){
       solution.init_board = _board;
       return solution;
     },
+    exportSolutionDropMatchesBoard: function(index){
+      var solution = _solutions[index];
+      var drop_matches_board = _inPlaceEvaluateSolution(solution, _getWeights());
+      return [].concat.apply([], drop_matches_board).join('');
+    },
     lengthenSolution: function(stepCallback, finishCallback) {
       var board = _board;
       var solutions = _unsimplified_solutions;
@@ -665,54 +661,3 @@ var Optimizer = function(opts){
     }
   };
 }
-
-
-// var global_index = 0;
-//
-//
-// function get_type(elem) {
-//   return elem.className.match(/e([\dX])/)[1];
-// }
-//
-// function advance_type(type, dt) {
-//   if (type == 'X') {
-//     return dt == 1 ? '0' : '6';
-//   } else {
-//     var new_type = dt + +type;
-//     if (new_type < 0) {
-//       new_type += TYPES;
-//     } else if (new_type >= TYPES) {
-//       new_type -= TYPES;
-//     }
-//     return new_type;
-//   }
-// }
-//
-// function show_element_type(jqel, type) {
-//   jqel.removeClass('eX');
-//   for (var i = 0; i < TYPES; ++ i) {
-//     jqel.removeClass('e' + i);
-//   }
-//   jqel.addClass('e' + type);
-// }
-//
-// function show_board(board) {
-//   for (var i = 0; i < _rows; ++ i) {
-//     for (var j = 0; j < _cols; ++ j) {
-//       var type = board[i][j];
-//       if (typeof(type) == 'undefined') {
-//         type = 'X';
-//       }
-//       show_element_type($('#o' + i + '' + j), type);
-//     }
-//   }
-// }
-//
-//
-// function clear_canvas() {
-//   var canvas_elem = $('#path')[0];
-//   var canvas = canvas_elem.getContext('2d');
-//   canvas.clearRect(0, 0, canvas_elem.width, canvas_elem.height);
-//   $('#hand').hide();
-//   return canvas;
-// }
