@@ -16,7 +16,7 @@ var paths = {
        'js/image-analysis.js',
        'js/source.js'],
   sass: ['css/source.scss'],
-  html: ['testing.html']
+  html: ['index.html']
 };
 
 // start development server

@@ -21,7 +21,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   * Variables
   *****************************************************************************/
   var debug = false;
-  var debug_grid = true;
+  var debug_grid = false;
   var debug_shape = true;
   var grid = [cols, rows];
   var grid_position;
@@ -43,7 +43,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   var poison_default =  [[276, 281, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
   var dark_default =    [[282, 300, 15000, 26000],[325, 345, 10000, 15000],[305, 329,  5000, 15000]];
   var heart_default =   [[310, 330, 15000, 26000],[340, 350, 10000, 25000],[330, 345,  8000, 15000]];
-  // {h: 231, s: 30, v: 8900}
+  // {h: 282, s: 14, v: 16600}
 
   /*****************************************************************************
   * Helper functions
@@ -494,11 +494,6 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   /*****************************************************************************
   * Main logic
   *****************************************************************************/
-  // hide everything, so we can see the debug result.
-  if (debug) {
-    $('#contentHolder').hide();
-    $('body').css('overflow', 'auto');
-  }
   removeCanvas();
   preProcessScreenshotForFindingGridBorder();
 
