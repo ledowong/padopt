@@ -1,11 +1,10 @@
 'use strict';
 
+// Begin: should remove after find out what it used for.
 var ORB_X_SEP = 64;
 var ORB_Y_SEP = 64;
 var ORB_WIDTH = 60;
 var ORB_HEIGHT = 60;
-
-
 function Coordinate(row, col){
   this.row = row || 0;
   this.col = col || 0;
@@ -15,6 +14,7 @@ Coordinate.prototype.getXY = function(){
   var y = this.row * ORB_Y_SEP + ORB_HEIGHT/2;
   return {x: x, y: y};
 };
+// End
 
 
 var Optimizer = function(opts){

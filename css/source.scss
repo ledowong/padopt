@@ -263,8 +263,6 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
 }
 
 #solutions{
-  padding-left: 25px;
-  font-size: 0.8em;
   @media (min-width: $screen-sm-min) {
     overflow: auto;
     position: fixed;
@@ -279,6 +277,10 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
     overflow: auto;
     z-index: 1;
     height: $mobile_solutions_height;
+  }
+  ol{
+    padding-left: 25px;
+    font-size: 0.8em;
   }
   li {
     font-size: 0.9em;

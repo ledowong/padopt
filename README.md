@@ -8,7 +8,7 @@ padopt - a Puzzle & Dragons Optimizer
 
 Originally forked from kennytm's [pndopt](https://github.com/kennytm/pndopt) and based on [combo.tips](http://combo.tips). 90% of the credit goes to the aforementioned, including the main Javascript logic.
 
-This fork redesign a whole new responsive UI with friendly mobile support. Rewrite most of the JavaScript to make the code clean. A new client side image analysis JavaScript (more accurate) that let you import from screenshot, without uploading the image to server.
+This fork redesign a whole new responsive UI with friendly mobile support. Single page app support all grid size (so you can keep your profile when switching between grid size). Rewrite most of the JavaScript to make the code clean. A new client side image analysis JavaScript that let you import from screenshot, without uploading the image to server.
 
 Usage
 -----
@@ -51,3 +51,4 @@ TODO
 * Simulate swapping and matching when playing the animation and dropping the matches.
 * The default weight of the profiles may need to be adjusted.
 * Image analysis: orb shape analysis
+* Profile creator
