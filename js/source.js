@@ -63,10 +63,7 @@ $(document).ready(function() {
       $('#status_bar').removeClass('image_analysing');
       if (result_string) {
         board.import(result_string);
-        if (result_string.indexOf('x') === -1) {
-          // no x in the result, everything matched, solve the puzzle
-          $('.form_solve_button:first').click();
-        }
+        $('.form_solve_button:first').click();
       } else {
         errorFlash('Game board not found.');
       }
