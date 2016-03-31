@@ -22,7 +22,8 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   *****************************************************************************/
   var debug = false;
   var debug_grid = false;
-  var debug_shape = true;
+  var debug_shape_dark = false;
+  var debug_shape_light = true;
   var grid = [cols, rows];
   var grid_position;
   var end_results;
@@ -38,12 +39,12 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   var light_default =   [[ 45,  60, 15000, 26000],[ 30,  40, 10000, 25000],[ 30,  40,  5000, 15000]];
   var wood_default =    [[125, 150, 15000, 26000],[ 45,  85,  5000, 15000],[ 85, 130,  5000, 15000]];
   var water_default =   [[195, 215, 18000, 26000],[225, 295,  5000, 15000],[215, 255,  5000, 15000]];
-  var junk_default =    [[195, 235,  8000, 17999],[  1,  15,  7000, 10000],[330, 340,  4000,  7999]];
+  var junk_default =    [[195, 235,  8000, 17999],[  1,  15,  7000, 10000],[330, 345,  4000,  7999]];
   var poison2_default = [[268, 275, 15000, 25000],[  5,  15, 30000, 30000],[  3,  15, 30000, 30000]];
   var poison_default =  [[276, 281, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
   var dark_default =    [[282, 300, 15000, 26000],[325, 345, 10000, 15000],[305, 329,  5000, 15000]];
   var heart_default =   [[310, 330, 15000, 26000],[340, 350, 10000, 25000],[330, 345,  8000, 15000]];
-  // {h: 282, s: 14, v: 16600}
+  //  {h: 344, s: 22, v: 4900}
 
   /*****************************************************************************
   * Helper functions
@@ -93,14 +94,29 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
       ).resize({
         width: resize_board_to
       }).render(function(){
-
         var canvas = document.getElementById('screenshot_canvas');
         var ctx = canvas.getContext("2d");
-        ctx.strokeStyle="#FFFF00";
-        ctx.lineWidth=5;
         var block_size = resize_board_to / grid[0];
-        ctx.strokeRect(0, 0, resize_board_to, block_size * grid[1]);
         var half_block_size = block_size / 2;
+        // border
+        // ctx.strokeStyle="#FFFF00";
+        // ctx.lineWidth=5;
+        // ctx.strokeRect(0, 0, resize_board_to, block_size * grid[1]);
+        // grid line
+        ctx.fillStyle="#FF0000";
+        for (var y=1; y < grid[1]; y++) {
+          ctx.fillRect(0,
+                       block_size * y,
+                       resize_board_to,
+                       2);
+        }
+        for (var x=1; x < grid[0]; x++) {
+          ctx.fillRect(block_size * x,
+                       0,
+                       2,
+                       block_size * grid[1]);
+        }
+        // gem color result
         for (var y=0; y < grid[1]; y++) {
           for (var x=0; x < grid[0]; x++) {
             var tx = x * half_block_size * 2 + half_block_size;
@@ -153,18 +169,146 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
       this.threshold(20).render(findGrid);
     });
   }
-  function preProcessScreenshotForFindingShape(){
+  function findShape(light_background){
+    if (light_background !== true) light_background = false; // default false
     if (debug) {
-      console.log('preProcessScreenshotForFindingShape');
+      console.log('findShape', light_background === true ? 'light' : 'dark');
     }
-    shape_results = []; // reset, just incase
+    var block_size = resize_board_to / grid[0];
+    screenshot_canvas = document.getElementById('screenshot_canvas'); // need to get again, otherwise draw not working...
+    var ctx = screenshot_canvas.getContext("2d");
+    if (debug) {
+      ctx.strokeStyle="#FFFF00";
+      ctx.lineWidth=5;
+      ctx.strokeRect(0, 0, resize_board_to, block_size * grid[1]);
+      ctx.fillStyle="#FF0000";
+      for (var y=1; y < grid[1]; y++) {
+        ctx.fillRect(0,
+                     block_size * y,
+                     resize_board_to,
+                     2);
+      }
+      for (var x=1; x < grid[0]; x++) {
+        ctx.fillRect(block_size * x,
+                     0,
+                     2,
+                     block_size * grid[1]);
+      }
+    }
+    var shape_result, p, tx, ty, sample1, sample2, sample3, sample4, d, dark_bg;
+    var result_index = 0;
+    for (var y=0; y < grid[1]; y++) {
+      dark_bg = (y % 2 === 0);
+      for (var x=0; x < grid[0]; x++) {
+        if ((light_background && !dark_bg) || (!light_background && dark_bg)) {
+          if (rows == 6) {
+            d = 16; // 7x6
+          } else {
+            d = 17.5; // 6x5 / 5x4
+          }
+          // if this point is...
+          // black: it can be Heart/Junk/Poison
+          // white: it can be Circle/Poison/Poison2
+          sample1 = isBlack(x * block_size + (block_size/2),
+                            y * block_size + (block_size/d),
+                            true);
+          //******************************************************
+          // if this point is...
+          // black, it can be Circle/Heart/Junk/Poison/Poison2
+          // white: it can be Poison/Poison2
+          sample2 = isBlack(x * block_size + (block_size/19),
+                            y * block_size + (block_size/19),
+                            true);
+          //******************************************************
+          // if this point is...
+          // black, it can be Circle/Heart/Junk/Poison/Poison2
+          // white: it can be Poison/Poison2
+          sample3 = isBlack(x * block_size + (block_size/11),
+                            y * block_size + (block_size/11),
+                            true);
+          //******************************************************
+          // we just try to make sure which gem is circle. This logic can't confirm other sharpe yet.
+          if (!sample1 && sample2 && sample3) {
+            shape_results[result_index] = 'o';
+          } else {
+            // so it is not circle. If sample 4 & 5 is white, it must be square (heart)
+            sample1 = isBlack(x * block_size + (block_size/10*8),
+                              y * block_size + (block_size/10*8),
+                              true);
+            sample2 = isBlack(x * block_size + (block_size/10*2),
+                              y * block_size + (block_size/10*8),
+                              true);
+            if (!sample1 && !sample2) {
+              // if both is white, it is heart.
+              shape_results[result_index] = 's';
+              if (debug && (debug_shape_dark || debug_shape_light)) {
+                ctx.fillStyle = "#00ff00";
+                ctx.font = "36px Arial";
+                ctx.fillText("s",x * block_size+block_size/2 ,y * block_size+block_size/2);
+              }
+            } else {
+              // oh shit, not circle and not heart?
+              // sample more point...
+              sample1 = isBlack(x * block_size + (block_size/30*19),
+                                y * block_size + (block_size/30*16),
+                                true);
+              sample2 = isBlack(x * block_size + (block_size/30*11),
+                                y * block_size + (block_size/30*16),
+                                true);
+              sample3 = isBlack(x * block_size + (block_size/30*15),
+                                y * block_size + (block_size/30*13),
+                                true);
+              if (!sample1 && !sample2 && sample3) {
+                // junk !!!
+                shape_results[result_index] = 'j';
+              } else {
+                // still no idea what shape it is...
+                // it might be poison, but it might also because above logic fail.
+                // so we should not asume this is poison.
+                shape_results[result_index] = '?';
+              }
+            }
+          }
+          if (debug && (debug_shape_dark || debug_shape_light)) {
+            ctx.fillStyle = (shape_results[result_index] === '?') ? "#ff0000" : "#00ff00";
+            ctx.font = "36px Arial";
+            ctx.fillText(shape_results[result_index], x * block_size+block_size/2 , y * block_size+block_size/2);
+          }
+        } // if ((light_background && !dark_bg) || (!light_background && dark_bg)) {
+        result_index += 1;
+        dark_bg = !dark_bg; // toggle
+      }
+    }
+    if (light_background) {
+      // finish shape detection, go to color detection.
+      if (debug && debug_shape_light) {
+        throw('debug shape');
+      }
+      removeCanvas();
+      preProcessScreenshotForGemSampling();
+    } else {
+      // only finish dark background gem, now go to gem with light background
+      if (debug && debug_shape_dark) {
+        throw('debug shape');
+      }
+      removeCanvas();
+      preProcessScreenshotForFindingShape(true);
+    }
+  }
+  function preProcessScreenshotForFindingShape(light_background){
+    if (light_background !== true) light_background = false; // default false
+    var threshold = 72;
+    if (light_background) threshold = 82;
+    if (debug) {
+      console.log('preProcessScreenshotForFindingShape', threshold, light_background === true ? 'light' : 'dark');
+    }
     screenshot_canvas = document.createElement('canvas');
     screenshot_canvas.id = 'screenshot_canvas';
     if (!debug) {
       screenshot_canvas.style.display = 'none';
     }
     document.body.appendChild(screenshot_canvas);
-    Caman(screenshot_canvas, screenshot_url, function () {
+    Caman(screenshot_canvas, screenshot_url, function() {
       this.crop(
         grid_position[2] - grid_position[0],
         grid_position[3] - grid_position[1],
@@ -172,70 +316,8 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
         grid_position[1]
       ).resize({
         width: resize_board_to
-      }).stackBlur(6).threshold(82).render(function(){ // best config, to make sure the background of gem is removed.
-        var block_size = resize_board_to / grid[0];
-        screenshot_canvas = document.getElementById('screenshot_canvas'); // need to get again, otherwise draw not working...
-        var ctx = screenshot_canvas.getContext("2d");
-        if (debug) {
-          ctx.strokeStyle="#FFFF00";
-          ctx.lineWidth=5;
-          ctx.strokeRect(0, 0, resize_board_to, block_size * grid[1]);
-          ctx.fillStyle="#FF0000";
-          for (var y=1; y < grid[1]; y++) {
-            ctx.fillRect(0,
-                         block_size * y,
-                         resize_board_to,
-                         2);
-          }
-          for (var x=1; x < grid[0]; x++) {
-            ctx.fillRect(block_size * x,
-                         0,
-                         2,
-                         block_size * grid[1]);
-          }
-        }
-        var shape_result, p, tx, ty, sample1, sample2, sample3, d;
-        for (var y=0; y < grid[1]; y++) {
-          for (var x=0; x < grid[0]; x++) {
-            if (rows == 6) {
-              d = 16; // 7x6
-            } else {
-              d = 17.5; // 6x5 / 5x4
-            }
-            tx = x * block_size + (block_size/2);
-            ty = y * block_size + (block_size/d); // ~94%
-            // if this point is...
-            // black: it can be Heart/Junk/Poison
-            // white: it can be Circle/Poison/Poison2
-            sample1 = isBlack(tx, ty, true)
-            //******************************************************
-            tx = x * block_size + (block_size/19);
-            ty = y * block_size + (block_size/19);
-            // if this point is...
-            // black, it can be Circle/Heart/Junk/Poison/Poison2
-            // white: it can be Poison/Poison2
-            sample2 = isBlack(tx, ty, true)
-            //******************************************************
-            tx = x * block_size + (block_size/11);
-            ty = y * block_size + (block_size/11);
-            // if this point is...
-            // black, it can be Circle/Heart/Junk/Poison/Poison2
-            // white: it can be Poison/Poison2
-            sample3 = isBlack(tx, ty, true)
-            //******************************************************
-            // we just try to make sure which gem is ciricle. This logic can't confirm other sharpe yet.
-            if (!sample1 && sample2 && sample3) {
-              shape_results.push('o');
-            } else {
-              shape_results.push('?');
-            }
-          }
-        }
-        if (debug && debug_shape) {
-          throw('debug shape');
-        }
-        removeCanvas();
-        preProcessScreenshotForGemSampling();
+      }).stackBlur(6).threshold(threshold).render(function(){ // best config, to make sure the background of gem is removed.
+        findShape(light_background);
       }); // caman.js render
     });
   }
@@ -281,7 +363,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
             shifted_y += sample_per_pixel;
           }
           if (all_black) {
-            return x + 2; // adjust 2 to perfectly matching each GEM block
+            return x + 2; // adjustment
             break;
           }
         }
@@ -303,7 +385,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
             shifted_y += sample_per_pixel;
           }
           if (all_black) {
-            return x - 2; // adjust 2 to perfectly matching each GEM block
+            return x;
             break;
           }
         }
@@ -331,7 +413,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
             shifted_x += sample_per_pixel;
           }
           if (all_black) {
-            return y;
+            return y + 1; // adjustment
             break;
           }
         }
@@ -339,7 +421,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
       }
       return null;
     }
-    var sample_per_pixel = 2;
+    var sample_per_pixel = 1; // must be 1, otherwise shape detection is not accurate enough.
     screenshot_canvas = document.getElementById('screenshot_canvas'); // need to get again, otherwise draw not working...
     var width = screenshot_canvas.width;
     var height = screenshot_canvas.height;
@@ -406,23 +488,25 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     // heart
     if (hsv.h >= heart_default[mode_index][0] && heart_default[mode_index][1] >= hsv.h &&
         hsv.v >= heart_default[mode_index][2] && heart_default[mode_index][3] >= hsv.v &&
-        (!dark_mode || (dark_mode && shape_results[result_index] === '?'))) {
+        (!dark_mode || (dark_mode && shape_results[result_index] === 's'))) {
       it_can_be.push('h');
     }
     // junk
     if (hsv.h >= junk_default[mode_index][0] && junk_default[mode_index][1] >= hsv.h &&
         hsv.v >= junk_default[mode_index][2] && junk_default[mode_index][3] >= hsv.v &&
-        (!dark_mode || (dark_mode && shape_results[result_index] === '?'))) {
+        (!dark_mode || (dark_mode && shape_results[result_index] === 'j'))) {
       it_can_be.push('j');
     }
     // poison
     if (hsv.h >= poison_default[mode_index][0] && poison_default[mode_index][1] >= hsv.h &&
-        hsv.v >= poison_default[mode_index][2] && poison_default[mode_index][3] >= hsv.v) {
+        hsv.v >= poison_default[mode_index][2] && poison_default[mode_index][3] >= hsv.v &&
+        (!dark_mode || (dark_mode && shape_results[result_index] === '?'))) {
       it_can_be.push('q');
     }
     // poison2
     if (hsv.h >= poison2_default[mode_index][0] && poison2_default[mode_index][1] >= hsv.h &&
-        hsv.v >= poison2_default[mode_index][2] && poison2_default[mode_index][3] >= hsv.v) {
+        hsv.v >= poison2_default[mode_index][2] && poison2_default[mode_index][3] >= hsv.v &&
+        (!dark_mode || (dark_mode && shape_results[result_index] === '?'))) {
       it_can_be.push('w');
     }
     if (it_can_be.length === 0 || it_can_be.length > 1) {
@@ -442,7 +526,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     var half_block = (resize_board_to / grid[0]) / 2;
     var tx, ty, p, key, dark_bg;
     for (var y=0; y < grid[1]; y++) {
-      dark_bg = (y % 2 === 0) ;
+      dark_bg = (y % 2 === 0);
       for (var x=0; x < grid[0]; x++) {
         if (dark_mode) {
           // in dark mode, sample a bit lower left, not center. it will be easier for poison, heart and junk.
@@ -479,6 +563,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
         console.log('go dark mode');
       }
       dark_mode = true;
+      shape_results = []; // reset, just incase
       preProcessScreenshotForFindingShape(); // dark mode need detect the gem shape a little bit.
     } else {
       if (debug) {
