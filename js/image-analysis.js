@@ -23,7 +23,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   var debug = false;
   var debug_grid = false;
   var debug_shape_dark = false;
-  var debug_shape_light = true;
+  var debug_shape_light = false;
   var grid = [cols, rows];
   var grid_position;
   var end_results;
@@ -39,12 +39,12 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   var light_default =   [[ 45,  60, 15000, 26000],[ 30,  40, 10000, 25000],[ 30,  40,  5000, 15000]];
   var wood_default =    [[125, 150, 15000, 26000],[ 45,  85,  5000, 15000],[ 85, 130,  5000, 15000]];
   var water_default =   [[195, 215, 18000, 26000],[225, 295,  5000, 15000],[215, 255,  5000, 15000]];
-  var junk_default =    [[195, 235,  8000, 17999],[  1,  15,  7000, 10000],[330, 345,  4000,  7999]];
+  var junk_default =    [[195, 235,  8000, 17999],[  1, 360,  7000, 10000],[300, 345,  4000,  7999]];
   var poison2_default = [[268, 275, 15000, 25000],[  5,  15, 30000, 30000],[  3,  15, 30000, 30000]];
-  var poison_default =  [[276, 281, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
-  var dark_default =    [[282, 300, 15000, 26000],[325, 345, 10000, 15000],[305, 329,  5000, 15000]];
+  var poison_default =  [[276, 282, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
+  var dark_default =    [[282, 300, 14000, 26000],[325, 345, 10000, 15000],[305, 329,  5000, 15000]];
   var heart_default =   [[310, 330, 15000, 26000],[340, 350, 10000, 25000],[330, 345,  8000, 15000]];
-  //  {h: 344, s: 22, v: 4900}
+  //  {h: 296, s: 43, v: 14700}
 
   /*****************************************************************************
   * Helper functions
@@ -241,11 +241,6 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
             if (!sample1 && !sample2) {
               // if both is white, it is heart.
               shape_results[result_index] = 's';
-              if (debug && (debug_shape_dark || debug_shape_light)) {
-                ctx.fillStyle = "#00ff00";
-                ctx.font = "36px Arial";
-                ctx.fillText("s",x * block_size+block_size/2 ,y * block_size+block_size/2);
-              }
             } else {
               // oh shit, not circle and not heart?
               // sample more point...
@@ -256,7 +251,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
                                 y * block_size + (block_size/30*16),
                                 true);
               sample3 = isBlack(x * block_size + (block_size/30*15),
-                                y * block_size + (block_size/30*13),
+                                y * block_size + (block_size/30*11),
                                 true);
               if (!sample1 && !sample2 && sample3) {
                 // junk !!!
@@ -272,7 +267,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
           if (debug && (debug_shape_dark || debug_shape_light)) {
             ctx.fillStyle = (shape_results[result_index] === '?') ? "#ff0000" : "#00ff00";
             ctx.font = "36px Arial";
-            ctx.fillText(shape_results[result_index], x * block_size+block_size/2 , y * block_size+block_size/2);
+            ctx.fillText(shape_results[result_index], x * block_size+block_size/3 , y * block_size+block_size/3);
           }
         } // if ((light_background && !dark_bg) || (!light_background && dark_bg)) {
         result_index += 1;

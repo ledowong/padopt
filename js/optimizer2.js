@@ -95,8 +95,8 @@ var Optimizer = function(opts){
       all_matches = all_matches.concat(matches.matches);
     }
 
-    if(globalmult == 0)//umiyama
-    {
+    if(globalmult == 0) { // 2279 Vigorous Hunt Gods, Umisachi & Yamasachi
+      // ATK x5 when attacking with Water, Wood, Light & Dark orb types at the same time.
       var blue = 0;
       var green = 0;
       var yellow = 0;
@@ -111,8 +111,8 @@ var Optimizer = function(opts){
       return 6*(blue+green+yellow+purple) + 1;
     }
 
-    if(globalmult == 1)//kirin
-    {
+    if(globalmult == 1) { // 2389 Awoken Sakuya
+      // ATK x5 when attacking with Fire, Water, Wood & Light orb types at the same time.
       var red = 0;
       var blue = 0;
       var green = 0;
@@ -155,8 +155,8 @@ var Optimizer = function(opts){
       }
     }
 
-    if(globalmult == 4)//haku
-    {
+    if(globalmult == 4) { //haku
+      // ATK x3.5 when attacking with Fire, Water & Dark orb types at the same time.
       var red = 0;
       var blue = 0;
       var purple = 0;
@@ -196,8 +196,8 @@ var Optimizer = function(opts){
     }
 
 
-    if(globalmult == 6)//D/L Anubis
-    {
+    if(globalmult == 6) { //D/L Anubis
+      // ATK x4 at 8 combos. ATK x3 for each additional combo, up to ATK x10 at 10 combos.
       if(all_matches.length < 8)
       return all_matches.length*2;
       if(all_matches.length == 8)
@@ -208,8 +208,8 @@ var Optimizer = function(opts){
       return 100;
     }
 
-    if(globalmult == 7)// Bastet
-    {
+    if(globalmult == 7) { // 2011 Awoken Bastet
+      // ATK x3 at 5 combos. ATK x0.5 for each additional combo, up to ATK x4 at 7 combos.
       if(all_matches.length < 4)
       return all_matches.length;
       if(all_matches.length == 4)
