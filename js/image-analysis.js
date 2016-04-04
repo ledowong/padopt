@@ -4,24 +4,24 @@
 
 'use strict';
 
-Array.prototype.getUnique = function(){
-   var u = {}, a = [];
-   for(var i = 0, l = this.length; i < l; ++i){
-      if(u.hasOwnProperty(this[i])) {
-         continue;
-      }
-      a.push(this[i]);
-      u[this[i]] = 1;
-   }
-   return a;
-}
+// Array.prototype.getUnique = function(){
+//    var u = {}, a = [];
+//    for(var i = 0, l = this.length; i < l; ++i){
+//       if(u.hasOwnProperty(this[i])) {
+//          continue;
+//       }
+//       a.push(this[i]);
+//       u[this[i]] = 1;
+//    }
+//    return a;
+// }
 
 var imageAnalysis = function(screenshot_url, cols, rows, callback){
   /*****************************************************************************
   * Variables
   *****************************************************************************/
   var debug = false;
-  var debug_grid = true;
+  var debug_grid = false;
   var debug_shape_dark = false;
   var debug_shape_light = false;
   var grid = [cols, rows];
@@ -31,20 +31,21 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   var dark_mode = false;
   var screenshot_canvas = null;
   var resize_board_to = 800;
+  var normal_acceptable_unknown_percentage = 15; // if more than this percentage, it will go for dark mode.
 
   // GEM color profile
   //                            Normal              Transparent Light BG     Transparent Dark BG
   //                     minH,maxH,  minV,  maxV  minH,maxH,  minV,  maxV  minH,maxH,  minV,  maxV
   var fire_default =    [[  5,  20, 15000, 26000],[  1,  15, 11701, 25000],[  2,  15,  5000, 15000]];
-  var light_default =   [[ 45,  60, 15000, 26000],[ 30,  40, 10000, 25000],[ 30,  40,  5000, 15000]];
-  var wood_default =    [[125, 150, 15000, 26000],[ 45,  85,  5000, 15000],[ 85, 130,  5000, 15000]];
-  var water_default =   [[195, 215, 18000, 26000],[225, 295,  5000, 15000],[215, 255,  5000, 15000]];
+  var light_default =   [[ 45,  60, 15000, 26000],[ 30,  40, 10000, 25000],[ 30,  45,  5000, 15000]];
+  var wood_default =    [[125, 150, 15000, 26000],[ 45, 105,  5000, 15000],[ 85, 135,  5000, 15000]];
+  var water_default =   [[195, 215, 18000, 26000],[220, 295,  5000, 15000],[215, 255,  5000, 15000]];
   var junk_default =    [[195, 235,  8000, 17999],[  1, 360,  7000, 10000],[300, 345,  4000,  7999]];
   var poison2_default = [[268, 275, 15000, 25000],[  5,  15, 30000, 30000],[  3,  15, 30000, 30000]];
   var poison_default =  [[276, 282, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
-  var dark_default =    [[282, 300, 14000, 26000],[325, 345, 10000, 15000],[305, 329,  5000, 15000]];
-  var heart_default =   [[310, 330, 15000, 26000],[340, 350, 10000, 25000],[330, 345,  8000, 15000]];
-  //  {h: 296, s: 43, v: 14700}
+  var dark_default =    [[282, 300, 14000, 26000],[320, 345, 10000, 15000],[305, 329,  5000, 15000]];
+  var heart_default =   [[310, 330, 15000, 26000],[335, 350, 10000, 25000],[330, 345,  8000, 15000]];
+  // {h: 224, s: 33, v: 12800}
 
   /*****************************************************************************
   * Helper functions
@@ -166,7 +167,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     }
     document.body.appendChild(screenshot_canvas);
     Caman(screenshot_canvas, screenshot_url, function () {
-      this.threshold(45).render(findGrid); // 45 works better, even works when there is healing effect.
+      this.threshold(55).render(findGrid); // 55 works better, even works when there is healing effect.
     });
   }
   function findShape(light_background){
@@ -548,10 +549,8 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     }
     end_results = results;
     removeCanvas();
-    var unique_result = end_results.getUnique().sort();
-    if (!dark_mode &&
-        ((unique_result.length === 1 && unique_result[0] === 'x') ||
-         (unique_result.length === 2 && unique_result[0] === 'j' && unique_result[1] === 'x'))) {
+    var x_count = (end_results.join('').match(/x/g) || []).length;
+    if (!dark_mode && (x_count / (grid[1] * grid[0]) * 100) > normal_acceptable_unknown_percentage) {
       // can found the board border, but all gem is X... maybe dark mode?
       // (sometimes blue will detected as Junk too...)
       if (debug) {
