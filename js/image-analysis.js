@@ -21,7 +21,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   * Variables
   *****************************************************************************/
   var debug = false;
-  var debug_grid = false;
+  var debug_grid = true;
   var debug_shape_dark = false;
   var debug_shape_light = false;
   var grid = [cols, rows];
@@ -166,7 +166,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     }
     document.body.appendChild(screenshot_canvas);
     Caman(screenshot_canvas, screenshot_url, function () {
-      this.threshold(20).render(findGrid);
+      this.threshold(45).render(findGrid); // 45 works better, even works when there is healing effect.
     });
   }
   function findShape(light_background){

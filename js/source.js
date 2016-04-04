@@ -198,6 +198,8 @@ $(document).ready(function() {
       $('#solutions ol').html(html_array.join(''));
       // reset solve buttons
       $('.form_solve_button').button('reset');
+      // click first solution
+      $('#solutions li:first').click();
     });
   });
 

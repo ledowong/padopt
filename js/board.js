@@ -335,6 +335,16 @@ var Board = function(canvas_id, opts){
           }
         }
         _path_animation.request_id = _requestAnimationFrame(_drawPathAnimation);
+      } else {
+        // this is the end...
+        // draw the square again with green color
+        _ctx.lineWidth = 2;
+        _ctx.fillStyle = 'lime';
+        _ctx.strokeStyle = '#000';
+        _ctx.beginPath();
+        _ctx.rect(_path_animation.x-(_PATH_SQUARE_SIZE/2), _path_animation.y-(_PATH_SQUARE_SIZE/2), _PATH_SQUARE_SIZE, _PATH_SQUARE_SIZE);
+        _ctx.fill();
+        _ctx.stroke();
       }
     }
   }
