@@ -36,16 +36,16 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   // GEM color profile
   //                            Normal              Transparent Light BG     Transparent Dark BG
   //                     minH,maxH,  minV,  maxV  minH,maxH,  minV,  maxV  minH,maxH,  minV,  maxV
-  var fire_default =    [[  5,  20, 15000, 26000],[  1,  15, 11701, 25000],[  2,  15,  5000, 15000]];
-  var light_default =   [[ 45,  60, 15000, 26000],[ 30,  40, 10000, 25000],[ 30,  45,  5000, 15000]];
-  var wood_default =    [[125, 150, 15000, 26000],[ 45, 105,  5000, 15000],[ 85, 135,  5000, 15000]];
-  var water_default =   [[195, 215, 18000, 26000],[220, 295,  5000, 15000],[215, 255,  5000, 15000]];
+  var fire_default =    [[  5,  20, 15000, 26000],[  1,  15, 11701, 25000],[  2,  15,  5000, 18000]];
+  var light_default =   [[ 45,  60, 15000, 26000],[ 30,  55, 10000, 25000],[ 30,  50,  5000, 18000]];
+  var wood_default =    [[125, 150, 15000, 26000],[ 60, 130,  5000, 15000],[ 85, 145,  5000, 15000]];
+  var water_default =   [[195, 215, 18000, 26000],[210, 295,  5000, 18000],[210, 255,  5000, 18000]];
   var junk_default =    [[195, 235,  8000, 17999],[  1, 360,  7000, 10000],[300, 345,  4000,  7999]];
   var poison2_default = [[268, 275, 15000, 25000],[  5,  15, 30000, 30000],[  3,  15, 30000, 30000]];
   var poison_default =  [[276, 282, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
-  var dark_default =    [[282, 300, 14000, 26000],[320, 345, 10000, 15000],[305, 329,  5000, 15000]];
-  var heart_default =   [[310, 330, 15000, 26000],[335, 350, 10000, 25000],[330, 345,  8000, 15000]];
-  // {h: 224, s: 33, v: 12800}
+  var dark_default =    [[282, 300, 14000, 26000],[300, 345, 10000, 15000],[295, 329,  5000, 15000]];
+  var heart_default =   [[310, 330, 15000, 26000],[325, 350, 10000, 25000],[325, 345,  8000, 18000]];
+  //
 
   /*****************************************************************************
   * Helper functions
@@ -252,7 +252,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
                                 y * block_size + (block_size/30*16),
                                 true);
               sample3 = isBlack(x * block_size + (block_size/30*15),
-                                y * block_size + (block_size/30*11),
+                                y * block_size + (block_size/30*13), // remark: 30*11 is better for normal mode.
                                 true);
               if (!sample1 && !sample2 && sample3) {
                 // junk !!!
