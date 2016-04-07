@@ -24,7 +24,7 @@ var Profile = function(){
     "default": DEFAULT_PROFILE,
     "id_2009": {
       name: "2009 Awoken Horus",
-      weights: [1,1,0,1,1,1,0,0,1,1,0,1,1,1,0,0,1,1,0,0,0.3,0.3,0,0,0.1,0.1,0,0,0.1,0.1,0,0,0.1,0.1,0,0],
+      weights: [1,1,0,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,0.3,0.3,0,0,0.1,0.1,0,0,0.1,0.1,0,0,0.1,0.1,0,0],
       multiple_formula: {
         base_multiple: 1,
         combo_mode: false,
