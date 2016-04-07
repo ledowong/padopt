@@ -132,7 +132,8 @@ var Optimizer = function(opts){
 
     // base multiple (in-game type 11, 22, 26, 28, 29, 30, 31, 40, 45, 62, 65, 69, 75, 76, 77, 79, 105, 108, 111, 114, 121, 125, 129, 137, 155)
     // * combine orbs mode * combo mode result, and friend.
-    return (_multiple_formula.base_multiple*combo_multiple*orbs_multiple) * (_multiple_formula.base_multiple*combo_multiple*orbs_multiple);
+    var final_multi = (_multiple_formula.base_multiple*combo_multiple*orbs_multiple) * (_multiple_formula.base_multiple*combo_multiple*orbs_multiple);
+    return final_multi;
   }
   var _copySolutionWithCursor = function(solution, i, j, init_cursor) {
     var complexity = _getSimplePathXYs(solution).length-1;

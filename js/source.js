@@ -146,6 +146,7 @@ $(document).ready(function() {
 
   $('#form_profile').on('change', function() {
     updateDOMprofile(profile.getProfile($(this).val()));
+    $('#profile_form').submit();
   });
 
   $('#profile_form').on('submit', function(){
