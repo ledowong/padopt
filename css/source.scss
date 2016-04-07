@@ -340,7 +340,8 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
     color: $state-danger-text;
   }
 }
-#orbs_count{
+#orbs_count_from,
+#orbs_count_upto{
   @extend .input-sm;
   display:inline;
   width: 45px;

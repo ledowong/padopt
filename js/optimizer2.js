@@ -102,11 +102,15 @@ var Optimizer = function(opts){
     // matching in-game skill type 66, 98, 104
     if (_multiple_formula.combo_mode) {
       if (all_matches.length >= _multiple_formula.combo_from) {
-        var additional_combo = all_matches.length - _multiple_formula.combo_from;
+        var combo_count = all_matches.length;
+        if (combo_count > _multiple_formula.combo_upto) {
+          combo_count = _multiple_formula.combo_upto;
+        }
+        var additional_combo = combo_count - _multiple_formula.combo_from;
         combo_multiple = _multiple_formula.combo_multiple + (additional_combo * _multiple_formula.combo_additional_multiple);
       }
     }
-    // orbs_mode: true, orbs: ['0','1','2','3'], orbs_count: 4, orbs_multiple: 5
+    // orbs_mode: true, orbs: ['0','1','2','3'], orbs_count_from: 4, orbs_multiple: 5, orbs_additional_multiple: 0.5, orbs_count_upto: 5
     // matching in-game skill type 61
     if (_multiple_formula.orbs_mode) {
       var matched_orbs = [];
@@ -119,8 +123,12 @@ var Optimizer = function(opts){
           matched_orbs_count ++;
         }
       });
-      if (matched_orbs_count >= _multiple_formula.orbs_count) {
-        orbs_multiple = _multiple_formula.orbs_multiple;
+      if (matched_orbs_count > _multiple_formula.orbs_count_upto) {
+        matched_orbs_count = _multiple_formula.orbs_count_upto;
+      }
+      if (matched_orbs_count >= _multiple_formula.orbs_count_from) {
+        var additional_count = matched_orbs_count - _multiple_formula.orbs_count_from;
+        orbs_multiple = _multiple_formula.orbs_multiple + (additional_count * _multiple_formula.orbs_additional_multiple);
       }
     }
 

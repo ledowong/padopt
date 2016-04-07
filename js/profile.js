@@ -13,13 +13,33 @@ var Profile = function(){
       combo_upto: 1,
       orbs_mode: false,
       orbs: ['0','1','2','3','4'],
-      orbs_count: 1,
-      orbs_multiple: 1
+      orbs_count_from: 1,
+      orbs_count_upto: 1,
+      orbs_multiple: 1,
+      orbs_additional_multiple: 0
     }
   };
   // profile storing weights, and multiple settings
   var _profiles = {
     "default": DEFAULT_PROFILE,
+    "id_2009": {
+      name: "2009 Awoken Horus",
+      weights: [1,1,0,1,1,1,0,0,1,1,0,1,1,1,0,0,1,1,0,0,0.3,0.3,0,0,0.1,0.1,0,0,0.1,0.1,0,0,0.1,0.1,0,0],
+      multiple_formula: {
+        base_multiple: 1,
+        combo_mode: false,
+        combo_from: 1,
+        combo_multiple: 1,
+        combo_additional_multiple: 1,
+        combo_upto: 1,
+        orbs_mode: true,
+        orbs: ['0','1','2','3','4'],
+        orbs_count_from: 4,
+        orbs_count_upto: 5,
+        orbs_multiple: 4,
+        orbs_additional_multiple: 0.5
+      }
+    },
     "id_2011": { // http://puzzledragonx.com/en/monster.asp?n=2011
       name: "2011 Awoken Bastet",
       weights: [1,1,0,0,1,1,0,0,1,1,0,1,1,1,0,0,1,1,0,0,0.3,0.3,0,0,0.1,0.1,0,0,0.1,0.1,0,0,0.1,0.1,0,0],
@@ -31,9 +51,11 @@ var Profile = function(){
         combo_additional_multiple: 0.5,
         combo_upto: 7,
         orbs_mode: false,
-        orbs: ['1','2','3','4', '5'],
-        orbs_count: 4,
-        orbs_multiple: 5
+        orbs: ['1','2','3','4','5'],
+        orbs_count_from: 4,
+        orbs_count_upto: 4,
+        orbs_multiple: 5,
+        orbs_additional_multiple: 0
       }
     },
     "id_2013": { // http://puzzledragonx.com/en/monster.asp?n=2013
@@ -47,9 +69,11 @@ var Profile = function(){
         combo_additional_multiple: 2,
         combo_upto: 12,
         orbs_mode: false,
-        orbs: ['1','2','3','4', '5'],
-        orbs_count: 4,
-        orbs_multiple: 5
+        orbs: ['1','2','3','4','5'],
+        orbs_count_from: 4,
+        orbs_count_upto: 4,
+        orbs_multiple: 5,
+        orbs_additional_multiple: 0
       }
     },
     "id_2076": {
@@ -64,8 +88,10 @@ var Profile = function(){
         combo_upto: 1,
         orbs_mode: true,
         orbs: ['0','1','4','5'],
-        orbs_count: 3,
-        orbs_multiple: 3.5
+        orbs_count_from: 3,
+        orbs_count_upto: 3,
+        orbs_multiple: 3.5,
+        orbs_additional_multiple: 0
       }
     },
     "id_2279": {
@@ -80,8 +106,10 @@ var Profile = function(){
         combo_upto: 1,
         orbs_mode: true,
         orbs: ['1','2','3','4'],
-        orbs_count: 4,
-        orbs_multiple: 5
+        orbs_count_from: 4,
+        orbs_count_upto: 4,
+        orbs_multiple: 5,
+        orbs_additional_multiple: 0
       }
     },
     "id_2389": {
@@ -96,8 +124,10 @@ var Profile = function(){
         combo_upto: 10,
         orbs_mode: true,
         orbs: ['0','1','2','3'],
-        orbs_count: 4,
-        orbs_multiple: 5
+        orbs_count_from: 4,
+        orbs_count_upto: 4,
+        orbs_multiple: 5,
+        orbs_additional_multiple: 0
       }
     },
   };
