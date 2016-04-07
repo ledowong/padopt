@@ -16,7 +16,6 @@ Coordinate.prototype.getXY = function(){
 };
 // End
 
-
 var Optimizer = function(opts){
   var _debug = true;
   var _rows = opts['rows'];
@@ -32,6 +31,8 @@ var Optimizer = function(opts){
   var MULTI_ORB_BONUS = 0.25;
   var COMBO_BONUS = 0.25;
   var _max_length = opts['max_length'];
+  var _multiple_formula = {};
+  var _weights = [];
 
   // private methods
   var _maxSolutionCount = function(){
@@ -81,7 +82,7 @@ var Optimizer = function(opts){
       mult: _computeMult(board),
       matches: []};
   }
-  var _computeMult = function(paramBoard) { // TODO, should be able to change by user
+  var _computeMult = function(paramBoard) {
     var board = _copyBoard(paramBoard);
 
     var all_matches = [];
@@ -95,134 +96,43 @@ var Optimizer = function(opts){
       all_matches = all_matches.concat(matches.matches);
     }
 
-    if(globalmult == 0) { // 2279 Vigorous Hunt Gods, Umisachi & Yamasachi
-      // ATK x5 when attacking with Water, Wood, Light & Dark orb types at the same time.
-      var blue = 0;
-      var green = 0;
-      var yellow = 0;
-      var purple = 0;
-      all_matches.forEach(function(m) {
-        if(m.type == 1) {blue = 1;}
-        if(m.type == 2) {green = 1;}
-        if(m.type == 3) {yellow = 1;}
-        if(m.type == 4) {purple = 1;}
-      });
-
-      return 6*(blue+green+yellow+purple) + 1;
+    var combo_multiple = 1;
+    var orbs_multiple = 1;
+    // combo_mode: true, combo_from: 6, combo_multiple: 1.2, combo_additional_multiple: 0.2, combo_upto: 10
+    // matching in-game skill type 66, 98, 104
+    if (_multiple_formula.combo_mode) {
+      if (all_matches.length >= _multiple_formula.combo_from) {
+        var additional_combo = all_matches.length - _multiple_formula.combo_from;
+        combo_multiple = _multiple_formula.combo_multiple + (additional_combo * _multiple_formula.combo_additional_multiple);
+      }
     }
-
-    if(globalmult == 1) { // 2389 Awoken Sakuya
-      // ATK x5 when attacking with Fire, Water, Wood & Light orb types at the same time.
-      var red = 0;
-      var blue = 0;
-      var green = 0;
-      var yellow = 0;
-
+    // orbs_mode: true, orbs: ['0','1','2','3'], orbs_count: 4, orbs_multiple: 5
+    // matching in-game skill type 61
+    if (_multiple_formula.orbs_mode) {
+      var matched_orbs = [];
       all_matches.forEach(function(m) {
-        if(m.type == 0) {red = 1;}
-        if(m.type == 1) {blue = 1;}
-        if(m.type == 2) {green = 1;}
-        if(m.type == 3) {yellow = 1;}
-
+        matched_orbs.push(m.type);
       });
-
-      return 6*(blue+green+yellow+red) + 1;
-    }
-
-    if(globalmult == 2)//ra
-    {
-      var red = 0;
-      var blue = 0;
-      var green = 0;
-      var yellow = 0;
-      var purple = 0;
-      all_matches.forEach(function(m) {
-        if(m.type == 0) {red = 1;}
-        if(m.type == 1) {blue = 1;}
-        if(m.type == 2) {green = 1;}
-        if(m.type == 3) {yellow = 1;}
-        if(m.type == 4) {purple = 1;}
+      var matched_orbs_count = 0;
+      _multiple_formula.orbs.forEach(function(need_orb){
+        if (matched_orbs.indexOf(need_orb) !== -1) {
+          matched_orbs_count ++;
+        }
       });
-
-      return (7*(blue+green+yellow+red+purple) + 1);
-    }
-
-    if(globalmult == 3)//kush
-    {
-      if(all_matches.length >= 3)
-      {
-        return (all_matches.length/2)*(all_matches.length/2);
+      if (matched_orbs_count >= _multiple_formula.orbs_count) {
+        orbs_multiple = _multiple_formula.orbs_multiple;
       }
     }
 
-    if(globalmult == 4) { //haku
-      // ATK x3.5 when attacking with Fire, Water & Dark orb types at the same time.
-      var red = 0;
-      var blue = 0;
-      var purple = 0;
+    // TODO, not support the follow skill type yet:
+    //   101 (just X number of orbs, no more no less)
+    //   119 (X color orbs x Y+, atk up, with additional per orb)
+    //   124
+    //   150 (X color orbs x 5 with plus)
 
-      all_matches.forEach(function(m) {
-        if(m.type == 0) {red = 1;}
-        if(m.type == 1) {blue = 1;}
-        if(m.type == 4) {purple = 1;}
-      });
-      return 3.75*(blue+purple+red) + 1;
-    }
-
-    if(globalmult == 5)// L/L ra
-    {
-      var red = 0;
-      var blue = 0;
-      var green = 0;
-      var yellow = 0;
-      var purple = 0;
-      var heart = 0;
-
-      all_matches.forEach(function(m) {
-        if(m.type == 0) {red = 1;}
-        if(m.type == 1) {blue = 1;}
-        if(m.type == 2) {green = 1;}
-        if(m.type == 3) {yellow = 1;}
-        if(m.type == 4) {purple = 1;}
-        if(m.type == 5) {heart = 1;}
-      });
-
-      var sum = red + blue + green + yellow + purple + heart;
-
-      if (sum < 6)
-      return 3*sum + 1;
-      if (sum == 6)
-      return 49;
-    }
-
-
-    if(globalmult == 6) { //D/L Anubis
-      // ATK x4 at 8 combos. ATK x3 for each additional combo, up to ATK x10 at 10 combos.
-      if(all_matches.length < 8)
-      return all_matches.length*2;
-      if(all_matches.length == 8)
-      return 16;
-      if(all_matches.length == 9)
-      return 49;
-      if(all_matches.length >= 10)
-      return 100;
-    }
-
-    if(globalmult == 7) { // 2011 Awoken Bastet
-      // ATK x3 at 5 combos. ATK x0.5 for each additional combo, up to ATK x4 at 7 combos.
-      if(all_matches.length < 4)
-      return all_matches.length;
-      if(all_matches.length == 4)
-      return 6.25;
-      if(all_matches.length == 5)
-      return 9;
-      if(all_matches.length == 6)
-      return 12.25;
-      if(all_matches.length >= 7)
-      return 16;
-    }
-
-    return 1;
+    // base multiple (in-game type 11, 22, 26, 28, 29, 30, 31, 40, 45, 62, 65, 69, 75, 76, 77, 79, 105, 108, 111, 114, 121, 125, 129, 137, 155)
+    // * combine orbs mode * combo mode result, and friend.
+    return (_multiple_formula.base_multiple*combo_multiple*orbs_multiple) * (_multiple_formula.base_multiple*combo_multiple*orbs_multiple);
   }
   var _copySolutionWithCursor = function(solution, i, j, init_cursor) {
     var complexity = _getSimplePathXYs(solution).length-1;
@@ -238,18 +148,6 @@ var Optimizer = function(opts){
   }
   var _copySolution = function(solution) {
     return _copySolutionWithCursor(solution, solution.cursor.row, solution.cursor.col, solution.init_cursor);
-  }
-  var _getWeights = function() { // TODO, should change to not reading DOM
-    var weights = new Array(TYPES);
-    for (var i = 0; i < TYPES; ++ i) {
-      weights[i] = {
-        normal: +$('#e' + i + '-normal').val(),
-        mass: +$('#e' + i + '-mass').val(),
-        row: +$('#e' + i + '-row').val(),
-        tpa: +$('#e' + i + '-tpa').val()
-      };
-    }
-    return weights;
   }
   var _findMatches = function(board) {
     var match_board = _initBoard();
@@ -498,6 +396,7 @@ var Optimizer = function(opts){
     });
     solutions = solutions.concat(new_solutions);
     solutions.sort(function(a, b) {
+      // if (b.mult == 25 || a.mult == 25) console.log(b.mult, a.mult);
       if (_sorting == "multiplier" ) {
         return b.mult - a.mult  ||  a.complexity - b.complexity || b.weight - a.weight;
       } else if (_sorting == "multiweight") {
@@ -599,7 +498,7 @@ var Optimizer = function(opts){
         }
       }
       var solutions = new Array(_rows * _cols);
-      var weights = _getWeights();
+      var weights = _weights;
 
       var seed_solution = _makeSeedSolution(_board);
       _inPlaceEvaluateSolution(seed_solution, weights);
@@ -627,13 +526,13 @@ var Optimizer = function(opts){
     },
     exportSolutionDropMatchesBoard: function(index){
       var solution = _solutions[index];
-      var drop_matches_board = _inPlaceEvaluateSolution(solution, _getWeights());
+      var drop_matches_board = _inPlaceEvaluateSolution(solution, _weights);
       return [].concat.apply([], drop_matches_board).join('');
     },
     lengthenSolution: function(stepCallback, finishCallback) {
       var board = _board;
       var solutions = _unsimplified_solutions;
-      var weights = _getWeights();
+      var weights = _weights;
 
       var seed_solution = _makeSeedSolution(board);
       _inPlaceEvaluateSolution(seed_solution, weights);
@@ -658,6 +557,12 @@ var Optimizer = function(opts){
       };
       // TODO, update DOM at source.js $('#form_max_length').val(solve_state.max_length);
       _solveBoardStep(solve_state);
+    },
+    setMultipleFormula: function(new_multiple_formula){
+      _multiple_formula = new_multiple_formula;
+    },
+    setWeights: function(new_weights){
+      _weights = new_weights;
     }
   };
 }

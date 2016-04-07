@@ -14,6 +14,7 @@ var paths = {
        'js/optimizer2.js',
        'js/board.js',
        'js/image-analysis.js',
+       'js/profile.js',
        'js/source.js'],
   sass: ['css/source.scss'],
   html: ['index.html']

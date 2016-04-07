@@ -32,6 +32,14 @@ body {
   background-image: url('/img/bg.gif');
   background-repeat: repeat;
   font-family: 'Roboto Mono', monospace;
+  // http://stackoverflow.com/questions/826782/css-rule-to-disable-text-selection-highlighting
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* IE/Edge */
+  user-select: none;           /* non-prefixed version, currently
+                                  not supported by any browser */
 }
 
 .modal{
@@ -127,6 +135,17 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
     }
   }
 }
+.gem-checkbox{
+  &:not(.checked){
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: url(grayscale.svg); /* Firefox 4+ */
+    filter: gray; /* IE 6-9 */
+  }
+}
 
 // change orbs
 .gem-target{
@@ -140,6 +159,11 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
     width: 50px;
     padding: 3px 6px;
     height: auto;
+    &:invalid{
+      border-color: $state-danger-border;
+      background-color: $state-danger-bg;
+      color: $state-danger-text;
+    }
   }
   th{
     @extend .text-center;
@@ -147,7 +171,7 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   td{
     padding: 1px;
   }
-  margin: 0 auto;
+  margin: 0 auto 15px auto;
 }
 
 #board_canvas{ // make canvas responsive without resize it using JS.
@@ -301,5 +325,36 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
       color: #fff;
       text-decoration: none;
     }
+  }
+}
+
+#base_multiple{
+  @extend .form-control;
+  @extend .input-sm;
+  width: 40px;
+  padding: 3px 6px;
+  height: auto;
+  display: inline;
+  margin: 1px;
+  &:invalid{
+    border-color: $state-danger-border;
+    background-color: $state-danger-bg;
+    color: $state-danger-text;
+  }
+}
+#orbs_count{
+  @extend .input-sm;
+  display:inline;
+  width: 45px;
+}
+#multiple_combo,
+#multiple_orb_types{
+  display:inline;
+}
+#multiple_combo_wrapper,
+#multiple_orb_types_wrapper{
+  padding-left:20px;
+  input{
+    @extend #base_multiple;
   }
 }

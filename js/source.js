@@ -1,18 +1,108 @@
-// TODO, global varialbe use between optimizer and source.js
-// Should redesign 'profile' and remove this global variable.
-var globalmult = -1;
-
-
+'use strict';
 
 $(document).ready(function() {
 
-  function errorFlash(msg){
+  /****************************************************
+   * functions
+  *****************************************************/
+  var errorFlash = function(msg){
     $('#status_bar').addClass('error');
     $('.error_label').text(msg);
     setTimeout(function(){
       $('#status_bar').removeClass('error');
     }, 1500);
   }
+
+  var updateDOMprofile = function(profile){
+    var field_per_type = 4;
+    var field_postfix, type;
+    // weights
+    profile.weights.forEach(function(value, index){
+      type = Math.floor(index / field_per_type);
+      switch (index % field_per_type) {
+        case 0: field_postfix = "normal"; break;
+        case 1: field_postfix = "mass"; break;
+        case 2: field_postfix = "row"; break;
+        case 3: field_postfix = "tpa"; break;
+      }
+      $("#e"+type+"-"+field_postfix).val(value);
+    });
+    // multiple
+    $("#base_multiple").val(profile.multiple_formula.base_multiple);
+    $("#multiple_combo").prop('checked', profile.multiple_formula.combo_mode);
+    $("#multiple_combo").change(); // fire change event.
+    $("#combo_from").val(profile.multiple_formula.combo_from);
+    $("#combo_multiple").val(profile.multiple_formula.combo_multiple);
+    $("#combo_additional_multiple").val(profile.multiple_formula.combo_additional_multiple);
+    $("#combo_upto").val(profile.multiple_formula.combo_upto);
+    $("#multiple_orb_types").prop('checked', profile.multiple_formula.orbs_mode);
+    $("#multiple_orb_types").change(); // fire change event.
+    $("#orbs_count").val(profile.multiple_formula.orbs_count);
+    $("#orbs_multiple").val(profile.multiple_formula.orbs_multiple);
+    $('.gem-checkbox').removeClass('checked');
+    profile.multiple_formula.orbs.forEach(function(orb_index){
+      $('.gem-checkbox.gem'+orb_index).addClass('checked');
+    });
+  };
+
+  var build_multiple_formula = function() {
+    var orbs = [];
+    $('.gem-checkbox.checked').each(function(){ orbs.push(String($(this).data('index'))) });
+    return {base_multiple: Number($("#base_multiple").val()),
+            combo_mode: $("#multiple_combo").is(':checked'),
+            combo_from: Number($('#combo_from').val()),
+            combo_multiple: Number($('#combo_multiple').val()),
+            combo_additional_multiple: Number($('#combo_additional_multiple').val()),
+            combo_upto: Number($('#combo_upto').val()),
+            orbs_mode: $("#multiple_orb_types").is(':checked'),
+            orbs: orbs,
+            orbs_count: Number($('#orbs_count').val()),
+            orbs_multiple: Number($('#orbs_multiple').val())
+            };
+  }
+
+  // handle screenshot
+  var imageLoaded = function(p){
+    var data_uri = p.currentTarget.result;
+    var col_row = $('#form_grid_size').val().split('x');
+    $('#status_bar').addClass('image_analysing');
+    imageAnalysis(data_uri, col_row[0], col_row[1], function(result_string){
+      $('#status_bar').removeClass('image_analysing');
+      if (result_string) {
+        board.import(result_string);
+        $('.form_solve_button:first').click();
+      } else {
+        errorFlash('Game board not found.');
+      }
+    });
+  };
+
+  // resize solution max-height
+  var setSolutionMaxHeight = function(){
+    var status_bar_height = $('#status_bar').outerHeight();
+    $('#solutions').css('max-height', $(window).height()-status_bar_height+'px');
+  }
+
+  var build_weights = function(){
+    var types = 9;
+    var weights = new Array(types);
+    for (var i = 0; i < types; ++ i) {
+      weights[i] = {
+        normal: +$('#e' + i + '-normal').val(),
+        mass: +$('#e' + i + '-mass').val(),
+        row: +$('#e' + i + '-row').val(),
+        tpa: +$('#e' + i + '-tpa').val()
+      };
+    }
+    return weights;
+  }
+
+  /****************************************************
+   * monitors
+  *****************************************************/
+  $(window).on('resize', function(){
+    setSolutionMaxHeight();
+  });
 
   // enable bootstrap tooltip
   $('[data-toggle="tooltip"]').tooltip();
@@ -54,61 +144,38 @@ $(document).ready(function() {
     }
   });
 
-  // handle screenshot
-  function imageLoaded(p){
-    var data_uri = p.currentTarget.result;
-    var col_row = $('#form_grid_size').val().split('x');
-    $('#status_bar').addClass('image_analysing');
-    imageAnalysis(data_uri, col_row[0], col_row[1], function(result_string){
-      $('#status_bar').removeClass('image_analysing');
-      if (result_string) {
-        board.import(result_string);
-        $('.form_solve_button:first').click();
-      } else {
-        errorFlash('Game board not found.');
-      }
-    });
-  }
+  $('#form_profile').on('change', function() {
+    updateDOMprofile(profile.getProfile($(this).val()));
+  });
 
-  // TODO, this should be upgrade, and remove global variable 'globalmult'.
-  // ready profile
-  $('#form_profile').change(function() {
-    var types = 9
-    var values = this.value.replace(/\s+/g, '').split(/,/);
-    for (var i = 0; i < types; ++ i) {
-      $('#e' + i + '-normal').val(values[4*i]);
-      $('#e' + i + '-mass').val(values[4*i+1]);
-      $('#e' + i + '-row').val(values[4*i+2]);
-      $('#e' + i + '-tpa').val(values[4*i+3]);
+  $('#profile_form').on('submit', function(){
+    if (this.checkValidity()) {
+      optimizer.setMultipleFormula(build_multiple_formula());
+      optimizer.setWeights(build_weights());
+    } else {
+      // TODO, error message
     }
-    globalmult = values[4*types];
+    return false;
   });
 
-
-
-  // resize solution max-height
-  var setSolutionMaxHeight = function(){
-    var status_bar_height = $('#status_bar').outerHeight();
-    $('#solutions').css('max-height', $(window).height()-status_bar_height+'px');
-  }
-  setSolutionMaxHeight();//init
-  $(window).on('resize', function(){
-    setSolutionMaxHeight();
+  $('#profile-table input').on('change', function(){
+    $('#profile_form').submit();
   });
 
+  $('.gem-checkbox').on('click', function(){
+    $(this).toggleClass('checked');
+    $('#profile_form').submit();
+    return false;
+  });
 
-  // prepare and draw game board
-  var board = new Board('board_canvas',
-    {rows: parseInt($('#form_grid_size').val().split('x')[1]),
-     cols: parseInt($('#form_grid_size').val().split('x')[0]),
-     draw_style: $('#form_draw_style').val()});
-  var optimizer = new Optimizer({
-    rows: parseInt($('#form_grid_size').val().split('x')[1]),
-    cols: parseInt($('#form_grid_size').val().split('x')[0]),
-    sorting: $('#form_sorting').val(),
-    max_path: parseInt($('#form_max_paths').val()),
-    is_8_dir_movement: $("#form_direction").val() === "8",
-    max_length: parseInt($('#form_max_length').val()),
+  $("#multiple_combo,#multiple_orb_types").on('change', function(){
+    var wrapper = $('#'+$(this).attr('id') + '_wrapper');
+    ($(this).is(':checked')) ? wrapper.show() : wrapper.hide();
+    $('#profile_form').submit();
+  })
+
+  $('#base_multiple,#multiple_combo_wrapper input,#multiple_orb_types input').on('change', function(){
+    $('#profile_form').submit();
   });
 
   $('#form_direction').on('change', function(){
@@ -266,7 +333,7 @@ $(document).ready(function() {
       48, 49, 50, 51, 52, 53, 54, 55, 56, // 0-8
       96, 97, 98, 99,100,101,102,103,104, // 0-8 (numpad)
       110,190, // .
-      88, 81, 87, 82, 89, 71, 72, 66, 80// color
+      88, 81, 87, 82, 89, 71, 72, 66, 80, 74 // color
       ]) === -1) {
       e.preventDefault();
     }
@@ -350,4 +417,35 @@ $(document).ready(function() {
     board.import(board_stirng);
     $('#changeOrbsModal').modal('hide');
   });
+
+
+
+  /****************************************************
+   * init
+  *****************************************************/
+  setSolutionMaxHeight();
+  var board = new Board('board_canvas',
+    {rows: parseInt($('#form_grid_size').val().split('x')[1]),
+     cols: parseInt($('#form_grid_size').val().split('x')[0]),
+     draw_style: $('#form_draw_style').val()});
+  var optimizer = new Optimizer({
+    rows: parseInt($('#form_grid_size').val().split('x')[1]),
+    cols: parseInt($('#form_grid_size').val().split('x')[0]),
+    sorting: $('#form_sorting').val(),
+    max_path: parseInt($('#form_max_paths').val()),
+    is_8_dir_movement: $("#form_direction").val() === "8",
+    max_length: parseInt($('#form_max_length').val()),
+  });
+  // load current selected profile and update optimizer
+  var profile = new Profile();
+  // generate profile options
+  profile.getProfileOptions().forEach(function(name_key){
+    // <option value="id_2389">2389 Awoken Sakuya</option>
+    var option = $('<option>').attr('value', name_key[1]).text(name_key[0]);
+    $('#form_profile').append(option);
+  });
+  updateDOMprofile(profile.getProfile($('#form_profile').val()));
+  optimizer.setMultipleFormula(build_multiple_formula());
+  optimizer.setWeights(build_weights());
+
 });

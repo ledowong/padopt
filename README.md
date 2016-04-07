@@ -37,6 +37,10 @@ For example, if you have 3 green monsters and one has a TPA and the other has tw
 
 Alternatively just put 1 where you have TPAs and 0 where you don't.
 
+New Profile
+------------
+Profiles are not define in profile.js. Feel free to add new profile and send me a pull request.
+
 Requirements
 ------------
 
@@ -50,5 +54,5 @@ TODO
 * Resolve overlapping lines and points.
 * Simulate swapping and matching when playing the animation and dropping the matches.
 * The default weight of the profiles may need to be adjusted.
-* Image analysis: orb shape analysis
-* Profile creator
+* Image analysis: enhance orb shape analysis
+* save settings in local storage
