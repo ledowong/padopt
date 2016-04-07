@@ -67,7 +67,7 @@ body {
 #unsupport-browser{
   display:block;
 }
-html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationframe{
+html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationframe.cssfilters{
   #main{
     display:block;
   }
@@ -142,8 +142,6 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
     -ms-filter: grayscale(100%);
     -o-filter: grayscale(100%);
     filter: grayscale(100%);
-    filter: url(grayscale.svg); /* Firefox 4+ */
-    filter: gray; /* IE 6-9 */
   }
 }
 
