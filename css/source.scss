@@ -157,11 +157,6 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
     width: 50px;
     padding: 3px 6px;
     height: auto;
-    &:invalid{
-      border-color: $state-danger-border;
-      background-color: $state-danger-bg;
-      color: $state-danger-text;
-    }
   }
   th{
     @extend .text-center;
@@ -326,6 +321,12 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   }
 }
 
+#profile_weights_multiple_form input:invalid{
+  border-color: $state-danger-border;
+  background-color: $state-danger-bg;
+  color: $state-danger-text;
+}
+
 #base_multiple{
   @extend .form-control;
   @extend .input-sm;
@@ -334,11 +335,6 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   height: auto;
   display: inline;
   margin: 1px;
-  &:invalid{
-    border-color: $state-danger-border;
-    background-color: $state-danger-bg;
-    color: $state-danger-text;
-  }
 }
 #orbs_count_from,
 #orbs_count_upto{

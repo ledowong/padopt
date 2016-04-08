@@ -3,10 +3,26 @@
 $(document).ready(function() {
 
   var form = $('#profile_weights_multiple_form');
+  var delete_customize_profile_button = $('#delete_customize_profile_button');
+  var multiple_session = $("#multiple_session");
 
   /****************************************************
    * functions
   *****************************************************/
+  var updateProfileOptions = function(profile_id){
+    $('#form_profile option').remove();
+    profile.getProfileOptions().forEach(function(name_key){
+      // <option value="id_2389">2389 Awoken Sakuya</option>
+      var option = $('<option>').attr('value', name_key[1]).text(name_key[0]);
+      if (name_key[1] === profile_id) {
+        option.prop('selected', true);
+      }
+      $('#form_profile').append(option);
+    });
+    // make sure the DOM are sync with selected profile.
+    updateDOMprofile(profile.getProfile($('#form_profile').val()));
+  };
+
   var errorFlash = function(msg){
     $('#status_bar').addClass('error');
     $('.error_label').text(msg);
@@ -26,11 +42,11 @@ $(document).ready(function() {
     }
   };
 
-  var updateDOMprofile = function(profile){
+  var updateDOMprofile = function(p){
     var field_per_type = 4;
     var field_postfix, type;
     // weights
-    profile.weights.forEach(function(value, index){
+    p.weights.forEach(function(value, index){
       type = Math.floor(index / field_per_type);
       switch (index % field_per_type) {
         case 0: field_postfix = "normal"; break;
@@ -41,28 +57,35 @@ $(document).ready(function() {
       $("#e"+type+"-"+field_postfix).val(value);
     });
     // multiple
-    $("#base_multiple").val(profile.multiple_formula.base_multiple);
-    $("#multiple_combo").prop('checked', profile.multiple_formula.combo_mode);
-
-    $("#combo_from").val(profile.multiple_formula.combo_from);
-    $("#combo_multiple").val(profile.multiple_formula.combo_multiple);
-    $("#combo_additional_multiple").val(profile.multiple_formula.combo_additional_multiple);
-    $("#combo_upto").val(profile.multiple_formula.combo_upto);
-    $("#multiple_orb_types").prop('checked', profile.multiple_formula.orbs_mode);
-    $("#orbs_count_from").val(profile.multiple_formula.orbs_count_from);
-    $("#orbs_count_upto").val(profile.multiple_formula.orbs_count_upto);
-    $("#orbs_multiple").val(profile.multiple_formula.orbs_multiple);
-    $("#orbs_additional_multiple").val(profile.multiple_formula.orbs_additional_multiple);
+    $("#base_multiple").val(p.multiple_formula.base_multiple);
+    $("#multiple_combo").prop('checked', p.multiple_formula.combo_mode);
+    $("#combo_from").val(p.multiple_formula.combo_from);
+    $("#combo_multiple").val(p.multiple_formula.combo_multiple);
+    $("#combo_additional_multiple").val(p.multiple_formula.combo_additional_multiple);
+    $("#combo_upto").val(p.multiple_formula.combo_upto);
+    $("#multiple_orb_types").prop('checked', p.multiple_formula.orbs_mode);
+    $("#orbs_count_from").val(p.multiple_formula.orbs_count_from);
+    $("#orbs_count_upto").val(p.multiple_formula.orbs_count_upto);
+    $("#orbs_multiple").val(p.multiple_formula.orbs_multiple);
+    $("#orbs_additional_multiple").val(p.multiple_formula.orbs_additional_multiple);
     $('.gem-checkbox').removeClass('checked');
-    profile.multiple_formula.orbs.forEach(function(orb_index){
+    p.multiple_formula.orbs.forEach(function(orb_index){
       $('.gem-checkbox.gem'+orb_index).addClass('checked');
     });
+    $('#name').val((p.key === 'customize_profile') ? "New Profile" : p.name);
     // fire change event to hide/show wrapper.
     $("#multiple_combo").change(); // fire change event.
     $("#multiple_orb_types").change(); // fire change event.
     // update optimizer
     optimizer.setMultipleFormula(buildMultipleFormula());
     optimizer.setWeights(buildWeights());
+    // make sure hide/show wrapper is correct
+    if (p.key.startsWith('customize_profile')) {
+      (p.key === 'customize_profile') ? delete_customize_profile_button.hide() : delete_customize_profile_button.show();
+      multiple_session.show();
+    } else {
+      multiple_session.hide();
+    }
   };
 
   var buildMultipleFormula = function() {
@@ -81,7 +104,7 @@ $(document).ready(function() {
             orbs_multiple: Number($('#orbs_multiple').val()),
             orbs_additional_multiple: Number($('#orbs_additional_multiple').val()),
             };
-  }
+  };
 
   // handle screenshot
   var imageLoaded = function(p){
@@ -105,16 +128,26 @@ $(document).ready(function() {
     $('#solutions').css('max-height', $(window).height()-status_bar_height+'px');
   }
 
-  var buildWeights = function(){
+  var buildWeights = function(pure_array){
     var types = 9;
-    var weights = new Array(types);
-    for (var i = 0; i < types; ++ i) {
-      weights[i] = {
-        normal: +$('#e' + i + '-normal').val(),
-        mass: +$('#e' + i + '-mass').val(),
-        row: +$('#e' + i + '-row').val(),
-        tpa: +$('#e' + i + '-tpa').val()
-      };
+    if (pure_array === true) {
+      var weights = [];
+      for (var i = 0; i < types; ++ i) {
+        weights.push(Number($('#e' + i + '-normal').val()));
+        weights.push(Number($('#e' + i + '-mass').val()));
+        weights.push(Number($('#e' + i + '-row').val()));
+        weights.push(Number($('#e' + i + '-tpa').val()));
+      }
+    } else {
+      var weights = new Array(types);
+      for (var i = 0; i < types; ++ i) {
+        weights[i] = {
+          normal: +$('#e' + i + '-normal').val(),
+          mass: +$('#e' + i + '-mass').val(),
+          row: +$('#e' + i + '-row').val(),
+          tpa: +$('#e' + i + '-tpa').val()
+        };
+      }
     }
     return weights;
   }
@@ -122,12 +155,6 @@ $(document).ready(function() {
   /****************************************************
    * monitors
   *****************************************************/
-  // prevent 'enter' submit form.
-  // http://stackoverflow.com/questions/895171/prevent-users-from-submitting-form-by-hitting-enter
-  form.on("keypress", function(event) {
-    return event.keyCode != 13;
-  });
-
   $(window).on('resize', function(){
     setSolutionMaxHeight();
   });
@@ -174,21 +201,41 @@ $(document).ready(function() {
 
   $('#form_profile').on('change', function() {
     var id = $(this).val();
-    var multiple_session = $("#multiple_session");
     updateDOMprofile(profile.getProfile(id));
-    if (id === 'customize') {
-      multiple_session.show();
-    } else {
-      multiple_session.hide();
-    }
   });
 
+  // prevent html form submit.
   form.on('submit', function(){
-    if (!inputValidation()) {
+    return false;
+  });
+
+  // delete button clicked (customize profile)
+  $('#delete_customize_profile_button').on('click', function(){
+    var profile_id = $('#form_profile').val();
+    profile.deleteCustomizeProfile(profile_id);
+    updateProfileOptions();
+  });
+
+  // save button clicked (customize profile)
+  $('#save_customize_profile_button').on('click', function(){
+    if (inputValidation()) {
+      var new_profile = {
+        name: $("#name").val(),
+        weights: buildWeights(true),
+        multiple_formula: buildMultipleFormula()
+      };
       // update profile to save customize profile.
-      // TODO
+      var profile_id = $('#form_profile').val();
+      if (profile_id.startsWith('customize_profile')) {
+        if (profile_id === 'customize_profile') {
+          // create new, genearte a new ID
+          profile_id = "customize_profile_"+Date.now();
+        }
+        profile.saveCustomizeProfile(profile_id, new_profile);
+      }
+      // update profile options <select>
+      updateProfileOptions(profile_id);
     }
-    return false; // prevent html form submit.
   });
 
   $('#profile-table input').on('change', function(){
@@ -472,11 +519,5 @@ $(document).ready(function() {
   // load current selected profile and update optimizer
   var profile = new Profile();
   // generate profile options
-  profile.getProfileOptions().forEach(function(name_key){
-    // <option value="id_2389">2389 Awoken Sakuya</option>
-    var option = $('<option>').attr('value', name_key[1]).text(name_key[0]);
-    $('#form_profile').append(option);
-  });
-  updateDOMprofile(profile.getProfile($('#form_profile').val()));
-
+  updateProfileOptions();
 });

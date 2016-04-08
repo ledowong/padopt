@@ -130,21 +130,41 @@ var Profile = function(){
         orbs_additional_multiple: 0
       }
     },
+    "customize_profile": $.extend({}, DEFAULT_PROFILE, {name: '--New Customize Profile--'}),
   };
 
   /*************************************************************************
   * public methods
   **************************************************************************/
   return {
-    getProfile: function(id){
-      if (typeof(_profiles[id]) !== 'undefined') {
-        return _profiles[id];
-      } else {
-        return DEFAULT_PROFILE;
+    saveCustomizeProfile: function(id, profile) {
+      localStorage.setItem(id, JSON.stringify(profile));
+    },
+    deleteCustomizeProfile: function(id) {
+      if (id.startsWith('customize_profile_')) {
+        localStorage.removeItem(id);
       }
     },
+    getProfile: function(id){
+      var found_profile = DEFAULT_PROFILE;
+      if (typeof(_profiles[id]) !== 'undefined') {
+        found_profile = _profiles[id];
+      } else if (id.startsWith('customize_profile_')) {
+        found_profile = JSON.parse(localStorage.getItem(id));
+      }
+      return $.extend({key: id}, found_profile);
+    },
     getProfileOptions: function(){
-      return Object.keys(_profiles).map(function(key){ return [_profiles[key].name, key]; });
+      var cp_keys = [];
+      for (var key in localStorage){
+        if (key.startsWith('customize_profile_')) {
+          cp_keys.push(key);
+        }
+      }
+      var preset_profiles = Object.keys(_profiles).map(function(key){ return [_profiles[key].name, key]; });
+      return preset_profiles.concat(cp_keys.map(function(key){
+        return [JSON.parse(localStorage.getItem(key)).name, key];
+      }));
     }
   };
 };
