@@ -13,6 +13,17 @@ $(document).ready(function() {
     }, 1500);
   }
 
+  var input_validation = function(that){
+    if ($('#profile_form')[0].checkValidity()) {
+      optimizer.setMultipleFormula(build_multiple_formula());
+      optimizer.setWeights(build_weights());
+      return true;
+    } else {
+      errorFlash('Error. Please fix those invalid values.');
+      return false;
+    }
+  };
+
   var updateDOMprofile = function(profile){
     var field_per_type = 4;
     var field_postfix, type;
@@ -45,6 +56,9 @@ $(document).ready(function() {
     profile.multiple_formula.orbs.forEach(function(orb_index){
       $('.gem-checkbox.gem'+orb_index).addClass('checked');
     });
+    // update optimizer
+    optimizer.setMultipleFormula(build_multiple_formula());
+    optimizer.setWeights(build_weights());
   };
 
   var build_multiple_formula = function() {
@@ -104,6 +118,12 @@ $(document).ready(function() {
   /****************************************************
    * monitors
   *****************************************************/
+  // prevent 'enter' submit form.
+  // http://stackoverflow.com/questions/895171/prevent-users-from-submitting-form-by-hitting-enter
+  $('#profile_form').on("keypress", function(event) {
+    return event.keyCode != 13;
+  });
+
   $(window).on('resize', function(){
     setSolutionMaxHeight();
   });
@@ -150,37 +170,34 @@ $(document).ready(function() {
 
   $('#form_profile').on('change', function() {
     updateDOMprofile(profile.getProfile($(this).val()));
-    $('#profile_form').submit();
   });
 
   $('#profile_form').on('submit', function(){
-    if (this.checkValidity()) {
-      optimizer.setMultipleFormula(build_multiple_formula());
-      optimizer.setWeights(build_weights());
-    } else {
-      // TODO, error message
+    if (!input_validation()) {
+      // update profile to save customize profile.
+      // TODO
     }
-    return false;
+    return false; // prevent html form submit.
   });
 
   $('#profile-table input').on('change', function(){
-    $('#profile_form').submit();
+    input_validation();
   });
 
   $('.gem-checkbox').on('click', function(){
     $(this).toggleClass('checked');
-    $('#profile_form').submit();
+    input_validation();
     return false;
   });
 
   $("#multiple_combo,#multiple_orb_types").on('change', function(){
     var wrapper = $('#'+$(this).attr('id') + '_wrapper');
     ($(this).is(':checked')) ? wrapper.show() : wrapper.hide();
-    $('#profile_form').submit();
+    input_validation();
   })
 
-  $('#base_multiple,#multiple_combo_wrapper input,#multiple_orb_types input').on('change', function(){
-    $('#profile_form').submit();
+  $('#base_multiple,#multiple_combo_wrapper input,#multiple_orb_types_wrapper input,#multiple_orb_types_wrapper select').on('change', function(){
+    input_validation();
   });
 
   $('#form_direction').on('change', function(){
@@ -450,7 +467,5 @@ $(document).ready(function() {
     $('#form_profile').append(option);
   });
   updateDOMprofile(profile.getProfile($('#form_profile').val()));
-  optimizer.setMultipleFormula(build_multiple_formula());
-  optimizer.setWeights(build_weights());
 
 });
