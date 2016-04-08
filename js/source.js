@@ -2,6 +2,8 @@
 
 $(document).ready(function() {
 
+  var form = $('#profile_weights_multiple_form');
+  
   /****************************************************
    * functions
   *****************************************************/
@@ -14,7 +16,7 @@ $(document).ready(function() {
   }
 
   var input_validation = function(that){
-    if ($('#profile_form')[0].checkValidity()) {
+    if (form[0].checkValidity()) {
       optimizer.setMultipleFormula(build_multiple_formula());
       optimizer.setWeights(build_weights());
       return true;
@@ -120,7 +122,7 @@ $(document).ready(function() {
   *****************************************************/
   // prevent 'enter' submit form.
   // http://stackoverflow.com/questions/895171/prevent-users-from-submitting-form-by-hitting-enter
-  $('#profile_form').on("keypress", function(event) {
+  form.on("keypress", function(event) {
     return event.keyCode != 13;
   });
 
@@ -172,7 +174,7 @@ $(document).ready(function() {
     updateDOMprofile(profile.getProfile($(this).val()));
   });
 
-  $('#profile_form').on('submit', function(){
+  form.on('submit', function(){
     if (!input_validation()) {
       // update profile to save customize profile.
       // TODO
