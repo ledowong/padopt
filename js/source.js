@@ -3,7 +3,7 @@
 $(document).ready(function() {
 
   var form = $('#profile_weights_multiple_form');
-  
+
   /****************************************************
    * functions
   *****************************************************/
@@ -15,10 +15,10 @@ $(document).ready(function() {
     }, 1500);
   }
 
-  var input_validation = function(that){
+  var inputValidation = function(that){
     if (form[0].checkValidity()) {
-      optimizer.setMultipleFormula(build_multiple_formula());
-      optimizer.setWeights(build_weights());
+      optimizer.setMultipleFormula(buildMultipleFormula());
+      optimizer.setWeights(buildWeights());
       return true;
     } else {
       errorFlash('Error. Please fix those invalid values.');
@@ -43,13 +43,12 @@ $(document).ready(function() {
     // multiple
     $("#base_multiple").val(profile.multiple_formula.base_multiple);
     $("#multiple_combo").prop('checked', profile.multiple_formula.combo_mode);
-    $("#multiple_combo").change(); // fire change event.
+
     $("#combo_from").val(profile.multiple_formula.combo_from);
     $("#combo_multiple").val(profile.multiple_formula.combo_multiple);
     $("#combo_additional_multiple").val(profile.multiple_formula.combo_additional_multiple);
     $("#combo_upto").val(profile.multiple_formula.combo_upto);
     $("#multiple_orb_types").prop('checked', profile.multiple_formula.orbs_mode);
-    $("#multiple_orb_types").change(); // fire change event.
     $("#orbs_count_from").val(profile.multiple_formula.orbs_count_from);
     $("#orbs_count_upto").val(profile.multiple_formula.orbs_count_upto);
     $("#orbs_multiple").val(profile.multiple_formula.orbs_multiple);
@@ -58,12 +57,15 @@ $(document).ready(function() {
     profile.multiple_formula.orbs.forEach(function(orb_index){
       $('.gem-checkbox.gem'+orb_index).addClass('checked');
     });
+    // fire change event to hide/show wrapper.
+    $("#multiple_combo").change(); // fire change event.
+    $("#multiple_orb_types").change(); // fire change event.
     // update optimizer
-    optimizer.setMultipleFormula(build_multiple_formula());
-    optimizer.setWeights(build_weights());
+    optimizer.setMultipleFormula(buildMultipleFormula());
+    optimizer.setWeights(buildWeights());
   };
 
-  var build_multiple_formula = function() {
+  var buildMultipleFormula = function() {
     var orbs = [];
     $('.gem-checkbox.checked').each(function(){ orbs.push(String($(this).data('index'))) });
     return {base_multiple: Number($("#base_multiple").val()),
@@ -103,7 +105,7 @@ $(document).ready(function() {
     $('#solutions').css('max-height', $(window).height()-status_bar_height+'px');
   }
 
-  var build_weights = function(){
+  var buildWeights = function(){
     var types = 9;
     var weights = new Array(types);
     for (var i = 0; i < types; ++ i) {
@@ -171,11 +173,18 @@ $(document).ready(function() {
   });
 
   $('#form_profile').on('change', function() {
-    updateDOMprofile(profile.getProfile($(this).val()));
+    var id = $(this).val();
+    var multiple_session = $("#multiple_session");
+    updateDOMprofile(profile.getProfile(id));
+    if (id === 'customize') {
+      multiple_session.show();
+    } else {
+      multiple_session.hide();
+    }
   });
 
   form.on('submit', function(){
-    if (!input_validation()) {
+    if (!inputValidation()) {
       // update profile to save customize profile.
       // TODO
     }
@@ -183,23 +192,23 @@ $(document).ready(function() {
   });
 
   $('#profile-table input').on('change', function(){
-    input_validation();
+    inputValidation();
   });
 
   $('.gem-checkbox').on('click', function(){
     $(this).toggleClass('checked');
-    input_validation();
+    inputValidation();
     return false;
   });
 
   $("#multiple_combo,#multiple_orb_types").on('change', function(){
     var wrapper = $('#'+$(this).attr('id') + '_wrapper');
     ($(this).is(':checked')) ? wrapper.show() : wrapper.hide();
-    input_validation();
+    inputValidation();
   })
 
   $('#base_multiple,#multiple_combo_wrapper input,#multiple_orb_types_wrapper input,#multiple_orb_types_wrapper select').on('change', function(){
-    input_validation();
+    inputValidation();
   });
 
   $('#form_direction').on('change', function(){

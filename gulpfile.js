@@ -8,7 +8,8 @@ var concat = require('gulp-concat');
 
 // static file that need to process.
 var paths = {
-  js: ['js/bootstrap/modal.js',
+  js: ['js/bootstrap/polyfill.js',
+       'js/bootstrap/modal.js',
        'js/bootstrap/tooltip.js',
        'js/bootstrap/button.js',
        'js/optimizer2.js',
