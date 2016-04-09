@@ -8,7 +8,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   /*****************************************************************************
   * Variables
   *****************************************************************************/
-  var debug = true;
+  var debug = false;
   var debug_grid = false;
   var debug_shape_dark = false;
   var debug_shape_light = true;
