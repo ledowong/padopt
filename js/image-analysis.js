@@ -8,10 +8,10 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   /*****************************************************************************
   * Variables
   *****************************************************************************/
-  var debug = false;
+  var debug = true;
   var debug_grid = false;
   var debug_shape_dark = false;
-  var debug_shape_light = false;
+  var debug_shape_light = true;
   var grid = [cols, rows];
   var grid_position;
   var end_results;
@@ -240,7 +240,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
                                 y * block_size + (block_size/30*16),
                                 true);
               sample3 = isBlack(x * block_size + (block_size/30*15),
-                                y * block_size + (block_size/30*13), // remark: 30*11 is better for normal mode.
+                                y * block_size + (block_size/30*12), // remark: 30*11 is better for normal mode; 13 fail in light background (iPhone need 12)
                                 true);
               if (!sample1 && !sample2 && sample3) {
                 // junk !!!
