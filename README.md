@@ -8,13 +8,17 @@ padopt - a Puzzle & Dragons Optimizer
 
 Originally forked from kennytm's [pndopt](https://github.com/kennytm/pndopt) and based on [combo.tips](http://combo.tips). 90% of the credit goes to the aforementioned, including the main Javascript logic.
 
-This fork redesign a whole new responsive UI with friendly mobile support. Single page app support all grid size (so you can keep your profile when switching between grid size). Rewrite most of the JavaScript to make the code clean. A new client side image analysis JavaScript that let you import from screenshot, without uploading the image to server.
+This fork redesign a whole new responsive UI with friendly mobile support. Single page app support all grid size (so you can keep your profile when switching between 6x5 and 7x6). Rewrite most of the JavaScript to make the code clean. A new client side image analysis JavaScript that let you import from screenshot, without uploading the image to server.
 
 Usage
 -----
 
-1. (Optional) Select a profile to get better boards.
-2. Left or right click on an orb to select its type.
+1. Select a profile, or create your own profile, to get better solutions.
+2. Input your board, by
+  - left or right click on an orb to select its type;
+  - click on the top green bar to pick a screenshot from your mobile or desktop file system;
+  - drag-and-drop a screenshot from desktop into the browser window;
+  - use "Import" feature to manually input all orbs using keyboard;
 3. Click "Solve" after completing the board.
 4. Choose one solution and see how it is performed.
 
@@ -46,8 +50,34 @@ You can also create your own customized profile and save in browser (localStorag
 Requirements
 ------------
 
-* An updated browser - preferably chromium or Firefox.
-* Javascript enabled.
+Browsers with following supported:
+* localStorage
+* canvas
+* filereader
+* dataURI
+* requestAnimationFrame
+* cssfilters
+
+Don't worry, modernizr JavaScript does check your browser. If something is not supported, an error page will be displayed.
+
+Development
+------------
+
+Run `gulp` to start a development server at port 8080. The only SCSS file (source.scss) will compile to CSS on-the-fly. Both JS and CSS are auto minify. Everything is config under gulpfile.js.
+
+JavaScript Structure
+------------
+
+This project has the follow JavaScript files:
+- **source.js**: The main JS, which interact with all other JS files and DOM. No other JS files will interact with DOM or each others!!!
+- **board.js**: The game boards, solution path, and path animation.
+- **image-analysis.js**: Analysis screenshot for orbs.
+- **optimizer2.js**: Calculate solutions. Rewrite base on optimizer.js, Remove (almost) all global variables and wrap it into a function (as Class). Remove code that interact with DOM and board. Rename all functions and variables name. However the logic is 100% same as the old optimizer.js.
+- **profile.js**: Store pre-defined profiles, and load/save customized profile from/to localStorage.
+
+3rd party:
+- **polyfill.js**: JS es6 polyfill for old browser.
+- **modernizr.js**: Browser features detection.
 
 TODO
 ----
@@ -57,3 +87,4 @@ TODO
 * Simulate swapping and matching when playing the animation and dropping the matches.
 * The default weight of the profiles may need to be adjusted.
 * Image analysis: enhance orb shape analysis
+* Profile add support for different leaders (Leader and Friend using different monster).

@@ -135,7 +135,7 @@ var Optimizer = function(opts){
     // matching in-game skill 119
     if (_multiple_formula.connected_orbs_mode) {
       all_matches.forEach(function(m) {
-        tmp_connected_orbs_multiple = 0;
+        var tmp_connected_orbs_multiple = 0;
         if (_multiple_formula.connected_orbs.indexOf(m.type) !== -1) { // is required color
           if (m.count >= _multiple_formula.connected_count_from) {
             var additional_connected = m.count - _multiple_formula.connected_count_from;
