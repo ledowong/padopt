@@ -280,13 +280,13 @@
               </label><br/>
               ATK x<input type="number" id="base_multiple" min="1" step="0.01" required> for all members.<br/>
               <label><input id="multiple_combo" type="checkbox" class="checkbox"> Multiple by combo</label>
-              <div id="multiple_combo_wrapper" style="display:none">
+              <div id="multiple_combo_wrapper" class="multiple_wrapper" style="display:none">
                 ATK x<input type="number" id="combo_multiple" min="0.01" step="0.01" required> at <input type="number" id="combo_from" min="1" required> combos.
                 ATK x<input type="number" id="combo_additional_multiple" min="0.01" step="0.01" required> for each additional combo, up to <input type="number" id="combo_upto" min="1" required> combos.
               </div>
               <br/>
               <label><input id="multiple_orb_types" type="checkbox" class="checkbox"> Multiple by orb types</label>
-              <div id="multiple_orb_types_wrapper" style="display:none">
+              <div id="multiple_orb_types_wrapper" class="multiple_wrapper" style="display:none">
                 ATK x<input type="number" id="orbs_multiple" min="0.01" step="0.01" required> when attacking with
                 <select id="orbs_count_from" class="form-control">
                   <option value="1">1</option>
@@ -300,7 +300,7 @@
                 </select>
                 of following orb types:
                 <br/>
-                <a href="#" class="gem gem0 gem-checkbox checked" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox checked" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox checked" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox checked" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox checked" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox" data-index="8"></a>
+                <a href="#" class="gem gem0 gem-checkbox orb_types" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox orb_types" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox orb_types" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox orb_types" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox orb_types" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox orb_types" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox orb_types" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox orb_types" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox orb_types" data-index="8"></a>
                 <br/>
                 ATK x<input type="number" id="orbs_additional_multiple" min="0" step="0.01" required> for each additional orb type, up to
                 <select id="orbs_count_upto" class="form-control">
@@ -314,6 +314,38 @@
                   <option value="8">8</option>
                 </select>
                 matches.
+              </div>
+              <br/>
+              <label><input id="multiple_connected_orbs" type="checkbox" class="checkbox"> Multiple by connected orbs</label>
+              <div id="multiple_connected_orbs_wrapper" class="multiple_wrapper" style="display:none">
+                ATK x<input type="number" id="connected_multiple" min="0.01" step="0.01" required> when simultaneously clearing
+                <select id="connected_count_from" class="form-control">
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                connected
+                <a href="#" class="gem gem0 gem-checkbox connected_orbs" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox connected_orbs" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox connected_orbs" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox connected_orbs" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox connected_orbs" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox connected_orbs" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox connected_orbs" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox connected_orbs" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox connected_orbs" data-index="8"></a>
+                orbs. ATK x<input type="number" id="connected_additional_multiple" min="0" step="0.01" required> for each additional orb, up to
+                <select id="connected_count_upto" class="form-control">
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                connected orb.
               </div>
               <div>
                 <label>

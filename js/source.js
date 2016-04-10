@@ -58,11 +58,13 @@ $(document).ready(function() {
     });
     // multiple
     $("#base_multiple").val(p.multiple_formula.base_multiple);
+    // combo
     $("#multiple_combo").prop('checked', p.multiple_formula.combo_mode);
     $("#combo_from").val(p.multiple_formula.combo_from);
     $("#combo_multiple").val(p.multiple_formula.combo_multiple);
     $("#combo_additional_multiple").val(p.multiple_formula.combo_additional_multiple);
     $("#combo_upto").val(p.multiple_formula.combo_upto);
+    // orb types
     $("#multiple_orb_types").prop('checked', p.multiple_formula.orbs_mode);
     $("#orbs_count_from").val(p.multiple_formula.orbs_count_from);
     $("#orbs_count_upto").val(p.multiple_formula.orbs_count_upto);
@@ -70,12 +72,23 @@ $(document).ready(function() {
     $("#orbs_additional_multiple").val(p.multiple_formula.orbs_additional_multiple);
     $('.gem-checkbox').removeClass('checked');
     p.multiple_formula.orbs.forEach(function(orb_index){
-      $('.gem-checkbox.gem'+orb_index).addClass('checked');
+      $('.orb_types.gem-checkbox.gem'+orb_index).addClass('checked');
     });
+    // connected orbs
+    $("#multiple_connected_orbs").prop('checked', p.multiple_formula.connected_orbs_mode);
+    $("#connected_multiple").val(p.multiple_formula.connected_multiple);
+    $("#connected_count_from").val(p.multiple_formula.connected_count_from);
+    $("#connected_count_upto").val(p.multiple_formula.connected_count_upto);
+    $("#connected_additional_multiple").val(p.multiple_formula.connected_additional_multiple);
+    p.multiple_formula.connected_orbs.forEach(function(orb_index){
+      $('.connected_orbs.gem-checkbox.gem'+orb_index).addClass('checked');
+    });
+    // name
     $('#name').val((p.key === 'customize_profile') ? "New Profile" : p.name);
     // fire change event to hide/show wrapper.
     $("#multiple_combo").change(); // fire change event.
     $("#multiple_orb_types").change(); // fire change event.
+    $("#multiple_connected_orbs").change(); // fire change event.
     // update optimizer
     optimizer.setMultipleFormula(buildMultipleFormula());
     optimizer.setWeights(buildWeights());
@@ -89,8 +102,10 @@ $(document).ready(function() {
   };
 
   var buildMultipleFormula = function() {
-    var orbs = [];
-    $('.gem-checkbox.checked').each(function(){ orbs.push(String($(this).data('index'))) });
+    var connected_orbs = [];
+    var orb_types = [];
+    $('.connected_orbs.gem-checkbox.checked').each(function(){ connected_orbs.push(String($(this).data('index'))) });
+    $('.orb_types.gem-checkbox.checked').each(function(){ orb_types.push(String($(this).data('index'))) });
     return {base_multiple: Number($("#base_multiple").val()),
             combo_mode: $("#multiple_combo").is(':checked'),
             combo_from: Number($('#combo_from').val()),
@@ -98,11 +113,17 @@ $(document).ready(function() {
             combo_additional_multiple: Number($('#combo_additional_multiple').val()),
             combo_upto: Number($('#combo_upto').val()),
             orbs_mode: $("#multiple_orb_types").is(':checked'),
-            orbs: orbs,
+            orbs: orb_types,
             orbs_count_from: Number($('#orbs_count_from').val()),
             orbs_count_upto: Number($('#orbs_count_upto').val()),
             orbs_multiple: Number($('#orbs_multiple').val()),
             orbs_additional_multiple: Number($('#orbs_additional_multiple').val()),
+            connected_orbs_mode: $("#multiple_connected_orbs").is(':checked'),
+            connected_multiple: Number($('#connected_multiple').val()),
+            connected_count_from: Number($('#connected_count_from').val()),
+            connected_count_upto: Number($('#connected_count_upto').val()),
+            connected_additional_multiple: Number($('#connected_additional_multiple').val()),
+            connected_orbs: connected_orbs,
             };
   };
 
@@ -248,7 +269,7 @@ $(document).ready(function() {
     return false;
   });
 
-  $("#multiple_combo,#multiple_orb_types").on('change', function(){
+  $("#multiple_combo,#multiple_orb_types,#multiple_connected_orbs").on('change', function(){
     var wrapper = $('#'+$(this).attr('id') + '_wrapper');
     ($(this).is(':checked')) ? wrapper.show() : wrapper.hide();
     inputValidation();
@@ -493,7 +514,6 @@ $(document).ready(function() {
         }
       }
     });
-    console.log(board_stirng);
     board.import(board_stirng);
     $('#changeOrbsModal').modal('hide');
   });

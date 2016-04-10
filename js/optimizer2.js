@@ -98,6 +98,7 @@ var Optimizer = function(opts){
 
     var combo_multiple = 1;
     var orbs_multiple = 1;
+    var connected_orbs_multiple = 1;
     // combo_mode: true, combo_from: 6, combo_multiple: 1.2, combo_additional_multiple: 0.2, combo_upto: 10
     // matching in-game skill type 66, 98, 104
     if (_multiple_formula.combo_mode) {
@@ -131,16 +132,34 @@ var Optimizer = function(opts){
         orbs_multiple = _multiple_formula.orbs_multiple + (additional_count * _multiple_formula.orbs_additional_multiple);
       }
     }
+    // matching in-game skill 119
+    if (_multiple_formula.connected_orbs_mode) {
+      all_matches.forEach(function(m) {
+        tmp_connected_orbs_multiple = 0;
+        if (_multiple_formula.connected_orbs.indexOf(m.type) !== -1) { // is required color
+          if (m.count >= _multiple_formula.connected_count_from) {
+            var additional_connected = m.count - _multiple_formula.connected_count_from;
+            var allowed_additional_connected = _multiple_formula.connected_count_upto - _multiple_formula.connected_count_from;
+            if (additional_connected > allowed_additional_connected) {
+              additional_connected = allowed_additional_connected; // max
+            }
+            tmp_connected_orbs_multiple = _multiple_formula.connected_multiple + (additional_connected * _multiple_formula.connected_additional_multiple);
+          }
+          if (tmp_connected_orbs_multiple > connected_orbs_multiple) {
+            connected_orbs_multiple = tmp_connected_orbs_multiple;
+          }
+        }
+      });
+    }
 
     // TODO, not support the follow skill type yet:
     //   101 (just X number of orbs, no more no less)
-    //   119 (X color orbs x Y+, atk up, with additional per orb)
     //   124
     //   150 (X color orbs x 5 with plus)
 
     // base multiple (in-game type 11, 22, 26, 28, 29, 30, 31, 40, 45, 62, 65, 69, 75, 76, 77, 79, 105, 108, 111, 114, 121, 125, 129, 137, 155)
     // * combine orbs mode * combo mode result, and friend.
-    var final_multi = (_multiple_formula.base_multiple*combo_multiple*orbs_multiple) * (_multiple_formula.base_multiple*combo_multiple*orbs_multiple);
+    var final_multi = (_multiple_formula.base_multiple*combo_multiple*orbs_multiple*connected_orbs_multiple) * (_multiple_formula.base_multiple*combo_multiple*orbs_multiple*connected_orbs_multiple);
     return final_multi;
   }
   var _copySolutionWithCursor = function(solution, i, j, init_cursor) {

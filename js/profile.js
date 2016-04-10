@@ -16,7 +16,13 @@ var Profile = function(){
       orbs_count_from: 1,
       orbs_count_upto: 1,
       orbs_multiple: 1,
-      orbs_additional_multiple: 0
+      orbs_additional_multiple: 0,
+      connected_orbs_mode: false,
+      connected_multiple: 1,
+      connected_count_from: 3,
+      connected_count_upto: 4,
+      connected_additional_multiple: 0,
+      connected_orbs: ['0','1','2','3','4'],
     }
   };
   // profile storing weights, and multiple settings
@@ -37,7 +43,13 @@ var Profile = function(){
         orbs_count_from: 4,
         orbs_count_upto: 5,
         orbs_multiple: 4,
-        orbs_additional_multiple: 0.5
+        orbs_additional_multiple: 0.5,
+        connected_orbs_mode: false,
+        connected_multiple: 1,
+        connected_count_from: 3,
+        connected_count_upto: 4,
+        connected_additional_multiple: 0,
+        connected_orbs: ['0','1','2','3','4'],
       }
     },
     "id_2011": { // http://puzzledragonx.com/en/monster.asp?n=2011
@@ -55,7 +67,13 @@ var Profile = function(){
         orbs_count_from: 4,
         orbs_count_upto: 4,
         orbs_multiple: 5,
-        orbs_additional_multiple: 0
+        orbs_additional_multiple: 0,
+        connected_orbs_mode: false,
+        connected_multiple: 1,
+        connected_count_from: 3,
+        connected_count_upto: 4,
+        connected_additional_multiple: 0,
+        connected_orbs: ['0','1','2','3','4'],
       }
     },
     "id_2013": { // http://puzzledragonx.com/en/monster.asp?n=2013
@@ -73,7 +91,13 @@ var Profile = function(){
         orbs_count_from: 4,
         orbs_count_upto: 4,
         orbs_multiple: 5,
-        orbs_additional_multiple: 0
+        orbs_additional_multiple: 0,
+        connected_orbs_mode: false,
+        connected_multiple: 1,
+        connected_count_from: 3,
+        connected_count_upto: 4,
+        connected_additional_multiple: 0,
+        connected_orbs: ['0','1','2','3','4'],
       }
     },
     "id_2076": {
@@ -91,7 +115,13 @@ var Profile = function(){
         orbs_count_from: 3,
         orbs_count_upto: 3,
         orbs_multiple: 3.5,
-        orbs_additional_multiple: 0
+        orbs_additional_multiple: 0,
+        connected_orbs_mode: false,
+        connected_multiple: 1,
+        connected_count_from: 3,
+        connected_count_upto: 4,
+        connected_additional_multiple: 0,
+        connected_orbs: ['0','1','2','3','4'],
       }
     },
     "id_2279": {
@@ -109,7 +139,13 @@ var Profile = function(){
         orbs_count_from: 4,
         orbs_count_upto: 4,
         orbs_multiple: 5,
-        orbs_additional_multiple: 0
+        orbs_additional_multiple: 0,
+        connected_orbs_mode: false,
+        connected_multiple: 1,
+        connected_count_from: 3,
+        connected_count_upto: 4,
+        connected_additional_multiple: 0,
+        connected_orbs: ['0','1','2','3','4'],
       }
     },
     "id_2389": {
@@ -127,7 +163,13 @@ var Profile = function(){
         orbs_count_from: 4,
         orbs_count_upto: 4,
         orbs_multiple: 5,
-        orbs_additional_multiple: 0
+        orbs_additional_multiple: 0,
+        connected_orbs_mode: false,
+        connected_multiple: 1,
+        connected_count_from: 3,
+        connected_count_upto: 4,
+        connected_additional_multiple: 0,
+        connected_orbs: ['0','1','2','3','4'],
       }
     },
     "customize_profile": $.extend({}, DEFAULT_PROFILE, {name: '--New Customize Profile--'}),
@@ -152,6 +194,9 @@ var Profile = function(){
       } else if (id.startsWith('customize_profile_')) {
         found_profile = JSON.parse(localStorage.getItem(id));
       }
+      // make sure multiple_formula have all keys (backward complatable)
+      var multiple_formula = $.extend({}, DEFAULT_PROFILE.multiple_formula, found_profile.multiple_formula);
+      found_profile.multiple_formula = multiple_formula;
       return $.extend({key: id}, found_profile);
     },
     getProfileOptions: function(){

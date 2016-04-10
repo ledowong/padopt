@@ -337,17 +337,19 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   margin: 1px;
 }
 #orbs_count_from,
-#orbs_count_upto{
+#orbs_count_upto,
+#connected_count_from,
+#connected_count_upto{
   @extend .input-sm;
   display:inline;
   width: 45px;
 }
 #multiple_combo,
-#multiple_orb_types{
+#multiple_orb_types,
+#multiple_connected_orbs{
   display:inline;
 }
-#multiple_combo_wrapper,
-#multiple_orb_types_wrapper{
+.multiple_wrapper{
   padding-left:20px;
   input{
     @extend #base_multiple;
