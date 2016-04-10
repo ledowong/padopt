@@ -37,29 +37,29 @@ var Optimizer = function(opts){
   // private methods
   var _maxSolutionCount = function(){
     return _rows * _cols * _max_path;
-  }
+  };
   var _makeRC = function (row, col) {
     return {row: row, col: col};
-  }
+  };
   var _makeMatch = function (type, count, isRow) {
     return {type: type, count: count, isRow: isRow};
-  }
+  };
   var _copyRC = function(rc) {
     return {row: rc.row, col: rc.col};
-  }
+  };
   var _equalsXY = function(a, b) {
     return a.x == b.x && a.y == b.y;
-  }
+  };
   var _equalsRC = function(a, b) {
     return a.row == b.row && a.col == b.col;
-  }
+  };
   var _initBoard = function() { // was create_empty_board
     var result = new Array(_rows);
     for (var i = 0; i < _rows; ++ i) {
       result[i] = new Array(_cols);
     }
     return result;
-  }
+  };
   var _equalsMatches = function(a, b) {
     if (a.length != b.length) {
       return false;
@@ -68,10 +68,10 @@ var Optimizer = function(opts){
       var bm = b[i];
       return am.type == bm.type && am.count == bm.count;
     });
-  }
+  };
   var _copyBoard = function(board) {
     return board.map(function(a) { return a.slice(); });
-  }
+  };
   var _makeSeedSolution = function(board) { // was make_solution
     return {board: _copyBoard(board),
       cursor: _makeRC(0, 0),
@@ -81,7 +81,7 @@ var Optimizer = function(opts){
       weight: 0,
       mult: _computeMult(board),
       matches: []};
-  }
+  };
   var _computeMult = function(paramBoard) {
     var board = _copyBoard(paramBoard);
 
@@ -161,7 +161,7 @@ var Optimizer = function(opts){
     // * combine orbs mode * combo mode result, and friend.
     var final_multi = (_multiple_formula.base_multiple*combo_multiple*orbs_multiple*connected_orbs_multiple) * (_multiple_formula.base_multiple*combo_multiple*orbs_multiple*connected_orbs_multiple);
     return final_multi;
-  }
+  };
   var _copySolutionWithCursor = function(solution, i, j, init_cursor) {
     var complexity = _getSimplePathXYs(solution).length-1;
     return {board: _copyBoard(solution.board),
@@ -173,10 +173,10 @@ var Optimizer = function(opts){
       complexity: complexity,
       mult: _computeMult(solution.board),
       matches: []};
-  }
+  };
   var _copySolution = function(solution) {
     return _copySolutionWithCursor(solution, solution.cursor.row, solution.cursor.col, solution.init_cursor);
-  }
+  };
   var _findMatches = function(board) {
     var match_board = _initBoard();
 
@@ -270,9 +270,8 @@ var Optimizer = function(opts){
         matches.push(_makeMatch(cur_orb, count, isRow));
       }
     }
-
     return {matches: matches, board: match_board};
-  }
+  };
   var _inPlaceRemoveMatches = function(board, match_board) {
     for (var i = 0; i < _rows; ++ i) {
       for (var j = 0; j < _cols; ++ j) {
@@ -282,7 +281,7 @@ var Optimizer = function(opts){
       }
     }
     return board;
-  }
+  };
   var _inPlaceDropEmptySpaces = function(board) {
     for (var j = 0; j < _cols; ++ j) {
       var dest_i = _rows-1;
@@ -297,7 +296,7 @@ var Optimizer = function(opts){
       }
     }
     return board;
-  }
+  };
   var _inPlaceEvaluateSolution = function(solution, weights) {
     var current_board = _copyBoard(solution.board);
     var all_matches = [];
@@ -314,7 +313,7 @@ var Optimizer = function(opts){
     solution.mult = _computeMult(solution.board);
     solution.matches = all_matches;
     return current_board;
-  }
+  };
   var _computeWeight = function(matches, weights) {
     var total_weight = 0;
     //find num rows.
@@ -335,7 +334,7 @@ var Optimizer = function(opts){
     });
     var combo_bonus = (matches.length - 1) * COMBO_BONUS + 1;
     return total_weight * combo_bonus;
-  }
+  };
   var _getSimplePathXYs = function(solution) {
     if (solution.simplyXYs) {
       return solution.simplyXYs; //solved already
@@ -349,7 +348,7 @@ var Optimizer = function(opts){
       xys.push(rc.getXY());
     });
     return _simplifyPath(xys);
-  }
+  };
   var _simplifyPath = function(xys) {
     // 1. Remove intermediate points.
     var simplified_xys = [xys[0]];
@@ -368,7 +367,7 @@ var Optimizer = function(opts){
     }
     simplified_xys.push(xys[xys_length_1]);
     return simplified_xys;
-  }
+  };
   var _inPlaceMoveRC = function(rc, dir) {
     switch (dir) {
       case 0:              rc.col += 1; break;
@@ -380,14 +379,15 @@ var Optimizer = function(opts){
       case 6: rc.row -= 1;              break;
       case 7: rc.row -= 1; rc.col += 1; break;
     }
-  }
+  };
   var _getMaxPathLength = function() {
     _max_solutions_count = _rows * _cols * _max_path;
     return _max_length;
-  }
+  };
   var _solveBoardStep = function(solve_state) {
     if (solve_state.p >= solve_state.max_length) {
       // finish
+      _sortSolutions(solve_state.solutions); // inPlaceSorting: https://github.com/izenn/padopt/commit/53545c2d30c54f49d1293496e554c5ce968697f6#diff-4fb221052027124c5c17ffaf1a48572fR859
       _unsimplified_solutions = solve_state.solutions;
       _solutions = _simplifySolutions(solve_state.solutions);
       // callback
@@ -404,7 +404,7 @@ var Optimizer = function(opts){
     }
 
     setTimeout(function() { _solveBoardStep(solve_state); }, 0); // TODO: what is this? maybe should use web worker?
-  }
+  };
   var _evolveSolutions = function(solutions, weights, dir_step) {
     var new_solutions = [];
     solutions.forEach(function(s) {
@@ -423,27 +423,43 @@ var Optimizer = function(opts){
       s.is_done = true;
     });
     solutions = solutions.concat(new_solutions);
+    // solutions.sort(function(a, b) {
+    //   if (_sorting == "multiplier" ) {
+    //     return b.mult - a.mult  ||  a.complexity - b.complexity || b.weight - a.weight;
+    //   } else if (_sorting == "multiweight") {
+    //     return b.mult - a.mult  || b.weight - a.weight ||  a.complexity - b.complexity;
+    //   } else if (_sorting == "complexity") {
+    //     return b.weight - a.weight || a.complexity - b.complexity;
+    //   } else if (_sorting == "length") {
+    //     return b.weight - a.weight || a.path.length - b.path.length;
+    //   }
+    // });
+    // https://github.com/izenn/padopt/commit/53545c2d30c54f49d1293496e554c5ce968697f6
     solutions.sort(function(a, b) {
-      // if (b.mult == 25 || a.mult == 25) console.log(b.mult, a.mult);
+      return b.weight - a.weight;
+    });
+    return solutions.slice(0, _max_solutions_count);
+  };
+  var _sortSolutions = function(solutions){
+    solutions.sort(function(a, b) {
       if (_sorting == "multiplier" ) {
-        return b.mult - a.mult  ||  a.complexity - b.complexity || b.weight - a.weight;
+        return b.mult - a.mult || a.complexity - b.complexity || b.weight - a.weight;
       } else if (_sorting == "multiweight") {
-        return b.mult - a.mult  || b.weight - a.weight ||  a.complexity - b.complexity;
+        return b.mult - a.mult || b.weight - a.weight || a.complexity - b.complexity;
       } else if (_sorting == "complexity") {
         return b.weight - a.weight || a.complexity - b.complexity;
       } else if (_sorting == "length") {
         return b.weight - a.weight || a.path.length - b.path.length;
       }
     });
-    return solutions.slice(0, _max_solutions_count);
-  }
+  };
   var _canMoveOrbInSolution = function(solution, dir) {
     // Don't allow going back directly. It's pointless.
     if (solution.path[solution.path.length-1] == (dir + 4) % 8) {
       return false;
     }
     return _canMoveOrb(solution.cursor, dir);
-  }
+  };
   var _canMoveOrb = function(rc, dir) {
     switch (dir) {
       case 0: return                     rc.col < _cols-1;
@@ -456,12 +472,12 @@ var Optimizer = function(opts){
       case 7: return rc.row > 0       && rc.col < _cols-1;
     }
     return false;
-  }
+  };
   var _inPlaceSwapOrbInSolution = function(solution, dir) {
     var res = _inPlaceSwapOrb(solution.board, solution.cursor, dir);
     solution.cursor = res.rc;
     solution.path.push(dir);
-  }
+  };
   var _inPlaceSwapOrb = function(board, rc, dir) {
     var old_rc = _copyRC(rc);
     _inPlaceMoveRC(rc, dir);
@@ -469,7 +485,7 @@ var Optimizer = function(opts){
     board[old_rc.row][old_rc.col] = board[rc.row][rc.col];
     board[rc.row][rc.col] = orig_type;
     return {board: board, rc: rc};
-  }
+  };
   var _simplifySolutions = function (solutions) {
     var simplified_solutions = [];
     solutions.forEach(function(solution) {
@@ -486,7 +502,7 @@ var Optimizer = function(opts){
       simplified_solutions.push(solution);
     });
     return simplified_solutions;
-  }
+  };
 
 
 
@@ -508,6 +524,10 @@ var Optimizer = function(opts){
     },
     changeSorting: function(new_sorting){
       _sorting = new_sorting;
+      // re-sort existing solutions
+      _sortSolutions(_unsimplified_solutions); // inPlaceSorting: https://github.com/izenn/padopt/commit/53545c2d30c54f49d1293496e554c5ce968697f6#diff-4fb221052027124c5c17ffaf1a48572fR859
+      _solutions = _simplifySolutions(_unsimplified_solutions);
+      return _solutions;
     },
     changeMaxPath: function(new_max_path){
       _max_path = new_max_path

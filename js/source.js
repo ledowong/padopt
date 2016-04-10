@@ -173,6 +173,52 @@ $(document).ready(function() {
     return weights;
   }
 
+  var displaySolutions = function(solutions){ // finish callback
+    // progress bar style
+    $('#status_bar').removeClass('solving');
+    // handle solutions
+    function _addSolutionAsLi(html_array, solution) {
+      html_array.push('<li><a href="#">W=');
+      html_array.push(solution.weight.toFixed(2));
+      html_array.push(', L=');
+      html_array.push(solution.path.length);
+      html_array.push(', M=');
+      html_array.push(solution.mult.toFixed(2));
+      html_array.push(', &#8623;=');
+      html_array.push(solution.complexity);
+      html_array.push('<br/>');
+      var sorted_matches = solution.matches.slice();
+      sorted_matches.sort(function(a, b) {
+        if (a.count != b.count) {
+          return b.count - a.count;
+        } else if (a.type > b.type) {
+          return 1;
+        } else if (a.type < b.type) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+      sorted_matches.forEach(function(match, i) {
+        html_array.push('<span class="gem gem');
+        html_array.push(match.type);
+        html_array.push('"></span>&times;');
+        html_array.push(match.count);
+      });
+      html_array.push('</a></li>');
+    }
+    // display solution in HTML
+    var html_array = [];
+    solutions.forEach(function(solution) {
+      _addSolutionAsLi(html_array, solution);
+    });
+    $('#solutions ol').html(html_array.join(''));
+    // reset solve buttons
+    $('.form_solve_button').button('reset');
+    // click first solution
+    $('#solutions li:first').click();
+  };
+
   /****************************************************
    * monitors
   *****************************************************/
@@ -301,7 +347,7 @@ $(document).ready(function() {
   });
 
   $('#form_sorting').on('change', function() {
-    optimizer.changeSorting($(this).val());
+    displaySolutions(optimizer.changeSorting($(this).val()));
   });
 
   $('.form_solve_button').click(function() {
@@ -324,51 +370,7 @@ $(document).ready(function() {
       var percentage = parseInt(p * 100 / parseInt(max_p));
       $('.solving_label span').text(percentage);
       //$('.progress-bar').attr('aria-valuemin', percentage).css('width', percentage+'%');
-    }, function(solutions){ // finish callback
-      // progress bar style
-      $('#status_bar').removeClass('solving');
-      // handle solutions
-      function _addSolutionAsLi(html_array, solution) {
-        html_array.push('<li><a href="#">W=');
-        html_array.push(solution.weight.toFixed(2));
-        html_array.push(', L=');
-        html_array.push(solution.path.length);
-        html_array.push(', M=');
-        html_array.push(solution.mult.toFixed(2));
-        html_array.push(', &#8623;=');
-        html_array.push(solution.complexity);
-        html_array.push('<br/>');
-        var sorted_matches = solution.matches.slice();
-        sorted_matches.sort(function(a, b) {
-          if (a.count != b.count) {
-            return b.count - a.count;
-          } else if (a.type > b.type) {
-            return 1;
-          } else if (a.type < b.type) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-        sorted_matches.forEach(function(match, i) {
-          html_array.push('<span class="gem gem');
-          html_array.push(match.type);
-          html_array.push('"></span>&times;');
-          html_array.push(match.count);
-        });
-        html_array.push('</a></li>');
-      }
-      // display solution in HTML
-      var html_array = [];
-      solutions.forEach(function(solution) {
-        _addSolutionAsLi(html_array, solution);
-      });
-      $('#solutions ol').html(html_array.join(''));
-      // reset solve buttons
-      $('.form_solve_button').button('reset');
-      // click first solution
-      $('#solutions li:first').click();
-    });
+    }, displaySolutions);
   });
 
 
