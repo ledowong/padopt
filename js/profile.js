@@ -172,6 +172,30 @@ var Profile = function(){
         connected_orbs: ['0','1','2','3','4'],
       }
     },
+    "id_2661": {
+      name: "2661 Cruel Bleak Night Goddess, Pandora",
+      weights: [1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,2,0.5,0.3,0.3,0,0,0.1,0.1,0,0,0.1,0.1,0,0,0.1,0.1,0,0],
+      multiple_formula: {
+        base_multiple: 1,
+        combo_mode: false,
+        combo_from: 1,
+        combo_multiple: 1,
+        combo_additional_multiple: 1,
+        combo_upto: 1,
+        orbs_mode: false,
+        orbs: ['0','1','2','3','4'],
+        orbs_count_from: 1,
+        orbs_count_upto: 1,
+        orbs_multiple: 1,
+        orbs_additional_multiple: 0,
+        connected_orbs_mode: true,
+        connected_multiple: 2,
+        connected_count_from: 4,
+        connected_count_upto: 10,
+        connected_additional_multiple: 0.5,
+        connected_orbs: ['4'],
+      }
+    },
     "customize_profile": $.extend({}, DEFAULT_PROFILE, {name: '--New Customize Profile--'}),
   };
 
