@@ -29,9 +29,9 @@ input[type=number] {
 
 // body background, and monospace font (for better alignment)
 body {
-  background-image: url('/img/bg.gif');
+  background-image: url('../img/bg.gif');
   background-repeat: repeat;
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'Roboto', monospace;
   // http://stackoverflow.com/questions/826782/css-rule-to-disable-text-selection-highlighting
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -188,6 +188,7 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
 
 #importModal{
   textarea{
+    font-family: 'Roboto Mono', monospace;
     resize: none;
     overflow: hidden;
     &.grid5x4{
