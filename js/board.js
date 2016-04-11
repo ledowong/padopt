@@ -19,7 +19,7 @@ var Board = function(canvas_id, opts){
                                window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
   var _cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
   var _path_animation = {step: 0, x: null, y: null, xys: [], request_id: 0, move_distance_x: 1, move_distance_y: 1, frame_start_at: null};
-  var _PATH_SQUARE_SIZE = 10; // starting point, ending point, and moving point.
+  var _PATH_SQUARE_SIZE = 20; // starting point, ending point, and moving point.
   var _FPS = 60;
   var _NUMBER_OF_STEP_BETWEEN_TWO_POINT = 20; // adjust this value for the path moving speed. (20 similar to jquery animation 400ms)
   var _bg_img_light, _bg_img_dark;
@@ -239,7 +239,7 @@ var Board = function(canvas_id, opts){
   }
   var _drawPath = function(xys){
     // draw path
-    _ctx.lineWidth = 4;
+    _ctx.lineWidth = 8;
     _ctx.strokeStyle = 'rgba(0, 0, 0, 0.75)';
     _ctx.beginPath();
     for (var i = 0; i < xys.length; ++ i) {
@@ -258,7 +258,7 @@ var Board = function(canvas_id, opts){
     _ctx.stroke();
     // darw start point
     var start_xy = xys[0];
-    _ctx.lineWidth = 2;
+    _ctx.lineWidth = 4;
     _ctx.fillStyle = '#f00';
     _ctx.strokeStyle = '#000';
     _ctx.beginPath();
@@ -287,7 +287,7 @@ var Board = function(canvas_id, opts){
       // darw path
       _drawPath(_path_animation.xys);
       // darw current position.
-      _ctx.lineWidth = 2;
+      _ctx.lineWidth = 4;
       _ctx.fillStyle = 'yellow';
       _ctx.strokeStyle = '#000';
       _ctx.beginPath();
@@ -328,7 +328,7 @@ var Board = function(canvas_id, opts){
       } else {
         // this is the end...
         // draw the square again with green color
-        _ctx.lineWidth = 2;
+        _ctx.lineWidth = 4;
         _ctx.fillStyle = 'lime';
         _ctx.strokeStyle = '#000';
         _ctx.beginPath();
