@@ -72,7 +72,7 @@ This project has the follow JavaScript files:
 - **source.js**: The main JS, which interact with all other JS files and DOM. No other JS files will interact with DOM or each others!!!
 - **board.js**: The game boards, solution path, and path animation.
 - **image-analysis.js**: Analysis screenshot for orbs.
-- **optimizer2.js**: Calculate solutions. Rewrite base on optimizer.js, Remove (almost) all global variables and wrap it into a function (as Class). Remove code that interact with DOM and board. Rename all functions and variables name. However the logic is 100% same as the old optimizer.js.
+- **optimizer2.js**: Calculate solutions. Rewrite base on optimizer.js, Remove (almost) all global variables and wrap it into a function (as Class). Remove code that interact with DOM and board. Rename all functions and variables name. Multiple logic is rewrote completely. Other logic is same as the old optimizer.js.
 - **profile.js**: Store pre-defined profiles, and load/save customized profile from/to localStorage.
 
 3rd party:
