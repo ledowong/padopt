@@ -10,7 +10,7 @@ var Board = function(canvas_id, opts){
   var _canvas = document.getElementById(canvas_id);
   var _ctx = _canvas.getContext('2d');
   var _ORB_SIZE = 100; // even number
-  var _GRID_SIZE = 104; // even number, larger than _ORB_SIZE.
+  var _GRID_SIZE = ORB_BG_IMAGE_DATA.size; // even number, larger than _ORB_SIZE.
   var _board_data = [];
   var _orbs = [];
   var _rows = opts['rows'];
@@ -22,6 +22,7 @@ var Board = function(canvas_id, opts){
   var _PATH_SQUARE_SIZE = 10; // starting point, ending point, and moving point.
   var _FPS = 60;
   var _NUMBER_OF_STEP_BETWEEN_TWO_POINT = 20; // adjust this value for the path moving speed. (20 similar to jquery animation 400ms)
+  var _bg_img_light, _bg_img_dark;
 
   // private methods
   var _width = function(){
@@ -34,8 +35,15 @@ var Board = function(canvas_id, opts){
     return {x: (_GRID_SIZE * col) + (_GRID_SIZE / 2),
             y: (_GRID_SIZE * row) + (_GRID_SIZE / 2)};
   }
-  var _drawOrb = function(row, col, orb_index){
+  var _drawOrb = function(row, col, orb_index, is_dark_bg){
     var xy = _rowCol2xy(row, col);
+    // draw background
+    _ctx.drawImage(is_dark_bg ? _bg_img_dark : _bg_img_light,
+                   xy.x - (ORB_BG_IMAGE_DATA.size / 2),
+                   xy.y - (ORB_BG_IMAGE_DATA.size / 2),
+                   ORB_BG_IMAGE_DATA.size,
+                   ORB_BG_IMAGE_DATA.size);
+    // draw orb
     if (orb_index === null) {
       // draw circle
       _ctx.beginPath();
@@ -79,13 +87,16 @@ var Board = function(canvas_id, opts){
       }
     }
     // draw orbs
+    var is_dark_bg;
     for (var y=0; y < _rows; y++) {
+      is_dark_bg = (y % 2 === 0);
       for (var x=0; x < _cols; x++) {
         if (typeof(_board_data[_rowCol2index(y,x)]) === 'undefined') {
-          _drawOrb(y,x,null);
+          _drawOrb(y, x, null, is_dark_bg);
         } else {
-          _drawOrb(y,x,_board_data[_rowCol2index(y,x)]);
+          _drawOrb(y, x, _board_data[_rowCol2index(y,x)], is_dark_bg);
         }
+        is_dark_bg = !is_dark_bg; // toggle
       }
     }
   }
@@ -411,6 +422,10 @@ var Board = function(canvas_id, opts){
     img.src = data.uri;
     _orbs.push(img);
   });
+  _bg_img_light = new Image();
+  _bg_img_light.src = ORB_BG_IMAGE_DATA.light;
+  _bg_img_dark = new Image();
+  _bg_img_dark.src = ORB_BG_IMAGE_DATA.dark;
   _resetCanvas();
   _drawBoard();
 
