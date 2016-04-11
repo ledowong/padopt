@@ -11,6 +11,7 @@ var paths = {
   js: ['js/bootstrap/polyfill.js',
        'js/bootstrap/modal.js',
        'js/bootstrap/tooltip.js',
+       'js/orbs_data.js',
        'js/bootstrap/button.js',
        'js/optimizer2.js',
        'js/board.js',
