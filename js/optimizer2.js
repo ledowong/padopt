@@ -31,6 +31,7 @@ var Optimizer = function(opts){
   var MULTI_ORB_BONUS = 0.25;
   var COMBO_BONUS = 0.25;
   var _max_length = opts['max_length'];
+  var _current_solutions_max_length = opts['max_length']; // save the max length for solved solutions. So changing max_length by UI doesn't affect lengthenSolution.
   var _multiple_formula = {};
   var _weights = [];
 
@@ -382,7 +383,7 @@ var Optimizer = function(opts){
   };
   var _getMaxPathLength = function() {
     _max_solutions_count = _rows * _cols * _max_path;
-    return _max_length;
+    return _max_length; // pay attaction, this is from optimizer.js (old version), yea a bit strange...
   };
   var _solveBoardStep = function(solve_state) {
     if (solve_state.p >= solve_state.max_length) {
@@ -390,6 +391,7 @@ var Optimizer = function(opts){
       _sortSolutions(solve_state.solutions); // inPlaceSorting: https://github.com/izenn/padopt/commit/53545c2d30c54f49d1293496e554c5ce968697f6#diff-4fb221052027124c5c17ffaf1a48572fR859
       _unsimplified_solutions = solve_state.solutions;
       _solutions = _simplifySolutions(solve_state.solutions);
+      _current_solutions_max_length = solve_state.max_length;
       // callback
       if (typeof (solve_state.finishCallback) === 'function') {
         solve_state.finishCallback(_solutions);
@@ -581,30 +583,29 @@ var Optimizer = function(opts){
       var board = _board;
       var solutions = _unsimplified_solutions;
       var weights = _weights;
-
       var seed_solution = _makeSeedSolution(board);
       _inPlaceEvaluateSolution(seed_solution, weights);
-
       for (var i = 0, s = 0; i < _rows; ++ i) {
         for (var j = 0; j < _cols; ++ j, ++ s) {
           solutions.push(_copySolutionWithCursor(seed_solution, i, j));
         }
       }
 
-      var oldmax = _getMaxPathLength();
-      var newmax = oldmax + 1;
+      var new_max_path = _current_solutions_max_length + 1;
 
       var solve_state = {
         stepCallback: stepCallback,
         finishCallback: finishCallback,
-        max_length: newmax,
-        dir_step: is_8_dir_movement_supported ? 1 : 2,
-        p: oldmax,
+        max_length: new_max_path,
+        dir_step: _is_8_dir_movement_supported ? 1 : 2,
+        p: _current_solutions_max_length,
         solutions: solutions,
         weights: weights,
       };
-      // TODO, update DOM at source.js $('#form_max_length').val(solve_state.max_length);
+
       _solveBoardStep(solve_state);
+
+      return new_max_path;
     },
     setMultipleFormula: function(new_multiple_formula){
       _multiple_formula = new_multiple_formula;

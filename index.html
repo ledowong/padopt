@@ -45,7 +45,7 @@
           <!-- buttons -->
           <div class="row" id="buttons">
             <div class="col-xs-6 col-sm-12">
-              <button type="button" class="btn btn-primary form_solve_button  btn-block" data-loading-text="Solving...">Solve</button>
+              <button type="button" class="btn btn-primary form_solve_button btn-block" data-loading-text="Solving...">Solve</button>
             </div>
             <div class="col-xs-6 visible-xs-block">
               <button type="button" class="btn btn-default  btn-block" id="form_play_button">
@@ -354,19 +354,23 @@
           <div class="row"> <!--hidden-xs-->
             <div class="col-xs-12">
               <label>
-                Sorting:
+                Solutions:
+                <span class="glyphicon glyphicon-question-sign" data-placement="bottom" data-toggle="tooltip" data-html="true"
+                      title="M: Multiplier<br/>W: Weight<br/>↯: Complexity<br/>L: Length"></span>
               </label>
+            </div>
+            <div class="col-xs-7 form-group">
               <select class="form-control" id="form_sorting">
-                <option value="multiweight">Multiplier (M) &gt; Weight (W) &gt; Complexity (↯)</option>
-                <option value="multiplier">Multiplier (M) &gt; Complexity (↯) &gt; Weight (W)</option>
-                <option value="length">Weight (W) &gt; Length (L)</option>
-                <option value="complexity">Weight (W) &gt; Complexity (↯)</option>
+                <option value="multiweight">Sorted by: M &gt; W &gt; ↯</option>
+                <option value="multiplier">Sorted by: M &gt; ↯ &gt; W</option>
+                <option value="length">Sorted by: W &gt; L</option>
+                <option value="complexity">Sorted by: W &gt; ↯</option>
               </select>
             </div>
-          </div>
-          <div class="row"> <!--hidden-xs-->
+            <div class="col-xs-5 form-group">
+              <button type="button" class="btn btn-default btn-block" id="form_lengthen_path" data-loading-text="Solving...">Lengthen Path</button>
+            </div>
             <div class="col-xs-12">
-              <label>Solutions:</label>
               <ol></ol>
             </div>
           </div>

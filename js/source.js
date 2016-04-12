@@ -127,6 +127,12 @@ $(document).ready(function() {
             };
   };
 
+  var solvingCallback = function(p, max_p){ // step callback
+    var percentage = parseInt(p * 100 / parseInt(max_p));
+    $('.solving_label span').text(percentage);
+    //$('.progress-bar').attr('aria-valuemin', percentage).css('width', percentage+'%');
+  };
+
   // handle screenshot
   var imageLoaded = function(p){
     var data_uri = p.currentTarget.result;
@@ -366,13 +372,12 @@ $(document).ready(function() {
     // redraw board, to clear path and animation
     board.redraw();
     // solve board
-    optimizer.solveBoard(board.export(), function(p, max_p){ // step callback
-      var percentage = parseInt(p * 100 / parseInt(max_p));
-      $('.solving_label span').text(percentage);
-      //$('.progress-bar').attr('aria-valuemin', percentage).css('width', percentage+'%');
-    }, displaySolutions);
+    optimizer.solveBoard(board.export(), solvingCallback, displaySolutions);
   });
 
+  $('#form_lengthen_path').on('click', function(){
+    optimizer.lengthenSolution(solvingCallback, displaySolutions);
+  });
 
   $('#form_max_length').on('change', function(){
     optimizer.changeMaxLength(parseInt($(this).val()));
