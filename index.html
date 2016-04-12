@@ -40,7 +40,7 @@
     </div>
     <form id="profile_weights_multiple_form">
       <div class="row">
-        <div class="col-sm-4 form-horizontal">
+        <div class="col-sm-4">
           <canvas id="board_canvas"></canvas>
           <!-- buttons -->
           <div class="row" id="buttons">
@@ -81,23 +81,22 @@
               <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#changeOrbsModal">Change Orbs</button>
             </div>
             <div class="col-xs-4">
-              <div class="btn-group btn-block">
+              <div class="btn-group btn-block dropup">
                 <button type="button" class="btn btn-default" id="form_randomize_button" data-value="r,b,g,y,p,h">Randomize</button>
                 <button type="button"  id="form_randomize_dropdown_button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="caret"></span>
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" id="form_random_type">
-                  <li><a href="#" data-value="r,b,g,y,p,h">5 + Heal</a></li>
-                  <li><a href="#" data-value="r,p">Ronia</a></li>
-                  <li><a href="#" data-value="b,p">Bonia</a></li>
-                  <li><a href="#" data-value="g,p">Gonia</a></li>
-                  <li><a href="#" data-value="r,b,h">Skuld</a></li>
-                  <li><a href="#" data-value="r,b,h">Verdandi</a></li>
-                  <li><a href="#" data-value="r,b,g">3-color</a></li>
-                  <li><a href="#" data-value="r,b,g,h">3 + Heal</a></li>
-                  <li><a href="#" data-value="r,b,g,y,p">5-color</a></li>
-                  <li><a href="#" data-value="r,b,g,y,p,h,q,w,j">All</a></li>
+                  <li><a href="#" data-value="r" class="checked"><span class="gem gem0"></span> Fire</a></li>
+                  <li><a href="#" data-value="b" class="checked"><span class="gem gem1"></span> Water</a></li>
+                  <li><a href="#" data-value="g" class="checked"><span class="gem gem2"></span> Wood</a></li>
+                  <li><a href="#" data-value="y" class="checked"><span class="gem gem3"></span> Light</a></li>
+                  <li><a href="#" data-value="p" class="checked"><span class="gem gem4"></span> Dark</a></li>
+                  <li><a href="#" data-value="h" class="checked"><span class="gem gem5"></span> Heart</a></li>
+                  <li><a href="#" data-value="q"><span class="gem gem6"></span> Poison</a></li>
+                  <li><a href="#" data-value="w"><span class="gem gem7"></span> Poison 2</a></li>
+                  <li><a href="#" data-value="j"><span class="gem gem8"></span> Junk</a></li>
                 </ul>
               </div>
             </div>

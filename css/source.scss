@@ -374,3 +374,14 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
     @extend #base_multiple;
   }
 }
+
+#form_random_type{
+  a:not(.checked){
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    text-decoration: line-through;
+  }
+}

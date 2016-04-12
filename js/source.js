@@ -387,12 +387,14 @@ $(document).ready(function() {
     board.drawSolution(solution);
   });
 
-  $('#form_randomize_button,#form_random_type a').click(function() {
-    var types = $(this).data('value').split(',');
+  $('#form_randomize_button').click(function() {
+    var types = [];
+    $('#form_random_type a.checked').each(function(){ types.push($(this).data('value')); })
     board.randomize(types);
-    if ($(this).parents('.btn-group').hasClass('open')) {
-      $('#form_randomize_dropdown_button').dropdown('toggle');
-    }
+  });
+
+  $('#form_random_type a').on('click', function(){
+    $(this).toggleClass('checked');
     return false;
   });
 
