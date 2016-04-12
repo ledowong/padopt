@@ -45,10 +45,10 @@
           <!-- buttons -->
           <div class="row" id="buttons">
             <div class="col-xs-6 col-sm-12">
-              <button type="button" class="btn btn-primary form_solve_button" data-loading-text="Solving...">Solve</button>
+              <button type="button" class="btn btn-primary form_solve_button  btn-block" data-loading-text="Solving...">Solve</button>
             </div>
             <div class="col-xs-6 visible-xs-block">
-              <button type="button" class="btn btn-default" id="form_play_button">
+              <button type="button" class="btn btn-default  btn-block" id="form_play_button">
                 <span class="glyphicon glyphicon-play"></span>
               </button>
             </div>
@@ -61,8 +61,8 @@
             </div>
             <div class="col-xs-4">
               <select class="form-control" id="form_direction">
-                <option value="4" selected>4 direction</option>
-                <option value="8">8 direction</option>
+                <option value="4" selected>4 Direction</option>
+                <option value="8">8 Direction</option>
               </select>
             </div>
             <div class="col-xs-4">
@@ -72,38 +72,40 @@
               </select>
             </div>
             <div class="col-xs-4">
-              <button type="button" class="btn btn-default" id="form_final_state_button">Final State</button>
+              <button type="button" class="btn btn-default btn-block" id="form_final_state_button">Final State</button>
             </div>
             <div class="col-xs-4">
-              <button type="button" class="btn btn-default" id="form_drop_match_button">Drop Matches</button>
+              <button type="button" class="btn btn-default btn-block" id="form_drop_match_button">Drop Matches</button>
             </div>
             <div class="col-xs-4">
-              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeOrbsModal">Change Orbs</button>
+              <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#changeOrbsModal">Change Orbs</button>
             </div>
             <div class="col-xs-4">
-              <button type="button" class="btn btn-default" id="form_randomize_button">Randomize</button>
+              <div class="btn-group btn-block">
+                <button type="button" class="btn btn-default" id="form_randomize_button" data-value="r,b,g,y,p,h">Randomize</button>
+                <button type="button"  id="form_randomize_dropdown_button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" id="form_random_type">
+                  <li><a href="#" data-value="r,b,g,y,p,h">5 + Heal</a></li>
+                  <li><a href="#" data-value="r,p">Ronia</a></li>
+                  <li><a href="#" data-value="b,p">Bonia</a></li>
+                  <li><a href="#" data-value="g,p">Gonia</a></li>
+                  <li><a href="#" data-value="r,b,h">Skuld</a></li>
+                  <li><a href="#" data-value="r,b,h">Verdandi</a></li>
+                  <li><a href="#" data-value="r,b,g">3-color</a></li>
+                  <li><a href="#" data-value="r,b,g,h">3 + Heal</a></li>
+                  <li><a href="#" data-value="r,b,g,y,p">5-color</a></li>
+                  <li><a href="#" data-value="r,b,g,y,p,h,q,w,j">All</a></li>
+                </ul>
+              </div>
             </div>
-            <div class="col-xs-8">
-              <select class="form-control" id="form_random_type">
-                <option value="r,b,g,y,p,h">--Random Type--</option>
-                <option value="r,b,g,y,p,h">5 + Heal</option>
-                <option value="r,p">Ronia</option>
-                <option value="b,p">Bonia</option>
-                <option value="g,p">Gonia</option>
-                <option value="r,b,h">Urd</option>
-                <option value="b,g,h">Skuld</option>
-                <option value="r,b,h">Verdandi</option>
-                <option value="r,b,g">3-color</option>
-                <option value="r,b,g,h">3 + Heal</option>
-                <option value="r,b,g,y,p">5-color</option>
-                <option value="r,b,g,y,p,h,q,w,j">All</option>
-              </select>
+            <div class="col-xs-4">
+              <button type="button" class="btn btn-default btn-block" id="form_clear_button">Clear</button>
             </div>
-            <div class="col-xs-6">
-              <button type="button" class="btn btn-default btn" id="form_clear_button">Clear</button>
-            </div>
-            <div class="col-xs-6">
-              <button type="button" class="btn btn-default" id="form_import_button">Import</button>
+            <div class="col-xs-4">
+              <button type="button" class="btn btn-default btn-block" id="form_import_button">Import</button>
             </div>
             <div class="col-xs-6">
               <label>
@@ -265,13 +267,13 @@
                 Multiple:
               </label><br/>
               ATK x<input type="number" id="base_multiple" min="1" step="0.01" required> for all members.<br/>
-              <label><input id="multiple_combo" type="checkbox" class="checkbox"> Multiple by combo</label>
+              <label><input id="multiple_combo" type="checkbox" class="checkbox"> Combo</label>
               <div id="multiple_combo_wrapper" class="multiple_wrapper" style="display:none">
                 ATK x<input type="number" id="combo_multiple" min="0.01" step="0.01" required> at <input type="number" id="combo_from" min="1" required> combos.
                 ATK x<input type="number" id="combo_additional_multiple" min="0.01" step="0.01" required> for each additional combo, up to <input type="number" id="combo_upto" min="1" required> combos.
               </div>
               <br/>
-              <label><input id="multiple_orb_types" type="checkbox" class="checkbox"> Multiple by orb types</label>
+              <label><input id="multiple_orb_types" type="checkbox" class="checkbox"> Orb types</label>
               <div id="multiple_orb_types_wrapper" class="multiple_wrapper" style="display:none">
                 ATK x<input type="number" id="orbs_multiple" min="0.01" step="0.01" required> when attacking with
                 <select id="orbs_count_from" class="form-control">
@@ -302,7 +304,7 @@
                 matches.
               </div>
               <br/>
-              <label><input id="multiple_connected_orbs" type="checkbox" class="checkbox"> Multiple by connected orbs</label>
+              <label><input id="multiple_connected_orbs" type="checkbox" class="checkbox"> Connected orbs</label>
               <div id="multiple_connected_orbs_wrapper" class="multiple_wrapper" style="display:none">
                 ATK x<input type="number" id="connected_multiple" min="0.01" step="0.01" required> when simultaneously clearing
                 <select id="connected_count_from" class="form-control">

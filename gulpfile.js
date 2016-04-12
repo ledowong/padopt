@@ -10,6 +10,7 @@ var concat = require('gulp-concat');
 var paths = {
   js: ['js/bootstrap/polyfill.js',
        'js/bootstrap/modal.js',
+       'js/bootstrap/dropdown.js',
        'js/bootstrap/tooltip.js',
        'js/orbs_data.js',
        'js/bootstrap/button.js',

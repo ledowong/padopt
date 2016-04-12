@@ -387,9 +387,13 @@ $(document).ready(function() {
     board.drawSolution(solution);
   });
 
-  $('#form_randomize_button').click(function() {
-    var types = $('#form_random_type').val().split(",");
+  $('#form_randomize_button,#form_random_type a').click(function() {
+    var types = $(this).data('value').split(',');
     board.randomize(types);
+    if ($(this).parents('.btn-group').hasClass('open')) {
+      $('#form_randomize_dropdown_button').dropdown('toggle');
+    }
+    return false;
   });
 
   $('#form_clear_button').click(function() {

@@ -153,9 +153,9 @@ var Optimizer = function(opts){
     }
 
     // TODO, not support the follow skill type yet:
-    //   101 (just X number of orbs, no more no less)
+    //   101 (just X combo, no more no less, only for Monster 1604)
     //   124
-    //   150 (X color orbs x 5 with plus)
+    //   150 (X color connected orbs x 5 with plus)
 
     // base multiple (in-game type 11, 22, 26, 28, 29, 30, 31, 40, 45, 62, 65, 69, 75, 76, 77, 79, 105, 108, 111, 114, 121, 125, 129, 137, 155)
     // * combine orbs mode * combo mode result, and friend.

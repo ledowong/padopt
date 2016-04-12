@@ -174,9 +174,16 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
 }
 
 #buttons{
+  .btn-group{
+    >.btn:first-child{
+      width: 80%;
+    }
+    >.btn+.dropdown-toggle{
+      width: 20%;
+    }
+  }
   button{
     overflow: hidden;
-    width: 100%;
     padding-left:0;
     padding-right:0;
     margin-bottom:5px;
