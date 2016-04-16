@@ -33,7 +33,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   var poison_default =  [[276, 282, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
   var dark_default =    [[282, 300, 14000, 26000],[300, 345, 10000, 15000],[295, 329,  5000, 15000]];
   var heart_default =   [[310, 330, 15000, 26000],[325, 350, 10000, 25000],[325, 345,  8000, 18000]];
-  // {h: 11, s: 57, v: 12900}
+  // {h: 350, s: 18, v: 13300}
 
   /*****************************************************************************
   * Helper functions
@@ -285,7 +285,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   }
   function preProcessScreenshotForFindingShape(light_background){
     if (light_background !== true) light_background = false; // default false
-    var threshold = 72;
+    var threshold = 75; // 72 somethings fail to detect poison.
     if (light_background) threshold = 82;
     if (debug) {
       console.log('preProcessScreenshotForFindingShape', threshold, light_background === true ? 'light' : 'dark');
