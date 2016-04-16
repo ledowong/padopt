@@ -11,7 +11,7 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   var debug = false;
   var debug_grid = false;
   var debug_shape_dark = false;
-  var debug_shape_light = true;
+  var debug_shape_light = false;
   var grid = [cols, rows];
   var grid_position;
   var end_results;
@@ -26,14 +26,14 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
   //                     minH,maxH,  minV,  maxV  minH,maxH,  minV,  maxV  minH,maxH,  minV,  maxV
   var fire_default =    [[  5,  20, 15000, 26000],[  1,  15, 11701, 25000],[  2,  15,  5000, 18000]];
   var light_default =   [[ 45,  60, 15000, 26000],[ 30,  51, 10000, 25000],[ 30,  50,  5000, 18000]];
-  var wood_default =    [[125, 150, 15000, 26000],[ 52, 130,  5000, 15000],[ 85, 145,  5000, 15000]];
+  var wood_default =    [[125, 150, 15000, 26000],[ 50, 130,  5000, 15000],[ 85, 145,  5000, 15000]];
   var water_default =   [[195, 215, 18000, 26000],[210, 295,  5000, 18000],[210, 255,  5000, 18000]];
   var junk_default =    [[195, 235,  8000, 17999],[  1, 360,  7000, 10000],[300, 345,  4000,  7999]];
   var poison2_default = [[268, 275, 15000, 25000],[  5,  15, 30000, 30000],[  3,  15, 30000, 30000]];
   var poison_default =  [[276, 282, 15000, 21000],[  3,  15,  9000, 11700],[340, 360,  5000, 10000]];
   var dark_default =    [[282, 300, 14000, 26000],[300, 345, 10000, 15000],[295, 329,  5000, 15000]];
   var heart_default =   [[310, 330, 15000, 26000],[325, 350, 10000, 25000],[325, 345,  8000, 18000]];
-  // {h: 52, s: 27, v: 8900}
+  // {h: 11, s: 57, v: 12900}
 
   /*****************************************************************************
   * Helper functions
@@ -111,7 +111,11 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
             var tx = x * half_block_size * 2 + half_block_size;
             var ty = y * half_block_size * 2 + half_block_size;
             var index = (grid[1]*y)+x+y;
-            ctx.fillStyle = "#ffffff";
+            if (end_results[index] === 'x') {
+              ctx.fillStyle = "#FF0000";
+            } else {
+              ctx.fillStyle = "#FFFFFF";
+            }
             ctx.font = "36px Arial";
             ctx.fillText(end_results[index],tx,ty);
             ctx.strokeStyle="#FF0000";
@@ -205,14 +209,14 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
           // if this point is...
           // black, it can be Circle/Heart/Junk/Poison/Poison2
           // white: it can be Poison/Poison2
-          sample2 = isBlack(x * block_size + (block_size/19),
+          sample2 = isBlack(x * block_size + (block_size/19*18), // right top corner, to avoid Lock icon.
                             y * block_size + (block_size/19),
                             true);
           //******************************************************
           // if this point is...
           // black, it can be Circle/Heart/Junk/Poison/Poison2
           // white: it can be Poison/Poison2
-          sample3 = isBlack(x * block_size + (block_size/11),
+          sample3 = isBlack(x * block_size + (block_size/11*10), // right top corner, to avoid Lock icon.
                             y * block_size + (block_size/11),
                             true);
           //******************************************************
@@ -266,14 +270,14 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     if (light_background) {
       // finish shape detection, go to color detection.
       if (debug && debug_shape_light) {
-        throw('debug shape');
+        throw('debug light shape');
       }
       removeCanvas();
       preProcessScreenshotForGemSampling();
     } else {
       // only finish dark background gem, now go to gem with light background
       if (debug && debug_shape_dark) {
-        throw('debug shape');
+        throw('debug dark shape');
       }
       removeCanvas();
       preProcessScreenshotForFindingShape(true);
