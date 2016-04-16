@@ -363,19 +363,26 @@ var Board = function(canvas_id, opts){
     }
     return xys;
   }
+  // var _drawLineTo = function(px, py, x, y) {
+  //   var mx = (px*2 + x) / 3;
+  //   var my = (py*2 + y) / 3;
+  //   _ctx.lineTo(mx, my);
+  //   var dx = x - px;
+  //   var dy = y - py;
+  //   var dr = Math.sqrt(dx*dx + dy*dy) / 3;
+  //   dx /= dr;
+  //   dy /= dr;
+  //   _ctx.lineTo(mx - (dx+dy), my + (dx-dy));
+  //   _ctx.lineTo(mx - (dx-dy), my - (dx+dy));
+  //   _ctx.lineTo(mx, my);
+  //   _ctx.lineTo(x, y);
+  // }
   var _drawLineTo = function(px, py, x, y) {
-    var mx = (px*2 + x) / 3;
-    var my = (py*2 + y) / 3;
-    _ctx.lineTo(mx, my);
-    var dx = x - px;
-    var dy = y - py;
-    var dr = Math.sqrt(dx*dx + dy*dy) / 3;
-    dx /= dr;
-    dy /= dr;
-    _ctx.lineTo(mx - (dx+dy), my + (dx-dy));
-    _ctx.lineTo(mx - (dx-dy), my - (dx+dy));
-    _ctx.lineTo(mx, my);
-    _ctx.lineTo(x, y);
+    var dr = 0.15;
+    var dx = _ORB_SIZE * dr * _sign(x - px);
+    var dy = _ORB_SIZE * dr * _sign(y - py);
+    _ctx.lineTo(px + dx, py + dy);
+    _ctx.lineTo( x - dx,  y - dy);
   }
   var _drawLineTo2 = function(px, py, x, y) {
     var dr = 0.1;
