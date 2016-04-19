@@ -378,7 +378,7 @@ var Board = function(canvas_id, opts){
   //   _ctx.lineTo(x, y);
   // }
   var _drawLineTo = function(px, py, x, y) {
-    var dr = 0.15;
+    var dr = 0.2;
     var dx = _ORB_SIZE * dr * _sign(x - px);
     var dy = _ORB_SIZE * dr * _sign(y - py);
     _ctx.lineTo(px + dx, py + dy);
