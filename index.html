@@ -168,9 +168,9 @@
               <select class="form-control" id="form_profile"></select>
             </div>
             <div class="col-xs-12">
-              <label>
+              <a href="#" id="toggle-weight" class="open">
                 Weight:
-              </label>
+              </a>
               <table id="profile-table" class=""> <!--hidden-xs-->
                 <thead>
                   <tr>
@@ -261,90 +261,230 @@
                 </tfoot>
               </table>
             </div>
-            <div class="col-xs-12 form-group" id="multiple_session" style="display:none">
-              <label>
-                Multiple:
-              </label><br/>
-              ATK x<input type="number" id="base_multiple" min="1" step="0.01" required> for all members.<br/>
-              <label><input id="multiple_combo" type="checkbox" class="checkbox"> Combo</label>
-              <div id="multiple_combo_wrapper" class="multiple_wrapper" style="display:none">
-                ATK x<input type="number" id="combo_multiple" min="0.01" step="0.01" required> at <input type="number" id="combo_from" min="1" required> combos.
-                ATK x<input type="number" id="combo_additional_multiple" min="0.01" step="0.01" required> for each additional combo, up to <input type="number" id="combo_upto" min="1" required> combos.
-              </div>
-              <br/>
-              <label><input id="multiple_orb_types" type="checkbox" class="checkbox"> Orb types</label>
-              <div id="multiple_orb_types_wrapper" class="multiple_wrapper" style="display:none">
-                ATK x<input type="number" id="orbs_multiple" min="0.01" step="0.01" required> when attacking with
-                <select id="orbs_count_from" class="form-control">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                </select>
-                of following orb types:
-                <br/>
-                <a href="#" class="gem gem0 gem-checkbox orb_types" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox orb_types" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox orb_types" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox orb_types" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox orb_types" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox orb_types" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox orb_types" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox orb_types" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox orb_types" data-index="8"></a>
-                <br/>
-                ATK x<input type="number" id="orbs_additional_multiple" min="0" step="0.01" required> for each additional orb type, up to
-                <select id="orbs_count_upto" class="form-control">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                </select>
-                matches.
-              </div>
-              <br/>
-              <label><input id="multiple_connected_orbs" type="checkbox" class="checkbox"> Connected orbs</label>
-              <div id="multiple_connected_orbs_wrapper" class="multiple_wrapper" style="display:none">
-                ATK x<input type="number" id="connected_multiple" min="0.01" step="0.01" required> when simultaneously clearing
-                <select id="connected_count_from" class="form-control">
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                </select>
-                connected
-                <a href="#" class="gem gem0 gem-checkbox connected_orbs" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox connected_orbs" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox connected_orbs" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox connected_orbs" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox connected_orbs" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox connected_orbs" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox connected_orbs" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox connected_orbs" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox connected_orbs" data-index="8"></a>
-                orbs. ATK x<input type="number" id="connected_additional_multiple" min="0" step="0.01" required> for each additional orb, up to
-                <select id="connected_count_upto" class="form-control">
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                </select>
-                connected orb.
-              </div>
-              <div>
-                <label>
-                  Customize Profile Name:
-                </label>
-                <input type='text' class="form-control" id="name" required>
-                <br/>
-                <div class="col-xs-6">
-                  <button type='button' class="btn btn-warning btn-block" id="save_customize_profile_button">Save</button>
+            <div class="col-xs-12 form-group">
+              <a href="#" id="toggle-quick-change-orbs">
+                Quick Change Orbs:
+              </a>
+              <div id="toggle-quick-change-orbs-body" style="display:none">
+                <div class="quick-change-orbs">
+                  <div class="col-xs-1">
+                    1.
+                  </div><!--
+                  --><div class="col-xs-4">
+                    <a href="#" class="gem gem0 gem-checkbox" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox" data-index="8"></a>
+                  </div><!--
+                  --><div class="col-xs-1">
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                  </div><!--
+                  --><div class="col-xs-3">
+                    <select class="form-control">
+                      <option value="0">Fire</option>
+                      <option value="1">Water</option>
+                      <option value="2">Wood</option>
+                      <option value="3">Light</option>
+                      <option value="4">Dark</option>
+                      <option value="5">Heart</option>
+                    </select>
+                  </div><!--
+                  --><div class="col-xs-3">
+                    <button type="button" class="btn btn-default btn-success btn-block">
+                      <span class="glyphicon glyphicon-repeat"></span>
+                    </button>
+                  </div>
                 </div>
-                <div class="col-xs-6">
-                  <button type='button' class="btn btn-danger btn-block" id="delete_customize_profile_button">Delete</button>
+                <div class="quick-change-orbs">
+                  <div class="col-xs-1">
+                    2.
+                  </div><!--
+                  --><div class="col-xs-4">
+                    <a href="#" class="gem gem0 gem-checkbox" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox" data-index="8"></a>
+                  </div><!--
+                  --><div class="col-xs-1">
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                  </div><!--
+                  --><div class="col-xs-3">
+                    <select class="form-control">
+                      <option value="0">Fire</option>
+                      <option value="1">Water</option>
+                      <option value="2">Wood</option>
+                      <option value="3">Light</option>
+                      <option value="4">Dark</option>
+                      <option value="5">Heart</option>
+                    </select>
+                  </div><!--
+                  --><div class="col-xs-3">
+                    <button type="button" class="btn btn-default btn-success btn-block">
+                      <span class="glyphicon glyphicon-repeat"></span>
+                    </button>
+                  </div>
+                </div>
+                <div class="quick-change-orbs">
+                  <div class="col-xs-1">
+                    3.
+                  </div><!--
+                  --><div class="col-xs-4">
+                    <a href="#" class="gem gem0 gem-checkbox" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox" data-index="8"></a>
+                  </div><!--
+                  --><div class="col-xs-1">
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                  </div><!--
+                  --><div class="col-xs-3">
+                    <select class="form-control">
+                      <option value="0">Fire</option>
+                      <option value="1">Water</option>
+                      <option value="2">Wood</option>
+                      <option value="3">Light</option>
+                      <option value="4">Dark</option>
+                      <option value="5">Heart</option>
+                    </select>
+                  </div><!--
+                  --><div class="col-xs-3">
+                    <button type="button" class="btn btn-default btn-success btn-block">
+                      <span class="glyphicon glyphicon-repeat"></span>
+                    </button>
+                  </div>
+                </div>
+                <div class="quick-change-orbs">
+                  <div class="col-xs-1">
+                    4.
+                  </div><!--
+                  --><div class="col-xs-4">
+                    <a href="#" class="gem gem0 gem-checkbox" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox" data-index="8"></a>
+                  </div><!--
+                  --><div class="col-xs-1">
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                  </div><!--
+                  --><div class="col-xs-3">
+                    <select class="form-control">
+                      <option value="0">Fire</option>
+                      <option value="1">Water</option>
+                      <option value="2">Wood</option>
+                      <option value="3">Light</option>
+                      <option value="4">Dark</option>
+                      <option value="5">Heart</option>
+                    </select>
+                  </div><!--
+                  --><div class="col-xs-3">
+                    <button type="button" class="btn btn-default btn-success btn-block">
+                      <span class="glyphicon glyphicon-repeat"></span>
+                    </button>
+                  </div>
+                </div>
+                <div class="quick-change-orbs">
+                  <div class="col-xs-1">
+                    5.
+                  </div><!--
+                  --><div class="col-xs-4">
+                    <a href="#" class="gem gem0 gem-checkbox" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox" data-index="8"></a>
+                  </div><!--
+                  --><div class="col-xs-1">
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                  </div><!--
+                  --><div class="col-xs-3">
+                    <select class="form-control">
+                      <option value="0">Fire</option>
+                      <option value="1">Water</option>
+                      <option value="2">Wood</option>
+                      <option value="3">Light</option>
+                      <option value="4">Dark</option>
+                      <option value="5">Heart</option>
+                    </select>
+                  </div><!--
+                  --><div class="col-xs-3">
+                    <button type="button" class="btn btn-default btn-success btn-block">
+                      <span class="glyphicon glyphicon-repeat"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 form-group" id="multiple_session" style="display:none">
+              <a href="#" id="toggle-multiple" class="open">
+                Multiple:
+              </a>
+              <div id="toggle-multiple-body">
+                <br/>
+                ATK x<input type="number" id="base_multiple" min="1" step="0.01" required> for all members.<br/>
+                <label><input id="multiple_combo" type="checkbox" class="checkbox"> Combo</label>
+                <div id="multiple_combo_wrapper" class="multiple_wrapper" style="display:none">
+                  ATK x<input type="number" id="combo_multiple" min="0.01" step="0.01" required> at <input type="number" id="combo_from" min="1" required> combos.
+                  ATK x<input type="number" id="combo_additional_multiple" min="0.01" step="0.01" required> for each additional combo, up to <input type="number" id="combo_upto" min="1" required> combos.
+                </div>
+                <br/>
+                <label><input id="multiple_orb_types" type="checkbox" class="checkbox"> Orb types</label>
+                <div id="multiple_orb_types_wrapper" class="multiple_wrapper" style="display:none">
+                  ATK x<input type="number" id="orbs_multiple" min="0.01" step="0.01" required> when attacking with
+                  <select id="orbs_count_from" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                  </select>
+                  of following orb types:
+                  <br/>
+                  <a href="#" class="gem gem0 gem-checkbox orb_types" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox orb_types" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox orb_types" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox orb_types" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox orb_types" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox orb_types" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox orb_types" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox orb_types" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox orb_types" data-index="8"></a>
+                  <br/>
+                  ATK x<input type="number" id="orbs_additional_multiple" min="0" step="0.01" required> for each additional orb type, up to
+                  <select id="orbs_count_upto" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                  </select>
+                  matches.
+                </div>
+                <br/>
+                <label><input id="multiple_connected_orbs" type="checkbox" class="checkbox"> Connected orbs</label>
+                <div id="multiple_connected_orbs_wrapper" class="multiple_wrapper" style="display:none">
+                  ATK x<input type="number" id="connected_multiple" min="0.01" step="0.01" required> when simultaneously clearing
+                  <select id="connected_count_from" class="form-control">
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                  connected
+                  <a href="#" class="gem gem0 gem-checkbox connected_orbs" data-index="0"></a><a href="#" class="gem gem1 gem-checkbox connected_orbs" data-index="1"></a><a href="#" class="gem gem2 gem-checkbox connected_orbs" data-index="2"></a><a href="#" class="gem gem3 gem-checkbox connected_orbs" data-index="3"></a><a href="#" class="gem gem4 gem-checkbox connected_orbs" data-index="4"></a><a href="#" class="gem gem5 gem-checkbox connected_orbs" data-index="5"></a><a href="#" class="gem gem6 gem-checkbox connected_orbs" data-index="6"></a><a href="#" class="gem gem7 gem-checkbox connected_orbs" data-index="7"></a><a href="#" class="gem gem8 gem-checkbox connected_orbs" data-index="8"></a>
+                  orbs. ATK x<input type="number" id="connected_additional_multiple" min="0" step="0.01" required> for each additional orb, up to
+                  <select id="connected_count_upto" class="form-control">
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                  connected orb.
+                </div>
+                <div>
+                  <label>
+                    Customize Profile Name:
+                  </label>
+                  <input type='text' class="form-control" id="name" required>
+                  <br/>
+                  <div class="col-xs-6">
+                    <button type='button' class="btn btn-warning btn-block" id="save_customize_profile_button">Save</button>
+                  </div>
+                  <div class="col-xs-6">
+                    <button type='button' class="btn btn-danger btn-block" id="delete_customize_profile_button">Delete</button>
+                  </div>
                 </div>
               </div>
             </div> <!--multiple session-->

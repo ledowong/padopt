@@ -531,6 +531,39 @@ $(document).ready(function() {
     $('#changeOrbsModal').modal('hide');
   });
 
+  $("#toggle-weight").on('click', function(){
+    $('#profile-table').toggle();
+    $(this).toggleClass('open');
+  });
+
+  $("#toggle-multiple").on('click', function(){
+    $('#toggle-multiple-body').toggle();
+    $(this).toggleClass('open');
+  });
+
+  $("#toggle-quick-change-orbs").on('click', function(){
+    $('#toggle-quick-change-orbs-body').toggle();
+    $(this).toggleClass('open');
+  });
+
+  $(".quick-change-orbs button").on('click', function(){
+    if (board.ready()){
+      var wrapper = $(this).parents('.quick-change-orbs');
+      var to_index = $('select', wrapper).val();
+      var re, orginal_index;
+      var board_stirng = board.export();
+      $('.gem.checked', wrapper).each(function(){
+        orginal_index = $(this).data('index');
+        if (orginal_index !== to_index) {
+          board_stirng = board_stirng.replace(new RegExp(orginal_index, "g"), to_index);
+        }
+      });
+      board.import(board_stirng);
+      $('.form_solve_button:first').click(); // solve!
+    }
+  });
+
+
 
 
   /****************************************************

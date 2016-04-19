@@ -385,3 +385,36 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
     text-decoration: line-through;
   }
 }
+
+#toggle-quick-change-orbs,
+#toggle-multiple,
+#toggle-weight{
+  color: #fff;
+  font-weight: bold;
+  text-decoration: underline;
+  &:before{
+    @extend .glyphicon;
+    @extend .glyphicon-triangle-right;
+  }
+  &:before.open{
+    @extend .glyphicon;
+    @extend .glyphicon-triangle-bottom;
+  }
+}
+
+.quick-change-orbs{
+  .col-xs-6,
+  .col-xs-5,
+  .col-xs-4,
+  .col-xs-3,
+  .col-xs-2,
+  .col-xs-1{
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+  }
+  border-bottom: 1px dashed #fff;
+  &:last-child{
+    border:0;
+  }
+}
