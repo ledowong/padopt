@@ -5,6 +5,8 @@ $(document).ready(function() {
   var form = $('#profile_weights_multiple_form');
   var delete_customize_profile_button = $('#delete_customize_profile_button');
   var multiple_session = $("#multiple_session");
+  var qco_form = $('#quick-change-orbs-form');
+  var local_storage_qco_key = 'quick_change_orbs';
 
   /****************************************************
    * functions
@@ -100,6 +102,37 @@ $(document).ready(function() {
       multiple_session.hide();
     }
   };
+
+  var generateQCO = function(qco_array){
+    var ol = $('ol', "#toggle-quick-change-orbs-body");
+    ol.html(''); //clear everything
+    qco_array.forEach(function(qco){
+      var li = $('<li class="quick-change-orbs" data-from="'+qco.from.join(',')+'" data-to="'+qco.to+'">');
+      var wrapper = $('<div>');
+      wrapper.append($('<span class="glyphicon glyphicon-arrow-up"/>'));
+      wrapper.append($('<span class="glyphicon glyphicon-arrow-down"/>'));
+      wrapper.append($('<span class="glyphicon glyphicon-trash"/>'));
+      wrapper.append(qco.name);
+      wrapper.append($('<button class="btn btn-primary pull-right"><span class="glyphicon glyphicon-repeat"></span>'));
+      wrapper.append($('<button class="btn btn-success pull-right"><span class="glyphicon glyphicon-repeat"></span>'));
+      li.append(wrapper);
+      ol.append(li);
+    });
+  };
+
+  var loadQCO = function(){
+    var local_storage_value = localStorage.getItem(local_storage_qco_key);
+    // load or default data array.
+    var qco_array = [];
+    if (local_storage_value !== null) {
+      qco_array = JSON.parse(local_storage_value);
+    }
+    return qco_array;
+  };
+
+  var saveQCO = function(qco_array){
+    localStorage.setItem(local_storage_qco_key, JSON.stringify(qco_array));
+  }
 
   var buildMultipleFormula = function() {
     var connected_orbs = [];
@@ -398,7 +431,7 @@ $(document).ready(function() {
     board.randomize(types);
   });
 
-  $('#form_random_type a,.quick-change-orbs .btn-group a').on('click', function(){
+  $('#form_random_type a,#quick-change-orbs-form .btn-group a').on('click', function(){
     $(this).toggleClass('checked');
     return false;
   });
@@ -534,33 +567,92 @@ $(document).ready(function() {
   $("#toggle-weight").on('click', function(){
     $('#profile-table').toggle();
     $(this).toggleClass('open');
+    return false;
   });
 
   $("#toggle-multiple").on('click', function(){
     $('#toggle-multiple-body').toggle();
     $(this).toggleClass('open');
+    return false;
   });
 
   $("#toggle-quick-change-orbs").on('click', function(){
     $('#toggle-quick-change-orbs-body').toggle();
     $(this).toggleClass('open');
+    return false;
   });
 
-  $(".quick-change-orbs button").on('click', function(){
+  // add new quick change orbs
+  $(".btn-warning", qco_form).on('click', function(){
+    var $name = $('[name=qco_name]', qco_form);
+    var from_array = [];
+    $('#quick-change-orbs-form .btn-group a.checked').each(function(){
+      from_array.push($(this).data('value'));
+    });
+    if ($name.val() === '') {
+      errorFlash('Please input a name.');
+    } else if (from_array.length == 0) {
+      errorFlash('What does it change from?');
+    } else {
+      // load or default data array.
+      var qco_array = loadQCO();
+      var from_array = [];
+      $('#quick-change-orbs-form .btn-group a.checked').each(function(){
+        from_array.push($(this).data('value'));
+      });
+      // add new item to the array
+      var new_qco = {name: $name.val(), from: from_array, to: $('select', qco_form).val()};
+      qco_array.push(new_qco);
+      // save it
+      saveQCO(qco_array);
+      // reset form
+      $name.val('');
+      // reload UI
+      generateQCO(qco_array);
+    }
+  });
+
+  $(document).on('click', ".quick-change-orbs .glyphicon-trash, .quick-change-orbs .glyphicon-arrow-up, .quick-change-orbs .glyphicon-arrow-down", function(){
+    var wrapper = $(this).parents('.quick-change-orbs');
+    var index = $("#toggle-quick-change-orbs-body ol li").index(wrapper);
+    var data = loadQCO();
+    var items = data.splice(index, 1);
+    if ($(this).hasClass('glyphicon-arrow-up')) {
+      //up
+      if (index - 1 < 0) {
+        index = 0
+      } else {
+        index -= 1;
+      }
+      data.splice(index, 0, items[0]);
+    } else if ($(this).hasClass('glyphicon-arrow-down')) {
+      // down
+      if (index + 1 >= data.length) {
+        index = data.length;
+      } else {
+        index += 1;
+      }
+      data.splice(index, 0, items[0]);
+    }
+    saveQCO(data)
+    generateQCO(data);
+  });
+
+  $(document).on('click', ".quick-change-orbs button", function(){
     if (board.ready()){
       var wrapper = $(this).parents('.quick-change-orbs');
-      var to_index = $('select', wrapper).val();
-      var re, orginal_index;
+      var to_index = wrapper.data('to');
       var board_stirng = board.export();
-      $('.btn-group a.checked', wrapper).each(function(){
-        orginal_index = $(this).data('value');
-        if (orginal_index !== to_index) {
-          board_stirng = board_stirng.replace(new RegExp(orginal_index, "g"), to_index);
+      wrapper.data('from').split(',').forEach(function(from_index){
+        if (from_index !== to_index) {
+          board_stirng = board_stirng.replace(new RegExp(from_index, "g"), to_index);
         }
       });
       if (board.export() !== board_stirng) {
         board.import(board_stirng);
-        $('.form_solve_button:first').click(); // solve!
+        if ($(this).hasClass('btn-primary')) {
+          $('.form_solve_button:first').click(); // solve!
+        }
       }
     }
   });
@@ -588,4 +680,5 @@ $(document).ready(function() {
   var profile = new Profile();
   // generate profile options
   updateProfileOptions();
+  generateQCO(loadQCO());
 });

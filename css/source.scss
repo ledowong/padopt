@@ -375,7 +375,7 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   }
 }
 
-.quick-change-orbs .btn-group,
+#quick-change-orbs-form .btn-group,
 #form_random_type{
   a:not(.checked){
     -webkit-filter: grayscale(100%);
@@ -403,17 +403,29 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   }
 }
 
-.quick-change-orbs{
+#quick-change-orbs-form{
   @extend .clearfix;
-  border-bottom: 1px dashed #fff;
+  border-top: 1px solid #fff;
+  padding: 10px 0;
+  line-height: 32px;
+  select{
+    margin-bottom: 10px;
+  }
+}
+
+.quick-change-orbs{
+  .glyphicon{
+    cursor: pointer;
+    padding-right: 5px;
+  }
+  .btn .glyphicon{
+    padding: 0;
+  }
   padding: 5px 0;
-  .col-xs-1,
-  .col-xs-2,
-  .col-xs-3,
-  .col-xs-4,
-  .col-xs-5,
-  .col-xs-6{
-    line-height: 32px;
+  line-height: 32px;
+  border-bottom: 1px dashed #fff;
+  .btn{
+    margin-left: 5px;
   }
   &:last-child{
     border:0;
