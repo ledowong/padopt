@@ -398,7 +398,7 @@ $(document).ready(function() {
     board.randomize(types);
   });
 
-  $('#form_random_type a').on('click', function(){
+  $('#form_random_type a,.quick-change-orbs .btn-group a').on('click', function(){
     $(this).toggleClass('checked');
     return false;
   });
@@ -552,14 +552,16 @@ $(document).ready(function() {
       var to_index = $('select', wrapper).val();
       var re, orginal_index;
       var board_stirng = board.export();
-      $('.gem.checked', wrapper).each(function(){
-        orginal_index = $(this).data('index');
+      $('.btn-group a.checked', wrapper).each(function(){
+        orginal_index = $(this).data('value');
         if (orginal_index !== to_index) {
           board_stirng = board_stirng.replace(new RegExp(orginal_index, "g"), to_index);
         }
       });
-      board.import(board_stirng);
-      $('.form_solve_button:first').click(); // solve!
+      if (board.export() !== board_stirng) {
+        board.import(board_stirng);
+        $('.form_solve_button:first').click(); // solve!
+      }
     }
   });
 

@@ -375,6 +375,7 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   }
 }
 
+.quick-change-orbs .btn-group,
 #form_random_type{
   a:not(.checked){
     -webkit-filter: grayscale(100%);
@@ -403,17 +404,17 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
 }
 
 .quick-change-orbs{
-  .col-xs-6,
-  .col-xs-5,
-  .col-xs-4,
-  .col-xs-3,
-  .col-xs-2,
-  .col-xs-1{
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-  }
+  @extend .clearfix;
   border-bottom: 1px dashed #fff;
+  padding: 5px 0;
+  .col-xs-1,
+  .col-xs-2,
+  .col-xs-3,
+  .col-xs-4,
+  .col-xs-5,
+  .col-xs-6{
+    line-height: 32px;
+  }
   &:last-child{
     border:0;
   }
