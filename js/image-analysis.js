@@ -447,55 +447,55 @@ var imageAnalysis = function(screenshot_url, cols, rows, callback){
     if (hsv.h >= fire_default[mode_index][0] && fire_default[mode_index][1] >= hsv.h &&
         hsv.v >= fire_default[mode_index][2] && fire_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'o'))) {
-      it_can_be.push('r');
+      it_can_be.push('0');
     }
     // water
     if (hsv.h >= water_default[mode_index][0] && water_default[mode_index][1] >= hsv.h &&
         hsv.v >= water_default[mode_index][2] && water_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'o'))) {
-      it_can_be.push('b');
+      it_can_be.push('1');
     }
     // wood
     if (hsv.h >= wood_default[mode_index][0] && wood_default[mode_index][1] >= hsv.h &&
         hsv.v >= wood_default[mode_index][2] && wood_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'o'))) {
-      it_can_be.push('g');
+      it_can_be.push('2');
     }
     // light
     if (hsv.h >= light_default[mode_index][0] && light_default[mode_index][1] >= hsv.h &&
         hsv.v >= light_default[mode_index][2] && light_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'o'))) {
-      it_can_be.push('y');
+      it_can_be.push('3');
     }
     // dark
     if (hsv.h >= dark_default[mode_index][0] && dark_default[mode_index][1] >= hsv.h &&
         hsv.v >= dark_default[mode_index][2] && dark_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'o'))) {
-      it_can_be.push('p');
+      it_can_be.push('4');
     }
     // heart
     if (hsv.h >= heart_default[mode_index][0] && heart_default[mode_index][1] >= hsv.h &&
         hsv.v >= heart_default[mode_index][2] && heart_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 's'))) {
-      it_can_be.push('h');
+      it_can_be.push('5');
     }
     // junk
     if (hsv.h >= junk_default[mode_index][0] && junk_default[mode_index][1] >= hsv.h &&
         hsv.v >= junk_default[mode_index][2] && junk_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === 'j'))) {
-      it_can_be.push('j');
+      it_can_be.push('8');
     }
     // poison
     if (hsv.h >= poison_default[mode_index][0] && poison_default[mode_index][1] >= hsv.h &&
         hsv.v >= poison_default[mode_index][2] && poison_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === '?'))) {
-      it_can_be.push('q');
+      it_can_be.push('6');
     }
     // poison2
     if (hsv.h >= poison2_default[mode_index][0] && poison2_default[mode_index][1] >= hsv.h &&
         hsv.v >= poison2_default[mode_index][2] && poison2_default[mode_index][3] >= hsv.v &&
         (!dark_mode || (dark_mode && shape_results[result_index] === '?'))) {
-      it_can_be.push('w');
+      it_can_be.push('7');
     }
     if (it_can_be.length === 0 || it_can_be.length > 1) {
       return 'x' // unknown

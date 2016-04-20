@@ -174,6 +174,11 @@ $(document).ready(function() {
     imageAnalysis(data_uri, col_row[0], col_row[1], function(result_string){
       $('#status_bar').removeClass('image_analysing');
       if (result_string) {
+        if ($('.quick-change-orbs.dropped-at').length > 0) {
+          var qco_dom = $('.quick-change-orbs.dropped-at');
+          qco_dom.removeClass('dropped-at');
+          result_string = changeBoardString(result_string, qco_dom.data('from').split(','), qco_dom.data('to'));
+        }
         board.import(result_string);
         $('.form_solve_button:first').click();
       } else {
@@ -210,6 +215,15 @@ $(document).ready(function() {
       }
     }
     return weights;
+  }
+
+  var changeBoardString = function(board_string, from_array, to_index) {
+    from_array.forEach(function(from_index){
+      if (from_index !== to_index) {
+        board_string = board_string.replace(new RegExp(from_index, "g"), to_index);
+      }
+    });
+    return board_string;
   }
 
   var displaySolutions = function(solutions){ // finish callback
@@ -269,17 +283,17 @@ $(document).ready(function() {
   $('[data-toggle="tooltip"]').tooltip();
 
   // upload screenshot by drag and drop
-  $('body').on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
+  $(document).on('drag dragstart dragend dragover dragenter dragleave drop', "body,.quick-change-orbs", function(e) {
     e.preventDefault();
     e.stopPropagation();
   })
-  .on('dragover dragenter', function() {
-    $('body').addClass('is-dragover');
+  .on('dragover dragenter', "body,.quick-change-orbs", function() {
+    $(this).addClass('is-dragover');
   })
-  .on('dragleave dragend drop', function() {
-    $('body').removeClass('is-dragover');
+  .on('dragleave dragend drop', "body,.quick-change-orbs", function() {
+    $(this).removeClass('is-dragover');
   })
-  .on('drop', function(e) {
+  .on('drop', "body,.quick-change-orbs", function(e) {
     // droppedFiles = e.originalEvent.dataTransfer.files;
     var elem = document.getElementById("screenshot_canvas");
     if (elem) elem.parentElement.removeChild(elem); // reset canvas
@@ -288,6 +302,9 @@ $(document).ready(function() {
     if (e.originalEvent.dataTransfer.files.length > 1) {
       errorFlash('One image only.');
     } else {
+      if ($(this).is('.quick-change-orbs')) {
+        $(this).addClass('dropped-at');
+      }
       fr.readAsDataURL(e.originalEvent.dataTransfer.files[0]);
     }
   });
@@ -612,6 +629,7 @@ $(document).ready(function() {
     }
   });
 
+  // QCO sorting
   $(document).on('click', ".quick-change-orbs .glyphicon-trash, .quick-change-orbs .glyphicon-arrow-up, .quick-change-orbs .glyphicon-arrow-down", function(){
     var wrapper = $(this).parents('.quick-change-orbs');
     var index = $("#toggle-quick-change-orbs-body ol li").index(wrapper);
@@ -638,26 +656,21 @@ $(document).ready(function() {
     generateQCO(data);
   });
 
+  // apply QCO
   $(document).on('click', ".quick-change-orbs button", function(){
     if (board.ready()){
       var wrapper = $(this).parents('.quick-change-orbs');
       var to_index = wrapper.data('to');
-      var board_stirng = board.export();
-      wrapper.data('from').split(',').forEach(function(from_index){
-        if (from_index !== to_index) {
-          board_stirng = board_stirng.replace(new RegExp(from_index, "g"), to_index);
-        }
-      });
-      if (board.export() !== board_stirng) {
-        board.import(board_stirng);
+      var board_string = board.export();
+      board_string = changeBoardString(board_string, wrapper.data('from').split(','), to_index);
+      if (board.export() !== board_string) { // something changed
+        board.import(board_string);
         if ($(this).hasClass('btn-primary')) {
           $('.form_solve_button:first').click(); // solve!
         }
       }
     }
   });
-
-
 
 
   /****************************************************

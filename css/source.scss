@@ -222,6 +222,26 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   }
 }
 
+body.is-dragover{
+  #status_bar{
+    background-color: $brand-warning;
+  }
+  .quick-change-orbs{
+    // color: #69D2E7;
+    outline: 2px dashed $brand-warning;
+    //box-shadow: 0 0 0 10px #69D2E7;
+    animation: 1s animateBorderOne ease infinite;
+  }
+
+  @keyframes animateBorderOne {
+    to {
+      // background-color: $brand-warning;
+      outline-color: $brand-danger;
+      //box-shadow: 0 0 0 1px #E0E4CC;
+    }
+  }
+}
+
 #status_bar{
   z-index: 10;
   position: fixed;
@@ -414,6 +434,9 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
 }
 
 .quick-change-orbs{
+  &.is-dragover{
+    background-color: $brand-waring;
+  }
   .glyphicon{
     cursor: pointer;
     padding-right: 5px;
@@ -421,13 +444,20 @@ html.filereader.canvas.todataurljpeg.todataurlpng.localstorage.requestanimationf
   .btn .glyphicon{
     padding: 0;
   }
-  padding: 5px 0;
+  padding: 5px;
   line-height: 32px;
   border-bottom: 1px dashed #fff;
+  border-top: 1px dashed #fff;
   .btn{
     margin-left: 5px;
   }
   &:last-child{
     border:0;
+  }
+  &:last-child{
+    border-bottom:0;
+  }
+  &:first-child{
+    border-top:0;
   }
 }
