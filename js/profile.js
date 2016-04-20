@@ -174,7 +174,7 @@ var Profile = function(){
     },
     "id_2594": {
       name: "2594 Anti-God Machine, Ragnarok Dragon",
-      weights: [1,1,0,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,0.3,0.3,0,0,0.1,0.1,0,0,0.1,0.1,0,0,0.1,0.1,0,0],
+      weights: [1,1,0,0,1,1,0,0,1,1,0,1,1,1,0,0,1,1,0,0,0.3,0.3,0,0,0.1,0.1,0,0,0.1,0.1,0,0,0.1,0.1,0,0],
       multiple_formula: {
         base_multiple: 1.5,
         combo_mode: false,
