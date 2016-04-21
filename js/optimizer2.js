@@ -446,6 +446,8 @@ var Optimizer = function(opts){
     solutions.sort(function(a, b) {
       if (_sorting == "multiplier" ) {
         return b.mult - a.mult || a.complexity - b.complexity || b.weight - a.weight;
+      } else if (_sorting == "mcwx") {
+        return b.mult - a.mult || b.matches.length - a.matches.length || b.weight - a.weight || a.complexity - b.complexity;
       } else if (_sorting == "multiweight") {
         return b.mult - a.mult || b.weight - a.weight || a.complexity - b.complexity;
       } else if (_sorting == "complexity") {
