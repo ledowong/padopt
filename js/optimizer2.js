@@ -301,6 +301,7 @@ var Optimizer = function(opts){
   var _inPlaceEvaluateSolution = function(solution, weights) {
     var current_board = _copyBoard(solution.board);
     var all_matches = [];
+    var drop_times = 0;
     while (true) {
       var matches = _findMatches(current_board);
       if (matches.matches.length == 0) {
@@ -309,7 +310,9 @@ var Optimizer = function(opts){
       _inPlaceRemoveMatches(current_board, matches.board);
       _inPlaceDropEmptySpaces(current_board);
       all_matches = all_matches.concat(matches.matches);
+      drop_times += 1;
     }
+    solution.drop_times = drop_times;
     solution.weight = _computeWeight(all_matches, weights);
     solution.mult = _computeMult(solution.board);
     solution.matches = all_matches;
@@ -446,6 +449,8 @@ var Optimizer = function(opts){
     solutions.sort(function(a, b) {
       if (_sorting == "multiplier" ) {
         return b.mult - a.mult || a.complexity - b.complexity || b.weight - a.weight;
+      } else if (_sorting == "mctwx") {
+        return b.mult - a.mult || b.matches.length - a.matches.length || a.drop_times - b.drop_times || b.weight - a.weight || a.complexity - b.complexity;
       } else if (_sorting == "mcwx") {
         return b.mult - a.mult || b.matches.length - a.matches.length || b.weight - a.weight || a.complexity - b.complexity;
       } else if (_sorting == "multiweight") {
