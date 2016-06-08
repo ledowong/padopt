@@ -1,13 +1,16 @@
-var gulp = require('gulp');
-var cssmin = require('gulp-cssmin');
-var rename = require('gulp-rename');
-var sass = require('gulp-sass');
-var uglify = require('gulp-uglify');
-var connect = require('gulp-connect');
-var concat = require('gulp-concat');
+const gulp = require('gulp');
+const cssmin = require('gulp-cssmin');
+const rename = require('gulp-rename');
+const sass = require('gulp-sass');
+const uglify = require('gulp-uglify');
+const connect = require('gulp-connect');
+const concat = require('gulp-concat');
+const requireDir = require('require-dir');
+
+requireDir('./tasks');
 
 // static file that need to process.
-var paths = {
+const paths = {
   js: ['js/bootstrap/polyfill.js',
        'js/bootstrap/modal.js',
        'js/bootstrap/dropdown.js',
